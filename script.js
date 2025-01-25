@@ -19,38 +19,39 @@ document.addEventListener('DOMContentLoaded', () => {
    function updateMessage() {
        const currentMessage = characters[currentMessageIndex];
        switch(stage) {
-           case 0: // 1초 0%, (메세지1)
-               textEl.textContent = currentMessage;
-               gaugeEl.style.transition = 'width 1s linear';
-               gaugeEl.style.width = '0%';
-               break;
-           case 1: // 2초 25%, 변화 없음
-               gaugeEl.style.width = '25%';
-               break;
-           case 2: // 3초 50%, (메세지1).
-               textEl.textContent = `${currentMessage}.`;
-               gaugeEl.style.width = '50%';
-               break;
-           case 3: // 4초 75%, (메세지1)..
-               textEl.textContent = `${currentMessage}..`;
-               gaugeEl.style.width = '75%';
-               break;
-           case 4: // 5초 100%, (메세지1)...
-               textEl.textContent = `${currentMessage}...`;
-               gaugeEl.style.width = '100%';
-               break;
-           case 5: // 6초 0%, (메세지2)
-               currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+           case 0: // 1초: 프로그레스 바 0% 초기화와 메시지 업데이트 동시에 진행
+                textEl.textContent = currentMessage; // 메시지 초기화
+                gaugeEl.style.transition = 'none'; // 트랜지션 제거 (초기화)
+                gaugeEl.style.width = '0%'; // 프로그레스 초기화
 
-                // 프로그레스 초기화 (transition 제거 후 width를 0으로)
-                gaugeEl.style.transition = 'none';
-                gaugeEl.style.width = '0%';
-               
+                // 트랜지션 복구 (짧은 딜레이)
                 setTimeout(() => {
                     gaugeEl.style.transition = 'width 1s linear';
-                    stage = -1; // stage 리셋
-                }, 1000); // 
+                    gaugeEl.style.width = '25%';
+                }, 50); // 50ms 딜레이 후 트랜지션 복구
+                break;
 
+            case 1: // 2초: 25% 프로그레스 진행
+                gaugeEl.style.width = '50%';
+                break;
+
+            case 2: // 3초: 메시지에 "." 추가
+                textEl.textContent = `${currentMessage}.`;
+                gaugeEl.style.width = '75%';
+                break;
+
+            case 3: // 4초: 메시지에 ".." 추가
+                textEl.textContent = `${currentMessage}..`;
+                gaugeEl.style.width = '100%';
+                break;
+
+            case 4: // 5초: 메시지에 "..." 추가
+                textEl.textContent = `${currentMessage}...`;
+                break;
+
+            case 5: // 6초: 메시지와 프로그레스 바 초기화
+                currentMessageIndex = (currentMessageIndex + 1) % characters.length; // 다음 메시지로 이동
+                stage = -1; // 스테이지 리셋
                 break;
        }
        stage++;
