@@ -32,21 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
 
             case 1: // 2초: 25% 프로그레스 진행
+               textEl.textContent = `${currentMessage}.`;
                 gaugeEl.style.width = '50%';
                 break;
 
             case 2: // 3초: 메시지에 "." 추가
-                textEl.textContent = `${currentMessage}.`;
+                textEl.textContent = `${currentMessage}..`;
                 gaugeEl.style.width = '75%';
                 break;
 
             case 3: // 4초: 메시지에 ".." 추가
-                textEl.textContent = `${currentMessage}..`;
+                textEl.textContent = `${currentMessage}...`;
                 gaugeEl.style.width = '100%';
                 break;
 
             case 4: // 5초: 메시지에 "..." 추가
-                textEl.textContent = `${currentMessage}...`;
                 break;
 
             case 5: // 6초: 메시지와 프로그레스 바 초기화
