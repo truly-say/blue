@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&family=Montserrat:wght@600&display=swap');
+
 :root { 
   --text-glitch: 0px;
   --danger-level: 0;
@@ -9,6 +11,8 @@
   --wave-color-3: rgba(32, 178, 170, 0.2);  /* Turquoise */
   --side-gradient-1: linear-gradient(135deg, rgba(0,169,204,0.1), rgba(0,105,148,0.3));
   --side-gradient-2: linear-gradient(225deg, rgba(32,178,170,0.1), rgba(0,31,63,0.3));
+  --glitch-blue: #4affff;
+  --deep-background: #001f3f;
 }
   
 * {
@@ -97,25 +101,49 @@ body {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 100px;
-  background: var(--side-gradient-1);
-  z-index: 1;
+  width: 120px;
+  background: linear-gradient(
+    45deg, 
+    rgba(74,255,255,0.05), 
+    rgba(0,31,63,0.3)
+  );
+  z-index: 2;
   pointer-events: none;
-  mix-blend-mode: overlay;
-  animation: subtle-drift 10s infinite alternate;
+  overflow: hidden;
 }
-
 .container::before {
   left: 0;
-  background: var(--side-gradient-1);
+  box-shadow: 
+    inset -20px 0 30px -10px rgba(74,255,255,0.1),
+    -5px 0 15px -3px rgba(74,255,255,0.2);
+  border-right: 1px solid rgba(74,255,255,0.1);
 }
 
 .container::after {
   right: 0;
-  background: var(--side-gradient-2);
+  box-shadow: 
+    inset 20px 0 30px -10px rgba(74,255,255,0.1),
+    5px 0 15px -3px rgba(74,255,255,0.2);
+  border-left: 1px solid rgba(74,255,255,0.1);
 }
-
-
+.container::before::after,
+.container::after::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,31,63,0.05),
+    rgba(74,255,255,0.02) 1px,
+    transparent 2px,
+    transparent 10px
+  );
+  opacity: 0.3;
+  animation: side-panel-glitch 5s infinite alternate;
+}
 .hero-section, 
 .info-section {
   position: relative;
@@ -305,6 +333,11 @@ body, .status-text, #progress-text {
   opacity: 0.5;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 100" preserveAspectRatio="none"><path fill="rgba(32,178,170,0.2)" d="M0 75 Q1600 50 3200 25 T6400 75 V100 H0z"/></svg>');
 }
+@keyframes side-panel-glitch {
+  0% { transform: skew(1deg, 1deg) translateX(-2px); }
+  50% { transform: skew(-1deg, -1deg) translateX(2px); }
+  100% { transform: skew(0.5deg, 0.5deg) translateX(0); }
+}
 
 @keyframes subtle-drift {
   from { opacity: 0.6; transform: translateX(-5px); }
@@ -394,7 +427,8 @@ body, .status-text, #progress-text {
 @media screen and (max-width: 768px) {
   .container::before,
   .container::after {
-    width: 30px;
+    width: 40px;
+    opacity: 0.2;
   }
   .container {
     padding: 10px;
