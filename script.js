@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
                gaugeEl.style.transition = 'none';
                gaugeEl.style.width = '0%';
+               stage = -1;
                break;
        }
        stage++;
