@@ -4,16 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
 
-    const characters = [
-        "고라니가 코딩을 준비하고 있습니다",
-        "고라니가 절망을 하고 있습니다",
-        "고라니가 정신머리를 챙기고 있습니다",
-        "개능이 고라니를 보고 있습니다",
-        "개능이 감자를 키우고 있습니다",
-        "개능이 테트리스를 하고 있습니다"    
-    ];
-
-      function animateMessage() {
+     function animateMessage() {
         let currentMessageIndex = 0;
         let dotCount = 0;
         let stage = 0;
@@ -22,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentMessage = characters[currentMessageIndex];
             
             if (stage < 4) {
-                // 0-3초: 점진적 프로그레스, 점 추가
                 textEl.textContent = `${currentMessage}${'.'.repeat(Math.min(dotCount, 3))}`;
                 dotCount++;
                 
@@ -30,41 +20,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     gaugeEl.style.width = `${(stage + 1) * 25}%`;
                 }
             } else if (stage === 4) {
-                // 4초: 점 3개 고정
                 textEl.textContent = `${currentMessage}...`;
                 if (gaugeEl) {
                     gaugeEl.style.width = '100%';
                 }
-            } else if (stage === 5) {
-                // 5초: 다음 메시지 준비, 프로그레스 초기화
+            } else {
                 currentMessageIndex = (currentMessageIndex + 1) % characters.length;
                 dotCount = 0;
                 
                 if (gaugeEl) {
-                    gaugeEl.style.transition = 'none';
                     gaugeEl.style.width = '0%';
-                    
-                    // Force reflow
-                    void gaugeEl.offsetWidth;
-                    
-                    // Restart transition
-                    gaugeEl.style.transition = 'width 4s linear';
                 }
-                
-                stage = -1; // Reset to start next cycle
             }
             
             stage++;
+            if (stage > 4) stage = 0;
         }
         
-        // Immediate first call with transition
-        if (gaugeEl) {
-            gaugeEl.style.transition = 'width 4s linear';
-        }
         updateMessage();
-        
         textEl.intervalId = setInterval(updateMessage, 1000);
     }
+
+    animateMessage();
+});
 
     function updateDateTime() {
         const now = new Date();
