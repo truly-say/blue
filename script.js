@@ -3,8 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const gaugeEl = document.querySelector('.status-progress');
     const timeDisplay = document.querySelector('#current-datetime');
     const countdownDisplay = document.querySelector('#countdown');
-    const glitchTarget = document.querySelector('.intermittent-glitch');
-   
+    const glitchOriginalText = document.getElementById('glitchOriginalText');
+const glitchRedLayer = document.getElementById('glitchRedLayer');
+const glitchBlueLayer = document.getElementById('glitchBlueLayer');
+const glitchYellowLayer = document.getElementById('glitchYellowLayer');
+const glitchContainer = document.querySelector('.glitch-container-custom');
+
+    const glitchTexts = ['■■의 최종본', '청춘의 최종본'];
+const glitchOriginalDefaultText = '■■의 최종본';
+    
     const characters = [
         "고라니가 홈페이지를 준비하고 있습니다",
         "고라니가 절망을 하고 있습니다",
@@ -110,20 +117,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
    immediateNextMessage();
 }
-   function triggerRandomGlitch() {
-  if (Math.random() < 0.2) {  // 20% chance every 5 seconds
-    glitchTarget.classList.add('glitch-active');
-    
-    // Rare chance of text morphing
-    if (Math.random() < 0.3) {
-      glitchTarget.classList.add('text-morph');
+   function triggerRandomGlitchEffect() {
+    if (Math.random() < 0.5) return;
+
+    // 10% chance to change text
+    if (Math.random() < 0.1) {
+        const newText = glitchTexts[glitchTexts.indexOf(glitchOriginalDefaultText) === 0 ? 1 : 0];
+        glitchOriginalText.textContent = newText;
+        glitchRedLayer.textContent = newText;
+        glitchBlueLayer.textContent = newText;
+        glitchYellowLayer.textContent = newText;
+
+        // Revert back to original text after glitch
+        setTimeout(() => {
+            glitchOriginalText.textContent = glitchOriginalDefaultText;
+            glitchRedLayer.textContent = glitchOriginalDefaultText;
+            glitchBlueLayer.textContent = glitchOriginalDefaultText;
+            glitchYellowLayer.textContent = glitchOriginalDefaultText;
+        }, 250);
     }
+
+    glitchContainer.classList.add('glitch-active-custom');
     
     setTimeout(() => {
-      glitchTarget.classList.remove('glitch-active', 'text-morph');
-    }, 500);
-  }
+        glitchContainer.classList.remove('glitch-active-custom');
+    }, 250);
 }
+
+setInterval(triggerRandomGlitchEffect, 2000);
     
     function updateDateTime() {
         const now = new Date();
