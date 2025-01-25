@@ -39,47 +39,6 @@
   100% { clip: rect(39px, 9999px, 67px, 0); }
 }
 
-@keyframes glitch-shake {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  10% { transform: translate(-3px, 2px) scale(1.02); }
-  20% { transform: translate(4px, -3px) scale(0.98); }
-  30% { transform: translate(-2px, 1px) scale(1.01); }
-  40% { transform: translate(2px, -2px) scale(0.99); }
-  50% { transform: translate(0, 0) scale(1); }
-}
-
-@keyframes glitch-noise {
-  0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-  10% { clip-path: polygon(5% 0, 95% 10%, 100% 90%, 0 100%); }
-  20% { clip-path: polygon(0 10%, 100% 0, 95% 100%, 5% 90%); }
-  30% { clip-path: polygon(10% 0, 90% 5%, 100% 95%, 0 100%); }
-}
-
-@keyframes rare-text-morph {
-  0%, 99% { content: '■■의 최종본'; }
-  1% { content: '청춘의 최종본'; }
-}
-
-.glitch-ultimate {
-  position: relative;
-  display: inline-block;
-  animation: glitch-shake 0.3s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.glitch-ultimate::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  animation: 
-    glitch-noise 0.3s infinite step-end,
-    rare-text-morph 30s infinite step-end;
-  text-shadow: 
-    2px 0 red, 
-    -2px 0 blue;
-}
-
 /* Glitch class for elements */
 .glitch {
   animation: glitch-anim 0.2s infinite;
@@ -149,6 +108,45 @@
   100% {
     text-shadow: 2px -1px #00d1ff, -2px 1px #ff003c;
   }
+}
+@keyframes text-glitch {
+  0%, 100% { transform: none; opacity: 1; }
+  50% { 
+    transform: translate(-3px, 2px) scale(1.02); 
+    opacity: 0.8;
+    text-shadow: 2px 0 red, -2px 0 blue;
+  }
+}
+
+.intermittent-glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.intermittent-glitch::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intermittent-glitch.glitch-active::before {
+  animation: text-glitch 0.5s;
+  opacity: 1;
+}
+
+@keyframes rare-morph {
+  0%, 99% { content: '■■의 최종본'; }
+  1% { content: '청춘의 최종본'; }
+}
+
+.intermittent-glitch.glitch-active::before {
+  animation: 
+    text-glitch 0.5s,
+    rare-morph 0.5s step-end;
 }
 
 .info-card.glitch-active:hover {
