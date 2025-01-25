@@ -108,8 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500); // fade-out 후 0.5초에 페이지 변경
     });
 });
-    
-    nitial calls
+
+    // Initial calls
     animateMessage();
     updateDateTime();
 
