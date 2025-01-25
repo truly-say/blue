@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "고라니가 정신머리를 챙기고 있습니다",
         "개능이 고라니를 보고 있습니다",
         "개능이 감자를 키우고 있습니다",
-        "개능이 테트리스를 하고 있습니다"
+        "개능이 테트리스를 하고 있습니다"    
     ];
 
     function animateMessage() {
@@ -18,17 +18,35 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateMessage() {
             const currentMessage = characters[currentMessageIndex];
 
-            if (stage < 4) {
-                textEl.textContent = `${currentMessage}${'.'.repeat(stage + 1)}`;
-                gaugeEl.style.width = `${(stage + 1) * 25}%`;
-            } else if (stage === 4) {
-                textEl.textContent = `${currentMessage}...`;
-                gaugeEl.style.width = '100%';
-            } else {
-                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
-                gaugeEl.style.width = '0%';
-                textEl.textContent = characters[currentMessageIndex];
-                stage = -1;
+            switch(stage) {
+                case 0: // 1초: 초기 상태, 0%
+                    textEl.textContent = currentMessage;
+                    gaugeEl.style.transition = 'width 1s linear';
+                    gaugeEl.style.width = '0%';
+                    break;
+                case 1: // 2초: 25%, .
+                    textEl.textContent = `${currentMessage}.`;
+                    gaugeEl.style.width = '25%';
+                    break;
+                case 2: // 3초: 50%, ..
+                    textEl.textContent = `${currentMessage}..`;
+                    gaugeEl.style.width = '50%';
+                    break;
+                case 3: // 4초: 75%, ...
+                    textEl.textContent = `${currentMessage}...`;
+                    gaugeEl.style.width = '75%';
+                    break;
+                case 4: // 5초: 100%, ... 유지
+                    textEl.textContent = `${currentMessage}...`;
+                    gaugeEl.style.width = '100%';
+                    break;
+                case 5: // 6초: 다음 메시지로 초기화
+                    currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+                    textEl.textContent = characters[currentMessageIndex];
+                    gaugeEl.style.transition = 'none';
+                    gaugeEl.style.width = '0%';
+                    stage = -1;
+                    break;
             }
 
             stage++;
