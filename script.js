@@ -13,53 +13,35 @@ document.addEventListener('DOMContentLoaded', () => {
         "개능이 테트리스를 하고 있습니다"    
     ];
 
-    function animateMessage() {
+     function animateMessage() {
         let currentMessageIndex = 0;
         let dotCount = 0;
-        let stage = 0;
         
         function updateMessage() {
             const currentMessage = characters[currentMessageIndex];
+            textEl.textContent = `${currentMessage}${'.'.repeat(Math.min(dotCount, 3))}`;
             
-            if (stage < 4) {
-                // 0-3초: 메시지와 점 추가
-                textEl.textContent = `${currentMessage}${'.'.repeat(dotCount)}`;
-                dotCount++;
-            } else if (stage === 4) {
-                // 4초: 마지막 점 상태 유지
-                textEl.textContent = `${currentMessage}...`;
-            } else if (stage === 5) {
-                // 5초: 다음 메시지로 변경
-                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
-                textEl.textContent = characters[currentMessageIndex];
-                
-                // Reset gauge
-                if (gaugeEl) {
-                    gaugeEl.style.transition = 'none';
-                    gaugeEl.style.width = '0%';
-                    void gaugeEl.offsetWidth;
-                    gaugeEl.style.transition = 'width 6s linear';
-                    gaugeEl.style.width = '100%';
-                }
-                
-                // Reset dot count
+            dotCount++;
+            if (dotCount > 4) {
                 dotCount = 0;
-            } else {
-                // 6-8초: 새 메시지에 점 추가
-                textEl.textContent = `${characters[currentMessageIndex]}${'.'.repeat(dotCount)}`;
-                dotCount++;
+                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+                
+                // Immediate gauge reset
+                if (gaugeEl) {
+                    requestAnimationFrame(() => {
+                        gaugeEl.style.transition = 'none';
+                        gaugeEl.style.width = '0%';
+                        
+                        requestAnimationFrame(() => {
+                            gaugeEl.style.transition = 'width 5s linear';
+                            gaugeEl.style.width = '100%';
+                        });
+                    });
+                }
             }
-            
-            stage++;
-            if (stage > 8) stage = 0;
         }
         
-        // Clear any existing intervals
-        if (textEl.intervalId) {
-            clearInterval(textEl.intervalId);
-        }
-        
-        // Start new interval
+        updateMessage(); // Immediate first call
         textEl.intervalId = setInterval(updateMessage, 1000);
     }
 
