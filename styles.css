@@ -11,9 +11,6 @@
   --wave-color-3: rgba(32, 178, 170, 0.2);  /* Turquoise */
   --side-gradient-1: linear-gradient(135deg, rgba(0,169,204,0.1), rgba(0,105,148,0.3));
   --side-gradient-2: linear-gradient(225deg, rgba(32,178,170,0.1), rgba(0,31,63,0.3));
-  --ice-blue: rgba(173, 216, 230, 0.2);
-  --deep-sea: rgba(0, 105, 148, 0.3);
-  --frost-white: rgba(255, 255, 255, 0.1);
 }
   
 * {
@@ -102,17 +99,16 @@ body {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 100px;
+  width: 80px;
   background: 
     linear-gradient(
       to bottom, 
-      var(--deep-sea), 
-      var(--ice-blue)
+      rgba(0, 105, 148, 0.1), 
+      rgba(173, 216, 230, 0.05)
     );
   z-index: 2;
-  border-left: 1px solid var(--ice-blue);
-  border-right: 1px solid var(--ice-blue);
-  overflow: hidden;
+  border-left: 1px solid rgba(255,255,255,0.05);
+  border-right: 1px solid rgba(255,255,255,0.05);
 }
 .container::before::after,
 .container::after::after {
@@ -123,15 +119,14 @@ body {
   width: 100%;
   height: 100%;
   background: 
-    repeating-linear-gradient(
+    linear-gradient(
       45deg,
-      transparent,
-      transparent 20px,
-      var(--frost-white) 20px,
-      var(--frost-white) 40px
+      transparent 0%,
+      rgba(255,255,255,0.02) 50%,
+      transparent 100%
     );
   opacity: 0.3;
-  animation: ice-crack 5s infinite alternate;
+  animation: sea-whisper 6s infinite alternate;
 }
 .container::before {
   left: 0;
@@ -333,7 +328,16 @@ body, .status-text, #progress-text {
   opacity: 0.5;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 100" preserveAspectRatio="none"><path fill="rgba(32,178,170,0.2)" d="M0 75 Q1600 50 3200 25 T6400 75 V100 H0z"/></svg>');
 }
-
+@keyframes sea-whisper {
+  0% { 
+    transform: translateY(-3px);
+    opacity: 0.2;
+  }
+  100% { 
+    transform: translateY(3px);
+    opacity: 0.4;
+  }
+}
 @keyframes subtle-drift {
   from { opacity: 0.6; transform: translateX(-5px); }
   to { opacity: 0.8; transform: translateX(5px); }
@@ -370,16 +374,7 @@ body, .status-text, #progress-text {
       rotate(1deg);
   }
 }
-@keyframes ice-crack {
-  0% { 
-    transform: scale(1.01) skew(1deg);
-    opacity: 0.2;
-  }
-  100% { 
-    transform: scale(0.99) skew(-1deg);
-    opacity: 0.4;
-  }
-}
+
 .message-overlay {
   position: fixed;
   top: 50%;
