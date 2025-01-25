@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+     console.log('Script is running');
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
     const countdownDisplay = document.getElementById('countdown-display');
@@ -58,14 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = new Date();
         const departureDate = new Date('2025-02-28T00:00:00');
         const diff = departureDate - now;
+         console.log('Current time:', now); // Debug log
         
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        // Update current time
-        if (currentTimeDisplay) {
+       if (currentTimeDisplay) {
             currentTimeDisplay.textContent = new Intl.DateTimeFormat('ko-KR', {
                 year: 'numeric',
                 month: '2-digit',
@@ -74,7 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 minute: '2-digit',
                 hour12: false
             }).format(now);
+        } else {
+            console.error('Time display element not found');
         }
+    } catch (error) {
+        console.error('Error updating time:', error);
+    }
 
         // Update countdown
         if (countdownDisplay) {
