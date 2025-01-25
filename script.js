@@ -66,11 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
    immediateNextMessage();
 }
 
-    function triggerRandomGlitch() {
+   function triggerRandomGlitch() {
   if (Math.random() < 0.2) {  // 20% chance every 5 seconds
     glitchTarget.classList.add('glitch-active');
+    
+    // Rare chance of text morphing
+    if (Math.random() < 0.3) {
+      glitchTarget.classList.add('text-morph');
+    }
+    
     setTimeout(() => {
-      glitchTarget.classList.remove('glitch-active');
+      glitchTarget.classList.remove('glitch-active', 'text-morph');
     }, 500);
   }
 }
