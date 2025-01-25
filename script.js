@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
-    const countdownDisplay = document.getElementById('countdown-display');
-    const currentTimeDisplay = document.getElementById('current-time');
+    const timeDisplay = document.querySelector('#current-datetime');
+    const countdownDisplay = document.querySelector('#countdown');
 
     const characters = [
         "고라니가 코딩을 준비하고 있습니다",
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     gaugeEl.style.transition = 'width 1s linear';
                     gaugeEl.style.width = '0%';
                     break;
-                case 1: // 2초: 25%, . 
+                case 1: // 2초: 25%, .
                     textEl.textContent = `${currentMessage}.`;
                     gaugeEl.style.width = '25%';
                     break;
@@ -58,15 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = new Date();
         const departureDate = new Date('2025-02-28T00:00:00');
         const diff = departureDate - now;
-        
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        // Update current time
-        if (currentTimeDisplay) {
-            currentTimeDisplay.textContent = new Intl.DateTimeFormat('ko-KR', {
+        if (timeDisplay) {
+            timeDisplay.textContent = new Intl.DateTimeFormat('ko-KR', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
@@ -76,24 +74,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }).format(now);
         }
 
-        // Update countdown
         if (countdownDisplay) {
-            countdownDisplay.textContent = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            countdownDisplay.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
     }
 
     // Page transition effect
     const infoCards = document.querySelectorAll('.info-card');
-    infoCards.forEach((card) => {
-        card.addEventListener('click', (e) => {
-            const page = card.getAttribute('data-page');
-            document.body.style.transition = 'opacity 0.5s ease';
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                window.location.href = `${page}.html`;
-            }, 500);
+    if (infoCards) {
+        infoCards.forEach((card) => {
+            card.addEventListener('click', (e) => {
+                const page = card.getAttribute('data-page');
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    window.location.href = `${page}.html`;
+                }, 500);
+            });
         });
-    });
+    }
 
     // Initial calls
     animateMessage();
