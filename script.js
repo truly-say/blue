@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
-    const timeDisplay = document.querySelector('.time-display');
-    const countdownDisplay = document.querySelector('.countdown-display');
+    const timeDisplay = document.querySelector('#current-datetime');
+    const countdownDisplay = document.querySelector('#countdown');
 
     const characters = [
         "고라니가 코딩을 준비하고 있습니다",
@@ -16,28 +16,31 @@ document.addEventListener('DOMContentLoaded', () => {
     function animateMessage() {
         let currentMessageIndex = 0;
         let stage = 0;
-
         function updateMessage() {
             const currentMessage = characters[currentMessageIndex];
             switch(stage) {
-                case 0: // Immediately go to 25%
-                    textEl.textContent = `${currentMessage}.`;
+                case 0: // 1초: 초기 상태, 0%
+                    textEl.textContent = currentMessage;
                     gaugeEl.style.transition = 'width 1s linear';
+                    gaugeEl.style.width = '0%';
+                    break;
+                case 1: // 2초: 25%, .
+                    textEl.textContent = `${currentMessage}.`;
                     gaugeEl.style.width = '25%';
                     break;
-                case 1: // 50%
+                case 2: // 3초: 50%, ..
                     textEl.textContent = `${currentMessage}..`;
                     gaugeEl.style.width = '50%';
                     break;
-                case 2: // 75%
+                case 3: // 4초: 75%, ...
                     textEl.textContent = `${currentMessage}...`;
                     gaugeEl.style.width = '75%';
                     break;
-                case 3: // 100%
+                case 4: // 5초: 100%, ... 유지
                     textEl.textContent = `${currentMessage}...`;
                     gaugeEl.style.width = '100%';
                     break;
-                case 4: // Next message
+                case 5: // 6초: 다음 메시지로 초기화
                     currentMessageIndex = (currentMessageIndex + 1) % characters.length;
                     textEl.textContent = characters[currentMessageIndex];
                     gaugeEl.style.transition = 'none';
@@ -47,8 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             stage++;
         }
-
-        // Start immediately without waiting
         updateMessage();
         setInterval(updateMessage, 1000);
     }
@@ -78,13 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initial calls
-    updateDateTime();
-    animateMessage();
-
-    // Intervals
-    setInterval(updateDateTime, 1000);
-
     // Page transition effect
     const infoCards = document.querySelectorAll('.info-card');
     if (infoCards) {
@@ -99,6 +93,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // Initial calls
+    animateMessage();
+    updateDateTime();
+
+    // Intervals
+    setInterval(updateDateTime, 1000);
 
     // Page restoration
     window.addEventListener('pageshow', (event) => {
