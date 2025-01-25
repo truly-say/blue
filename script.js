@@ -16,16 +16,24 @@ document.addEventListener('DOMContentLoaded', () => {
     function animateMessage() {
         let currentMessageIndex = 0;
         let dotCount = 0;
+        let stage = 0;
         
         function updateMessage() {
             const currentMessage = characters[currentMessageIndex];
-            textEl.textContent = `${currentMessage}${'.'.repeat(dotCount)}`;
             
-            dotCount++;
-            if (dotCount > 3) {
-                dotCount = 0;
+            if (stage < 4) {
+                // 0-3초: 메시지와 점 추가
+                textEl.textContent = `${currentMessage}${'.'.repeat(dotCount)}`;
+                dotCount++;
+            } else if (stage === 4) {
+                // 4초: 마지막 점 상태 유지
+                textEl.textContent = `${currentMessage}...`;
+            } else if (stage === 5) {
+                // 5초: 다음 메시지로 변경
                 currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+                textEl.textContent = characters[currentMessageIndex];
                 
+                // Reset gauge
                 if (gaugeEl) {
                     gaugeEl.style.transition = 'none';
                     gaugeEl.style.width = '0%';
@@ -33,13 +41,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     gaugeEl.style.transition = 'width 6s linear';
                     gaugeEl.style.width = '100%';
                 }
+                
+                // Reset dot count
+                dotCount = 0;
+            } else {
+                // 6-8초: 새 메시지에 점 추가
+                textEl.textContent = `${characters[currentMessageIndex]}${'.'.repeat(dotCount)}`;
+                dotCount++;
             }
+            
+            stage++;
+            if (stage > 8) stage = 0;
         }
         
+        // Clear any existing intervals
         if (textEl.intervalId) {
             clearInterval(textEl.intervalId);
         }
         
+        // Start new interval
         textEl.intervalId = setInterval(updateMessage, 1000);
     }
 
