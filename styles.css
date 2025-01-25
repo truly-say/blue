@@ -309,11 +309,6 @@ body, .status-text, #progress-text {
   animation: fade-glitch 1s ease-out;
 }
 
-@keyframes fade-glitch {
-  0% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
-}
-
 /* Info Card 스타일 */
 .info-card {
   background: rgba(0, 31, 63, 0.8);
