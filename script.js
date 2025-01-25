@@ -97,6 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    infoCards.forEach((card) => {
+    card.addEventListener('click', (e) => {
+        const page = card.getAttribute('data-page');
+        document.body.style.transition = 'opacity 0.5s ease';
+        document.body.style.opacity = '0';
+
+        setTimeout(() => {
+            window.location.href = `${page}.html`;
+        }, 500); // fade-out 후 0.5초에 페이지 변경
+    });
+});
+
     // Initial calls
     animateMessage();
     updateDateTime();
