@@ -205,7 +205,7 @@ body, .status-text, #progress-text {
 
 .countdown-numbers {
   font-family: var(--accent-font);
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 600;
   letter-spacing: -2px;
   background: linear-gradient(45deg, #00b0ff, #0081cb);
