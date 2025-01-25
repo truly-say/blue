@@ -47,6 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+        // Initial call
+    animateMessage();
+    
+    // Repeat every 24 seconds (6 seconds * 4 messages)
+    setInterval(animateMessage, 24000);
         
         // Clear any existing intervals
         if (textEl.intervalId) {
@@ -55,18 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Start new interval
         textEl.intervalId = setInterval(updateMessage, 1000);
-    }
-
-    // Initial call
-    animateMessage();
-    
-    // Repeat every 24 seconds (6 seconds * 4 messages)
-    setInterval(animateMessage, 24000);
-});
-
-    function updateStatus() {
-        const randomMessage = getUniqueRandomMessage();
-        animateMessage(randomMessage);
     }
 
     function updateDateTime() {
