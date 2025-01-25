@@ -14,45 +14,46 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     function animateMessage() {
-        let currentMessageIndex = 0;
-        let stage = 0;
-        function updateMessage() {
-            const currentMessage = characters[currentMessageIndex];
-            switch(stage) {
-                case 0: // 1초: 초기 상태, 0%
-                    textEl.textContent = currentMessage;
-                    gaugeEl.style.transition = 'width 1s linear';
-                    gaugeEl.style.width = '0%';
-                    break;
-                case 1: // 2초: 25%, .
-                    textEl.textContent = `${currentMessage}.`;
-                    gaugeEl.style.width = '25%';
-                    break;
-                case 2: // 3초: 50%, ..
-                    textEl.textContent = `${currentMessage}..`;
-                    gaugeEl.style.width = '50%';
-                    break;
-                case 3: // 4초: 75%, ...
-                    textEl.textContent = `${currentMessage}...`;
-                    gaugeEl.style.width = '75%';
-                    break;
-                case 4: // 5초: 100%, ... 유지
-                    textEl.textContent = `${currentMessage}...`;
-                    gaugeEl.style.width = '100%';
-                    break;
-                case 5: // 6초: 다음 메시지로 초기화
-                    currentMessageIndex = (currentMessageIndex + 1) % characters.length;
-                    textEl.textContent = characters[currentMessageIndex];
-                    gaugeEl.style.transition = 'none';
-                    gaugeEl.style.width = '0%';
-                    stage = -1;
-                    break;
-            }
-            stage++;
+    let currentMessageIndex = 0;
+    let stage = 0;
+    function updateMessage() {
+        const currentMessage = characters[currentMessageIndex];
+        switch(stage) {
+            case 0:
+                textEl.textContent = currentMessage;
+                gaugeEl.style.transition = 'width 1s linear';
+                gaugeEl.style.width = '0%';
+                break;
+            case 1:
+                textEl.textContent = `${currentMessage}.`;
+                gaugeEl.style.width = '25%';
+                break;
+            case 2:
+                textEl.textContent = `${currentMessage}..`;
+                gaugeEl.style.width = '50%';
+                break;
+            case 3:
+                textEl.textContent = `${currentMessage}...`;
+                gaugeEl.style.width = '75%';
+                break;
+            case 4:
+                textEl.textContent = `${currentMessage}...`;
+                gaugeEl.style.width = '100%';
+                break;
+            case 5:
+                // Immediately update without waiting
+                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+                textEl.textContent = characters[currentMessageIndex];
+                gaugeEl.style.transition = 'none';
+                gaugeEl.style.width = '0%';
+                stage = -1;
+                break;
         }
-        updateMessage();
-        setInterval(updateMessage, 1000);
+        stage++;
     }
+    updateMessage();
+    setInterval(updateMessage, 1000);
+}
 
     function updateDateTime() {
         const now = new Date();
