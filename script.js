@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeDisplay = document.querySelector('#current-datetime');
     const countdownDisplay = document.querySelector('#countdown');
     const glitchTarget = document.querySelector('.intermittent-glitch');
-
+   
     const characters = [
         "고라니가 홈페이지를 준비하고 있습니다",
         "고라니가 절망을 하고 있습니다",
@@ -27,24 +27,44 @@ document.addEventListener('DOMContentLoaded', () => {
         "성주안이 노트에 무언가를 적고 있습니다"
     ];
 
+    function getRandomUniqueMessage() {
+    // If all messages have been used, reset the used messages array
+    if (usedMessages.length === characters.length) {
+        usedMessages = [];
+    }
+
+    // Find a message that hasn't been used yet
+    let randomMessage;
+    do {
+        randomMessage = characters[Math.floor(Math.random() * characters.length)];
+    } while (usedMessages.includes(randomMessage));
+
+    // Add the selected message to used messages
+    usedMessages.push(randomMessage);
+
+    return randomMessage;
+}
+
+    
     function animateMessage() {
-   let currentMessageIndex = 0;
-   let stage = 0;
-   function updateMessage() {
-       const currentMessage = characters[currentMessageIndex];
-       switch(stage) {
-           case 0: // 1초: 프로그레스 바 0% 초기화와 메시지 업데이트 동시에 진행
-                textEl.textContent = currentMessage; // 메시지 초기화
-                gaugeEl.style.transition = 'none'; // 트랜지션 제거 (초기화)
-                gaugeEl.style.width = '0%'; // 프로그레스 초기화
-
-                // 트랜지션 복구 (짧은 딜레이)
-                setTimeout(() => {
-                    gaugeEl.style.transition = 'width 1s linear';
-                    gaugeEl.style.width = '25%';
-                }, 50); // 50ms 딜레이 후 트랜지션 복구
+     let currentMessageIndex = 0;
+       let stage = 0;
+    let usedMessages = [];
+    
+  function updateMessage() {
+    const currentMessage = stage === 0 ? getRandomUniqueMessage() : currentMessage;
+    
+    switch(stage) {
+        case 0: // 1초: 프로그레스 바 0% 초기화와 메시지 업데이트 동시에 진행
+            textEl.textContent = currentMessage; // 메시지 초기화
+            gaugeEl.style.transition = 'none'; // 트랜지션 제거 (초기화)
+            gaugeEl.style.width = '0%'; // 프로그레스 초기화
+            // 트랜지션 복구 (짧은 딜레이)
+            setTimeout(() => {
+                gaugeEl.style.transition = 'width 1s linear';
+                gaugeEl.style.width = '25%';
+            }, 50); // 50ms 딜레이 후 트랜지션 복구
                 break;
-
             case 1: // 2초: 25% 프로그레스 진행
                textEl.textContent = `${currentMessage}.`;
                 gaugeEl.style.width = '50%';
