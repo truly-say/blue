@@ -109,6 +109,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+    function activateGlitchEffect() {
+    const glitchElements = document.querySelectorAll('.glitch-text');
+
+    glitchElements.forEach((el) => {
+        el.addEventListener('mouseover', () => el.classList.add('glitch-active'));
+        el.addEventListener('mouseout', () => el.classList.remove('glitch-active'));
+    });
+}
+
+// Call it after DOM loads
+document.addEventListener('DOMContentLoaded', activateGlitchEffect);
+    
     // Initial calls
     animateMessage();
     updateDateTime();
