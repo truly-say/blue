@@ -1,93 +1,109 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>   
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Lam Graduation Cruise</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-  <meta name="description" content="2025 Blue Lam Graduation Cruise - 청춘의 최종본">
-<style>
-    /* Ensure scrolling is enabled */
-    body, html {
-      overflow: auto !important;
-      height: auto;
+document.addEventListener('DOMContentLoaded', () => {
+    const textEl = document.querySelector('.status-text');
+    const gaugeEl = document.querySelector('.status-progress');
+    const countdownDisplay = document.getElementById('countdown-display');
+    const currentTimeDisplay = document.getElementById('current-time');
+
+    const characters = [
+        "고라니가 코딩을 준비하고 있습니다",
+        "고라니가 절망을 하고 있습니다",
+        "고라니가 정신머리를 챙기고 있습니다",
+        "개능이 고라니를 보고 있습니다",
+        "개능이 감자를 키우고 있습니다",
+        "개능이 테트리스를 하고 있습니다"    
+    ];
+
+    function animateMessage() {
+        let currentMessageIndex = 0;
+        let stage = 0;
+        function updateMessage() {
+            const currentMessage = characters[currentMessageIndex];
+            switch(stage) {
+                case 0: // 1초: 초기 상태, 0%
+                    textEl.textContent = currentMessage;
+                    gaugeEl.style.transition = 'width 1s linear';
+                    gaugeEl.style.width = '0%';
+                    break;
+                case 1: // 2초: 25%, .
+                    textEl.textContent = `${currentMessage}.`;
+                    gaugeEl.style.width = '25%';
+                    break;
+                case 2: // 3초: 50%, ..
+                    textEl.textContent = `${currentMessage}..`;
+                    gaugeEl.style.width = '50%';
+                    break;
+                case 3: // 4초: 75%, ...
+                    textEl.textContent = `${currentMessage}...`;
+                    gaugeEl.style.width = '75%';
+                    break;
+                case 4: // 5초: 100%, ... 유지
+                    textEl.textContent = `${currentMessage}...`;
+                    gaugeEl.style.width = '100%';
+                    break;
+                case 5: // 6초: 다음 메시지로 초기화
+                    currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+                    textEl.textContent = characters[currentMessageIndex];
+                    gaugeEl.style.transition = 'none';
+                    gaugeEl.style.width = '0%';
+                    stage = -1;
+                    break;
+            }
+            stage++;
+        }
+        updateMessage();
+        setInterval(updateMessage, 1000);
     }
-    
-    /* Add a container for progress text if missing */
-    .system-status {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+
+    function updateDateTime() {
+        const now = new Date();
+        const departureDate = new Date('2025-02-28T00:00:00');
+        const diff = departureDate - now;
+        
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        // Update current time
+        if (currentTimeDisplay) {
+            currentTimeDisplay.textContent = new Intl.DateTimeFormat('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(now);
+        }
+
+        // Update countdown
+        if (countdownDisplay) {
+            countdownDisplay.textContent = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        }
     }
-    
-    #progress-text {
-      font-family: monospace; /* Ensure monospace font for □■ characters */
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-  <div class="horror-glitch"></div>
-  <div class="overlay"></div>
-  <nav class="navbar">
-    <a href="#" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
-    <div class="nav-controls">
-      <div class="nav-time" id="current-time"></div>
-      <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
-    </div>
-  </nav>
-  
-  <div class="container">
-    <img src="선청고등학교.png" alt="School Image" class="school-image-overlay">
-    <section class="hero-section">
-      <div class="school-name glitch-text" data-text="善淸高等學校">善淸高等學校</div>
-      <h1 class="glitch-text" data-text="청춘의 최종본">■■의 최종본</h1>
-      <div class="subtitle">"진정으로 맑고 깨끗한 푸름의 정의에서."</div>
-      
-      <div class="countdown">
-        <div class="countdown-label">Next Series Countdown</div>
-        <div class="countdown-numbers" id="countdown-display">00:00:00</div>
-      </div>
-    </section>
-    <div class="system-status">
-      <div class="status-gauge">
-        <div class="status-progress"></div>
-      </div>
-      <br>
-      <div class="status-text"></div>
-      <!-- Add progress text element -->
-      <div id="progress-text"></div>
-    </div>
-    <section class="info-section">
-      <div class="info-card glitch-hover" data-page="timeline">
-        <div class="info-card-inner">
-          <h3>타임라인</h3>
-          <p>2025.01.02 ~ 2025.02.02</p>
-          <div class="card-overlay"></div>
-        </div>
-      </div>
-      <div class="info-card glitch-hover" data-page="character">
-        <div class="info-card-inner">
-          <h3>메시지</h3>
-          <p>"우리도 결국엔 完璧을 熱望했었잖아."</p>
-          <div class="card-overlay"></div>
-        </div>
-      </div>
-      <div class="info-card glitch-hover" data-page="status">
-        <div class="info-card-inner">
-          <h3>상태</h3>
-          <p id="status-message">SYSTEM DEGRADATION IMMINENT</p>
-          <div class="card-overlay"></div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div class="waves">
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
+
+    // Page transition effect
+    const infoCards = document.querySelectorAll('.info-card');
+    infoCards.forEach((card) => {
+        card.addEventListener('click', (e) => {
+            const page = card.getAttribute('data-page');
+            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = `${page}.html`;
+            }, 500);
+        });
+    });
+
+    // Initial calls
+    animateMessage();
+    updateDateTime();
+
+    // Intervals
+    setInterval(updateDateTime, 1000);
+
+    // Page restoration
+    window.addEventListener('pageshow', (event) => {
+        document.body.style.opacity = '1';
+    });
+});
