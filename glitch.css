@@ -44,7 +44,6 @@
   animation: glitch-anim 0.2s infinite;
 }
 
-/* 글리치 효과 베이스 스타일 */
 .glitch-text {
   position: relative;
   display: inline-block;
@@ -52,6 +51,45 @@
   font-weight: 600;
   overflow: hidden;
 }
+
+h1.glitch-text::before,
+h1.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: none;
+  clip-path: rect(0, 0, 0, 0);
+}
+
+h1.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 red;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+
+h1.glitch-text::after {
+  left: -2px;
+  text-shadow: -2px 0 blue;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+}
+
+h1.glitch-text:hover,
+h1.glitch-text.active {
+  animation: glitch-text-normal 0.5s infinite linear;
+}
+
+h1.glitch-text:hover::before,
+h1.glitch-text.active::before {
+  animation: glitch-text-normal 0.5s infinite linear;
+}
+
+h1.glitch-text:hover::after,
+h1.glitch-text.active::after {
+  animation: glitch-text-normal 0.5s infinite linear;
+}
+
 
 /* Active 글리치 */
 .glitch-active {
@@ -112,4 +150,37 @@
 
 .info-card.glitch-active:hover {
   animation: glitch-shake 0.5s ease-in-out, glitch-color 0.5s ease-in-out;
+}
+
+@keyframes random-glitch {
+  0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  5% { clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%); }
+  10% { clip-path: polygon(0 0, 50% 50%, 100% 100%, 0 100%); }
+}
+
+h1.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+h1.glitch-text::before {
+  animation: random-glitch 5s infinite step-end;
+  animation-play-state: paused;
+}
+
+h1.glitch-text:hover::before,
+h1.glitch-text.active::before {
+  animation-play-state: running;
+}
+
+/* Rare Text Change Glitch */
+@keyframes rare-text-glitch {
+  0%, 99% { content: '■■의 최종본'; }
+  1% { content: '청춘의 최종본'; }
+}
+
+h1.glitch-text:hover::after,
+h1.glitch-text.active::after {
+  animation: rare-text-glitch 30s infinite step-end;
+  animation-play-state: running;
 }
