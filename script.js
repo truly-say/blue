@@ -41,10 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
                break;
            case 5: // 6초 0%, (메세지2)
                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
-               gaugeEl.style.transition = 'none';
-               gaugeEl.style.width = '0%';
-               stage = -1;
-               break;
+
+                // 프로그레스 초기화 (transition 제거 후 width를 0으로)
+                gaugeEl.style.transition = 'none';
+                gaugeEl.style.width = '0%';
+               
+                setTimeout(() => {
+                    gaugeEl.style.transition = 'width 1s linear';
+                    stage = -1; // stage 리셋
+                }, 50); // 
+
+                break;
        }
        stage++;
    }
