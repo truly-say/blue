@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "개능이 테트리스를 하고 있습니다"    
     ];
 
-   function animateMessage() {
+    function animateMessage() {
    let currentMessageIndex = 0;
    let stage = 0;
    function updateMessage() {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                textEl.textContent = `${currentMessage}...`;
                gaugeEl.style.width = '100%';
                break;
-           case 5: // 즉시 다음 메시지로
+           case 5: // 6초 0%, (메세지2)
                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
                stage = -1; // 즉시 1초 상태로 리셋
                break;
@@ -47,9 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
        stage++;
    }
    
-   updateMessage();
-   setInterval(updateMessage, 1000);
-}
+   function immediateNextMessage() {
+       updateMessage();
+       setInterval(updateMessage, 1000);
+   }
 
    immediateNextMessage();
 }
