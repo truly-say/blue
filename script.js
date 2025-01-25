@@ -47,23 +47,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     function animateMessage() {
-     let currentMessageIndex = 0;
-       let stage = 0;
-    let usedMessages = [];
+    let currentMessageIndex = 0;
+    let stage = 0;
+    let usedMessages = []; // Move this inside animateMessage to ensure it's defined
     
-  function updateMessage() {
-    const currentMessage = stage === 0 ? getRandomUniqueMessage() : currentMessage;
+    function getRandomUniqueMessage() {
+        // If all messages have been used, reset the used messages array
+        if (usedMessages.length === characters.length) {
+            usedMessages = [];
+        }
+
+        // Find a message that hasn't been used yet
+        let randomMessage;
+        do {
+            randomMessage = characters[Math.floor(Math.random() * characters.length)];
+        } while (usedMessages.includes(randomMessage));
+
+        // Add the selected message to used messages
+        usedMessages.push(randomMessage);
+
+        return randomMessage;
+    }
     
-    switch(stage) {
-        case 0: // 1초: 프로그레스 바 0% 초기화와 메시지 업데이트 동시에 진행
-            textEl.textContent = currentMessage; // 메시지 초기화
-            gaugeEl.style.transition = 'none'; // 트랜지션 제거 (초기화)
-            gaugeEl.style.width = '0%'; // 프로그레스 초기화
-            // 트랜지션 복구 (짧은 딜레이)
-            setTimeout(() => {
-                gaugeEl.style.transition = 'width 1s linear';
-                gaugeEl.style.width = '25%';
-            }, 50); // 50ms 딜레이 후 트랜지션 복구
+    function updateMessage() {
+        const currentMessage = stage === 0 ? getRandomUniqueMessage() : currentMessage;
+        
+        switch(stage) {
+         case 0: // 1초: 프로그레스 바 0% 초기화와 메시지 업데이트 동시에 진행
+                textEl.textContent = currentMessage; // 메시지 초기화
+                gaugeEl.style.transition = 'none'; // 트랜지션 제거 (초기화)
+                gaugeEl.style.width = '0%'; // 프로그레스 초기화
+                // 트랜지션 복구 (짧은 딜레이)
+                setTimeout(() => {
+                    gaugeEl.style.transition = 'width 1s linear';
+                    gaugeEl.style.width = '25%';
+                }, 50); // 50ms 딜레이 후 트랜지션 복구
                 break;
             case 1: // 2초: 25% 프로그레스 진행
                textEl.textContent = `${currentMessage}.`;
@@ -92,11 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
    }
    
    function immediateNextMessage() {
-       updateMessage();
-       setInterval(updateMessage, 1000);
-   }
+        updateMessage();
+        setInterval(updateMessage, 1000);
+    }
 
-   immediateNextMessage();
+    immediateNextMessage();
 }
 
    function triggerRandomGlitch() {
