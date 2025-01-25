@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeDisplay = document.getElementById('current-time');
     const countdownDisplay = document.getElementById('countdown-display');
     const textEl = document.querySelector('.status-text');
+    const gaugeEl = document.querySelector('.status-progress');
 
     const characters = [
         "고라니가 코딩을 준비하고 있습니다",
@@ -12,10 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
         "개능이 테트리스를 하고 있습니다"    
     ];
 
-    // 랜덤 메시지 추출 (이전에 동일한 메시지를 출력하지 않도록 개선)
+    // Improved random message selection
     let lastMessageIndex = -1;
-
-    function getRandomMessage() {
+    function getUniqueRandomMessage() {
         let newIndex;
         do {
             newIndex = Math.floor(Math.random() * characters.length);
@@ -26,50 +26,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animateMessage(message) {
         let dotCount = 0;
-        const messageEl = textEl;
         
         function updateMessage() {
-            messageEl.textContent = `${message}${'.'.repeat(dotCount)}`;
-            
+            textEl.textContent = `${message}${'.'.repeat(dotCount)}`;
             dotCount = (dotCount + 1) % 4;
         }
-
+        
         // Clear any existing intervals
-        if (messageEl.intervalId) {
-            clearInterval(messageEl.intervalId);
+        if (textEl.intervalId) {
+            clearInterval(textEl.intervalId);
         }
-
-        // Start new interval
-        messageEl.intervalId = setInterval(updateMessage, 1000);
+        
+        // Reset gauge
+        if (gaugeEl) {
+            gaugeEl.style.transition = 'none';
+            gaugeEl.style.width = '0%';
+            
+            // Force reflow
+            void gaugeEl.offsetWidth;
+            
+            gaugeEl.style.transition = 'width 6s linear';
+            gaugeEl.style.width = '100%';
+        }
+        
+        // Start message animation
+        textEl.intervalId = setInterval(updateMessage, 1000);
         
         // Stop animation after 6 seconds
         setTimeout(() => {
-            clearInterval(messageEl.intervalId);
-            messageEl.textContent = message;
+            clearInterval(textEl.intervalId);
+            textEl.textContent = message;
         }, 6000);
     }
 
     function updateStatus() {
-        const randomMessage = getRandomMessage();
+        const randomMessage = getUniqueRandomMessage();
         animateMessage(randomMessage);
-
-        const gaugeEl = document.querySelector('.status-progress');
-        if (!gaugeEl) return;
-
-        gaugeEl.style.transition = 'none';
-        gaugeEl.style.width = '0%';
-        
-        void gaugeEl.offsetWidth;
-        
-        gaugeEl.style.transition = 'width 5s linear';
-        gaugeEl.style.width = '100%';
     }
 
     function updateDateTime() {
         const now = new Date();
         const departureDate = new Date('2025-02-28T00:00:00');
         const diff = departureDate - now;
-
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
