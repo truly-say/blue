@@ -9,6 +9,8 @@
   --wave-color-1: rgba(0, 105, 148, 0.5);   /* Deep sea blue */
   --wave-color-2: rgba(0, 169, 204, 0.3);   /* Bright ocean blue */
   --wave-color-3: rgba(32, 178, 170, 0.2);  /* Turquoise */
+  --side-gradient-1: linear-gradient(135deg, rgba(0,169,204,0.1), rgba(0,105,148,0.3));
+  --side-gradient-2: linear-gradient(225deg, rgba(32,178,170,0.1), rgba(0,31,63,0.3));
 }
   
 * {
@@ -88,8 +90,34 @@ body {
   padding-top: 80px;
   min-height: 100vh;
   position: relative;
+  overflow: hidden;
   padding-bottom: 50px;
 }
+.container::before,
+.container::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  background: var(--side-gradient-1);
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  animation: subtle-drift 10s infinite alternate;
+}
+
+.container::before {
+  left: 0;
+  background: var(--side-gradient-1);
+}
+
+.container::after {
+  right: 0;
+  background: var(--side-gradient-2);
+}
+
+
 .hero-section, 
 .info-section {
   position: relative;
@@ -138,7 +166,8 @@ body, .status-text, #progress-text {
 .info-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+   transform: perspective(1000px) rotateX(2deg) rotateY(-1deg);
+  gap: 2.5rem;
   padding: 4rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -149,7 +178,9 @@ body, .status-text, #progress-text {
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: 
+    transform 0.4s ease, 
+    box-shadow 0.4s ease;
   text-decoration: none;
   color: white;
   text-align: center;
@@ -169,10 +200,22 @@ body, .status-text, #progress-text {
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.9);
 }
+.info-card:nth-child(odd) {
+  transform: translateX(-10px) rotate(-2deg);
+}
+
+.info-card:nth-child(even) {
+  transform: translateX(10px) rotate(2deg);
+}
 
 .info-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  transform: 
+    translateY(-10px) 
+    rotate(0deg) 
+    scale(1.03);
+  box-shadow: 
+    0 15px 30px rgba(0,0,0,0.3), 
+    0 0 40px rgba(74,255,255,0.2);
 }
 
 .countdown {
@@ -265,6 +308,11 @@ body, .status-text, #progress-text {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 100" preserveAspectRatio="none"><path fill="rgba(32,178,170,0.2)" d="M0 75 Q1600 50 3200 25 T6400 75 V100 H0z"/></svg>');
 }
 
+@keyframes subtle-drift {
+  from { opacity: 0.6; transform: translateX(-5px); }
+  to { opacity: 0.8; transform: translateX(5px); }
+}
+
 @keyframes wave {
   0% { transform: translateX(0); }
   100% { transform: translateX(-1600px); }
@@ -346,7 +394,11 @@ body, .status-text, #progress-text {
 
 
 @media screen and (max-width: 768px) {
-       .container {
+  .container::before,
+  .container::after {
+    width: 30px;
+  }
+  .container {
     padding: 10px;
   }
   .countdown-numbers {
