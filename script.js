@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gaugeEl = document.querySelector('.status-progress');
     const timeDisplay = document.querySelector('#current-datetime');
     const countdownDisplay = document.querySelector('#countdown');
+    const glitchTarget = document.querySelector('.intermittent-glitch');
 
     const characters = [
         "고라니가 코딩을 준비하고 있습니다",
@@ -65,6 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
    immediateNextMessage();
 }
 
+    function triggerRandomGlitch() {
+  if (Math.random() < 0.2) {  // 20% chance every 5 seconds
+    glitchTarget.classList.add('glitch-active');
+    setTimeout(() => {
+      glitchTarget.classList.remove('glitch-active');
+    }, 500);
+  }
+}
+    
     function updateDateTime() {
         const now = new Date();
         const departureDate = new Date('2025-02-28T00:00:00');
@@ -123,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Intervals
     setInterval(updateDateTime, 1000);
+    setInterval(triggerRandomGlitch, 5000);
 
     // Page restoration
     window.addEventListener('pageshow', (event) => {
