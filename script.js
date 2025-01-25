@@ -1,3 +1,4 @@
+ document.addEventListener('DOMContentLoaded', initializeIntermittentGlitch);
 document.addEventListener('DOMContentLoaded', () => {
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
@@ -117,35 +118,53 @@ const glitchOriginalDefaultText = '■■의 최종본';
 
    immediateNextMessage();
 }
-   function triggerRandomGlitchEffect() {
-    if (Math.random() < 0.5) return;
+   function initializeIntermittentGlitch() {
+            const intermittentGlitchElements = document.querySelectorAll('.intermittent-glitch');
+            
+            intermittentGlitchElements.forEach(element => {
+                const originalText = element.querySelector('.original-text');
+                const redLayer = element.querySelector('.red-layer');
+                const blueLayer = element.querySelector('.blue-layer');
+                const yellowLayer = element.querySelector('.yellow-layer');
+                const glitchContainer = element.querySelector('.glitch-container');
 
-    // 10% chance to change text
-    if (Math.random() < 0.1) {
-        const newText = glitchTexts[glitchTexts.indexOf(glitchOriginalDefaultText) === 0 ? 1 : 0];
-        glitchOriginalText.textContent = newText;
-        glitchRedLayer.textContent = newText;
-        glitchBlueLayer.textContent = newText;
-        glitchYellowLayer.textContent = newText;
+                const texts = [
+                    element.getAttribute('data-text') || originalText.textContent, 
+                    '청춘의 최종본'
+                ];
 
-        // Revert back to original text after glitch
-        setTimeout(() => {
-            glitchOriginalText.textContent = glitchOriginalDefaultText;
-            glitchRedLayer.textContent = glitchOriginalDefaultText;
-            glitchBlueLayer.textContent = glitchOriginalDefaultText;
-            glitchYellowLayer.textContent = glitchOriginalDefaultText;
-        }, 250);
-    }
+                function triggerRandomGlitch() {
+                    if (Math.random() < 0.5) return;
 
-    glitchContainer.classList.add('glitch-active-custom');
-    
-    setTimeout(() => {
-        glitchContainer.classList.remove('glitch-active-custom');
-    }, 250);
-}
+                    // 10% chance to change text
+                    if (Math.random() < 0.1) {
+                        const currentText = originalText.textContent;
+                        const newText = texts.find(text => text !== currentText);
+                        
+                        originalText.textContent = newText;
+                        redLayer.textContent = newText;
+                        blueLayer.textContent = newText;
+                        yellowLayer.textContent = newText;
 
-setInterval(triggerRandomGlitchEffect, 2000);
-    
+                        // Revert back to original text after glitch
+                        setTimeout(() => {
+                            originalText.textContent = texts[0];
+                            redLayer.textContent = texts[0];
+                            blueLayer.textContent = texts[0];
+                            yellowLayer.textContent = texts[0];
+                        }, 250);
+                    }
+
+                    glitchContainer.classList.add('glitch-active');
+                    
+                    setTimeout(() => {
+                        glitchContainer.classList.remove('glitch-active');
+                    }, 250);
+                }
+
+                setInterval(triggerRandomGlitch, 2000);
+            });
+        }
     function updateDateTime() {
         const now = new Date();
         const departureDate = new Date('2025-02-28T00:00:00');
