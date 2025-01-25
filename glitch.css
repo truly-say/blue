@@ -118,39 +118,58 @@
   }
 }
 
-.intermittent-glitch {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
+.glitch-container-custom {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: bold;
 }
-
-.intermittent-glitch::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  pointer-events: none;
+.original-text-custom {
+    position: relative;
+    z-index: 3;
+    color: white;
 }
-
-.intermittent-glitch.glitch-active::before {
-  animation: text-glitch 0.5s;
-  opacity: 1;
+.color-layer-custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0.7;
+    z-index: 1;
 }
-
-@keyframes rare-morph {
-  0% { content: '■■의 최종본'; opacity: 1; }
-  50% { content: '청춘의 최종본'; opacity: 1; }
-  100% { content: '■■의 최종본'; opacity: 1; }
+.red-layer-custom { color: rgba(255,0,0,0.8); }
+.blue-layer-custom { color: rgba(0,0,255,0.8); }
+.yellow-layer-custom { color: rgba(255,255,0,0.8); }
+@keyframes print-glitch-custom {
+    0%, 100% { 
+        transform: translate(0) rotate(0deg);
+        opacity: 0;
+    }
+    25% { 
+        transform: translate(-5px, 4px) rotate(-2deg);
+        opacity: 0.9;
+    }
+    50% { 
+        transform: translate(5px, -4px) rotate(2deg);
+        opacity: 0.7;
+    }
+    75% { 
+        transform: translate(-4px, 5px) rotate(1deg);
+        opacity: 0.5;
+    }
 }
-
-.intermittent-glitch.text-morph::before {
-  animation: 
-    text-glitch 0.5s,
-    rare-morph 0.5s step-end;
+.glitch-active-custom .red-layer-custom { 
+    animation: print-glitch-custom 0.25s;
+    transform: translate(-5px, 4px) rotate(-2deg);
 }
-
+.glitch-active-custom .blue-layer-custom { 
+    animation: print-glitch-custom 0.25s;
+    transform: translate(5px, -4px) rotate(2deg);
+}
+.glitch-active-custom .yellow-layer-custom { 
+    animation: print-glitch-custom 0.25s;
+    transform: translate(-4px, 5px) rotate(1deg);
+}
 .info-card.glitch-active:hover {
   animation: glitch-shake 0.5s ease-in-out, glitch-color 0.5s ease-in-out;
 }
