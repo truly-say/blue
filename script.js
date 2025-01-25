@@ -45,78 +45,71 @@ document.addEventListener('DOMContentLoaded', () => {
     return randomMessage;
 }
 
-    
-    function animateMessage() {
+  function animateMessage() {
     let currentMessageIndex = 0;
     let stage = 0;
-    let usedMessages = []; // Move this inside animateMessage to ensure it's defined
+    let usedMessages = [];
+    let currentMessage = ''; // Declare currentMessage outside the function
     
     function getRandomUniqueMessage() {
-        // If all messages have been used, reset the used messages array
         if (usedMessages.length === characters.length) {
             usedMessages = [];
         }
 
-        // Find a message that hasn't been used yet
         let randomMessage;
         do {
             randomMessage = characters[Math.floor(Math.random() * characters.length)];
         } while (usedMessages.includes(randomMessage));
 
-        // Add the selected message to used messages
         usedMessages.push(randomMessage);
-
         return randomMessage;
     }
     
     function updateMessage() {
-        const currentMessage = stage === 0 ? getRandomUniqueMessage() : currentMessage;
+        // Update currentMessage at the start of each cycle
+        if (stage === 0) {
+            currentMessage = getRandomUniqueMessage();
+        }
         
         switch(stage) {
-         case 0: // 1초: 프로그레스 바 0% 초기화와 메시지 업데이트 동시에 진행
-                textEl.textContent = currentMessage; // 메시지 초기화
-                gaugeEl.style.transition = 'none'; // 트랜지션 제거 (초기화)
-                gaugeEl.style.width = '0%'; // 프로그레스 초기화
-                // 트랜지션 복구 (짧은 딜레이)
+            case 0:
+                textEl.textContent = currentMessage;
+                gaugeEl.style.transition = 'none';
+                gaugeEl.style.width = '0%';
                 setTimeout(() => {
                     gaugeEl.style.transition = 'width 1s linear';
                     gaugeEl.style.width = '25%';
-                }, 50); // 50ms 딜레이 후 트랜지션 복구
+                }, 50);
                 break;
-            case 1: // 2초: 25% 프로그레스 진행
+            case 1:
                textEl.textContent = `${currentMessage}.`;
                 gaugeEl.style.width = '50%';
                 break;
-
-            case 2: // 3초: 메시지에 "." 추가
+            case 2:
                 textEl.textContent = `${currentMessage}..`;
                 gaugeEl.style.width = '75%';
                 break;
-
-            case 3: // 4초: 메시지에 ".." 추가
+            case 3:
                 textEl.textContent = `${currentMessage}...`;
                 gaugeEl.style.width = '100%';
                 break;
-
-            case 4: // 5초: 메시지에 "..." 추가
+            case 4:
                 break;
-
-            case 5: // 6초: 메시지와 프로그레스 바 초기화
-                currentMessageIndex = (currentMessageIndex + 1) % characters.length; // 다음 메시지로 이동
-                stage = -1; // 스테이지 리셋
+            case 5:
+                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+                stage = -1;
                 break;
        }
        stage++;
    }
    
    function immediateNextMessage() {
-        updateMessage();
-        setInterval(updateMessage, 1000);
-    }
+       updateMessage();
+       setInterval(updateMessage, 1000);
+   }
 
-    immediateNextMessage();
+   immediateNextMessage();
 }
-
    function triggerRandomGlitch() {
   if (Math.random() < 0.2) {  // 20% chance every 5 seconds
     glitchTarget.classList.add('glitch-active');
