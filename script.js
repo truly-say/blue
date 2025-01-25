@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
+    const timeDisplay = document.querySelector('.time-display');
+    const countdownDisplay = document.querySelector('.countdown-display');
 
     const characters = [
         "고라니가 코딩을 준비하고 있습니다",
@@ -17,30 +19,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function updateMessage() {
             const currentMessage = characters[currentMessageIndex];
-
             switch(stage) {
-                case 0: // 1초: 초기 상태, 0%
-                    textEl.textContent = currentMessage;
-                    gaugeEl.style.transition = 'width 1s linear';
-                    gaugeEl.style.width = '0%';
-                    break;
-                case 1: // 2초: 25%, .
+                case 0: // Immediately go to 25%
                     textEl.textContent = `${currentMessage}.`;
+                    gaugeEl.style.transition = 'width 1s linear';
                     gaugeEl.style.width = '25%';
                     break;
-                case 2: // 3초: 50%, ..
+                case 1: // 50%
                     textEl.textContent = `${currentMessage}..`;
                     gaugeEl.style.width = '50%';
                     break;
-                case 3: // 4초: 75%, ...
+                case 2: // 75%
                     textEl.textContent = `${currentMessage}...`;
                     gaugeEl.style.width = '75%';
                     break;
-                case 4: // 5초: 100%, ... 유지
+                case 3: // 100%
                     textEl.textContent = `${currentMessage}...`;
                     gaugeEl.style.width = '100%';
                     break;
-                case 5: // 6초: 다음 메시지로 초기화
+                case 4: // Next message
                     currentMessageIndex = (currentMessageIndex + 1) % characters.length;
                     textEl.textContent = characters[currentMessageIndex];
                     gaugeEl.style.transition = 'none';
@@ -48,67 +45,63 @@ document.addEventListener('DOMContentLoaded', () => {
                     stage = -1;
                     break;
             }
-
             stage++;
         }
 
+        // Start immediately without waiting
         updateMessage();
         setInterval(updateMessage, 1000);
     }
 
+    function updateDateTime() {
+        const now = new Date();
+        const departureDate = new Date('2025-02-28T00:00:00');
+        const diff = departureDate - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        if (timeDisplay) {
+            timeDisplay.textContent = new Intl.DateTimeFormat('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(now);
+        }
+
+        if (countdownDisplay) {
+            countdownDisplay.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+    }
+
+    // Initial calls
+    updateDateTime();
     animateMessage();
-});
 
-function updateDateTime() {
-    const now = new Date();
-    const departureDate = new Date('2025-02-28T00:00:00');
-    const diff = departureDate - now;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    // Intervals
+    setInterval(updateDateTime, 1000);
 
-    if (timeDisplay) {
-        timeDisplay.textContent = new Intl.DateTimeFormat('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        }).format(now);
-    }
-
-    if (countdownDisplay) {
-        countdownDisplay.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-}
-
-// Initial calls
-updateDateTime();
-animateMessage();
-
-// Intervals
-setInterval(updateDateTime, 1000);
-
-// Page transition effect
-const infoCards = document.querySelectorAll('.info-card');
-if (infoCards) {
-    infoCards.forEach((card) => {
-        card.addEventListener('click', (e) => {
-            const page = card.getAttribute('data-page');
-            document.body.style.transition = 'opacity 0.5s ease';
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                window.location.href = `${page}.html`;
-            }, 500);
+    // Page transition effect
+    const infoCards = document.querySelectorAll('.info-card');
+    if (infoCards) {
+        infoCards.forEach((card) => {
+            card.addEventListener('click', (e) => {
+                const page = card.getAttribute('data-page');
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    window.location.href = `${page}.html`;
+                }, 500);
+            });
         });
+    }
+
+    // Page restoration
+    window.addEventListener('pageshow', (event) => {
+        document.body.style.opacity = '1';
     });
-}
-
-window.requestAnimationFrame(animateMessage);
-
-// Page restoration
-window.addEventListener('pageshow', (event) => {
-    document.body.style.opacity = '1';
 });
