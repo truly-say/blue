@@ -13,17 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "개능이 테트리스를 하고 있습니다"    
     ];
 
-    // Improved random message selection
-    let lastMessageIndex = -1;
-    function getUniqueRandomMessage() {
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * characters.length);
-        } while (newIndex === lastMessageIndex);
-        lastMessageIndex = newIndex;
-        return characters[newIndex];
-    }
-
     function animateMessage() {
         let currentMessageIndex = 0;
         let dotCount = 0;
@@ -37,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 dotCount = 0;
                 currentMessageIndex = (currentMessageIndex + 1) % characters.length;
                 
-                // Reset gauge when message changes
                 if (gaugeEl) {
                     gaugeEl.style.transition = 'none';
                     gaugeEl.style.width = '0%';
@@ -47,18 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        // Initial call
-    animateMessage();
-    
-    // Repeat every 24 seconds (6 seconds * 4 messages)
-    setInterval(animateMessage, 24000);
         
-        // Clear any existing intervals
         if (textEl.intervalId) {
             clearInterval(textEl.intervalId);
         }
         
-        // Start new interval
         textEl.intervalId = setInterval(updateMessage, 1000);
     }
 
@@ -83,12 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initial calls and intervals
+    // Initial calls
     updateDateTime();
-    updateStatus();
+    animateMessage();
+    
+    // Intervals
     setInterval(updateDateTime, 1000);
-    setInterval(updateStatus, 6000);
-
+    
     // Page transition effect
     const infoCards = document.querySelectorAll('.info-card');
     if (infoCards) {
