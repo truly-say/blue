@@ -24,12 +24,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return characters[newIndex];
     }
 
-    function animateMessage(message) {
+    function animateMessage() {
+        let currentMessageIndex = 0;
         let dotCount = 0;
         
         function updateMessage() {
-            textEl.textContent = `${message}${'.'.repeat(dotCount)}`;
-            dotCount = (dotCount + 1) % 4;
+            const currentMessage = characters[currentMessageIndex];
+            textEl.textContent = `${currentMessage}${'.'.repeat(dotCount)}`;
+            
+            dotCount++;
+            if (dotCount > 3) {
+                dotCount = 0;
+                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+                
+                // Reset gauge when message changes
+                if (gaugeEl) {
+                    gaugeEl.style.transition = 'none';
+                    gaugeEl.style.width = '0%';
+                    void gaugeEl.offsetWidth;
+                    gaugeEl.style.transition = 'width 6s linear';
+                    gaugeEl.style.width = '100%';
+                }
+            }
         }
         
         // Clear any existing intervals
@@ -37,27 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(textEl.intervalId);
         }
         
-        // Reset gauge
-        if (gaugeEl) {
-            gaugeEl.style.transition = 'none';
-            gaugeEl.style.width = '0%';
-            
-            // Force reflow
-            void gaugeEl.offsetWidth;
-            
-            gaugeEl.style.transition = 'width 6s linear';
-            gaugeEl.style.width = '100%';
-        }
-        
-        // Start message animation
+        // Start new interval
         textEl.intervalId = setInterval(updateMessage, 1000);
-        
-        // Stop animation after 6 seconds
-        setTimeout(() => {
-            clearInterval(textEl.intervalId);
-            textEl.textContent = message;
-        }, 6000);
     }
+
+    // Initial call
+    animateMessage();
+    
+    // Repeat every 24 seconds (6 seconds * 4 messages)
+    setInterval(animateMessage, 24000);
+});
 
     function updateStatus() {
         const randomMessage = getUniqueRandomMessage();
