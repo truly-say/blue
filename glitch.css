@@ -10,6 +10,10 @@
   clip: rect(0, 900px, 0, 0);
   animation: glitch-anim 3s infinite linear alternate-reverse;
 }
+@keyframes fade-glitch {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+}
 
 @keyframes glitch-anim {
   0% { clip: rect(47px, 9999px, 54px, 0); }
