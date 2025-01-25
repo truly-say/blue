@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
                break;
            case 5: // 6초 0%, (메세지2)
                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+               gaugeEl.style.transition = 'none';
+               gaugeEl.style.width = '0%';
                stage = -1; // 즉시 1초 상태로 리셋
                break;
        }
