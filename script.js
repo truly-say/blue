@@ -16,29 +16,38 @@ document.addEventListener('DOMContentLoaded', () => {
      function animateMessage() {
         let currentMessageIndex = 0;
         let dotCount = 0;
+        let stage = 0;
         
         function updateMessage() {
             const currentMessage = characters[currentMessageIndex];
-            textEl.textContent = `${currentMessage}${'.'.repeat(Math.min(dotCount, 3))}`;
             
-            dotCount++;
-            if (dotCount > 4) {
-                dotCount = 0;
-                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+            if (stage < 4) {
+                // 0-3초: 메시지와 점 추가, 프로그레스 채우기
+                textEl.textContent = `${currentMessage}${'.'.repeat(Math.min(dotCount, 3))}`;
+                dotCount++;
                 
-                // Immediate gauge reset
                 if (gaugeEl) {
-                    requestAnimationFrame(() => {
-                        gaugeEl.style.transition = 'none';
-                        gaugeEl.style.width = '0%';
-                        
-                        requestAnimationFrame(() => {
-                            gaugeEl.style.transition = 'width 5s linear';
-                            gaugeEl.style.width = '100%';
-                        });
-                    });
+                    gaugeEl.style.width = `${(stage + 1) * 25}%`;
+                }
+            } else if (stage === 4) {
+                // 4초: 대기 상태, 프로그레스 100%로 유지
+                textEl.textContent = `${currentMessage}...`;
+                if (gaugeEl) {
+                    gaugeEl.style.width = '100%';
+                }
+            } else {
+                // 5초: 다음 메시지로 변경, 프로그레스 초기화
+                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+                dotCount = 0;
+                stage = -1; // 다음 루프에서 0부터 시작
+                
+                if (gaugeEl) {
+                    gaugeEl.style.transition = 'none';
+                    gaugeEl.style.width = '0%';
                 }
             }
+            
+            stage++;
         }
         
         updateMessage(); // Immediate first call
