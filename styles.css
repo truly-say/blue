@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&family=Montserrat:wght@600&display=swap');
+
 :root { 
   --text-glitch: 0px;
   --danger-level: 0;
+  --primary-font: 'Noto Sans KR', sans-serif;
+  --accent-font: 'Montserrat', sans-serif;
 }
   
 * {
@@ -12,7 +16,9 @@
 
 body {
   margin: 0;
-  font-family: 'Noto Sans KR', 'Montserrat', sans-serif;
+  font-family: var(--primary-font);
+  font-weight: 700;
+  line-height: 1.4;
   background: linear-gradient(to bottom, #001f3f, #000810);
   color: white;
   min-height: 100vh;
@@ -161,10 +167,10 @@ body, .status-text, #progress-text {
 }
 
 .countdown-numbers {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--accent-font);
   font-size: 2rem;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: -1px;
   background: linear-gradient(45deg, #00b0ff, #0081cb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -175,6 +181,7 @@ body, .status-text, #progress-text {
     align-items: center;
     justify-content: center;
     margin: 2rem 0;
+ `  margin-top: -20px; 
     font-family: 'Roboto Mono', monospace;
   }
 
@@ -184,42 +191,56 @@ body, .status-text, #progress-text {
     letter-spacing: 0.5rem;
     text-align: center;
   }
+.status-gauge {
+  width: 100%;
+  max-width: 300px;
+  height: 5px;
+  background-color: rgba(255,255,255,0.2);
+}
+
+.status-progress {
+  height: 100%;
+  background-color: #4affff;
+}
+
 .waves {
   position: fixed;
-  bottom: -10%; /* Move waves further down */
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 60%; /* Increase height */
+  height: 100px;
   overflow: hidden;
-  z-index: -1;
 }
 
 .wave {
   position: absolute;
   bottom: 0;
-  width: 300%;
-  height: 100%;
-  background: rgba(52, 152, 219, 0.1);
-  border-radius: 45% 55% 0 0 / 20% 20% 0 0;
+  left: 0;
+  width: 6400px;
+  height: 100px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 100" preserveAspectRatio="none"><path fill="%23ffffff" d="M0 25 Q1600 75 3200 25 T6400 50 V100 H0z" opacity="0.3"/></svg>');
+  background-size: 1600px 100px;
+  animation: wave 10s linear infinite;
   transform-origin: center bottom;
 }
 
-.wave:nth-child(1) {
-  opacity: 0.3;
-  animation: wave-undulate 50s ease-in-out infinite;
-  background: rgba(52, 152, 219, 0.05);
-}
-
 .wave:nth-child(2) {
-  opacity: 0.5;
-  animation: wave-undulate 45s ease-in-out infinite;
-  background: rgba(52, 152, 219, 0.1);
+  bottom: 10px;
+  animation: wave 12s linear infinite;
+  opacity: 0.75;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 100" preserveAspectRatio="none"><path fill="%23ffffff" d="M0 50 Q1600 25 3200 75 T6400 25 V100 H0z" opacity="0.2"/></svg>');
 }
 
 .wave:nth-child(3) {
-  opacity: 0.7;
-  animation: wave-undulate 40s ease-in-out infinite;
-  background: rgba(52, 152, 219, 0.15);
+  bottom: 20px;
+  animation: wave 15s linear infinite;
+  opacity: 0.5;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 100" preserveAspectRatio="none"><path fill="%23ffffff" d="M0 75 Q1600 50 3200 25 T6400 75 V100 H0z" opacity="0.1"/></svg>');
+}
+
+@keyframes wave {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-1600px); }
 }
 
 @keyframes wave-undulate {
@@ -379,9 +400,15 @@ body, .status-text, #progress-text {
 
 
 @media screen and (max-width: 768px) {
-      .container {
-        padding-top: 60px;
-      }
+       .container {
+    padding: 10px;
+  }
+  .countdown-numbers {
+    font-size: 1.5rem;
+  }
+   .waves {
+    height: 50px;
+  }
       h1 {
         font-size: 2.5rem;
       }
