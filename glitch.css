@@ -112,15 +112,16 @@
 @keyframes text-glitch {
   0%, 100% { transform: none; opacity: 1; }
   50% { 
-    transform: translate(-3px, 2px) scale(1.02); 
-    opacity: 0.8;
-    text-shadow: 2px 0 red, -2px 0 blue;
+    transform: translate(-10px, 6px) scale(1.03); 
+    opacity: 0.9;
+    text-shadow: 3px 0 red, -3px 0 blue;
   }
 }
 
 .intermittent-glitch {
   position: relative;
   display: inline-block;
+  overflow: hidden;
 }
 
 .intermittent-glitch::before {
@@ -139,11 +140,12 @@
 }
 
 @keyframes rare-morph {
-  0%, 99% { content: '■■의 최종본'; }
-  1% { content: '청춘의 최종본'; }
+  0% { content: '■■의 최종본'; opacity: 1; }
+  50% { content: '청춘의 최종본'; opacity: 1; }
+  100% { content: '■■의 최종본'; opacity: 1; }
 }
 
-.intermittent-glitch.glitch-active::before {
+.intermittent-glitch.text-morph::before {
   animation: 
     text-glitch 0.5s,
     rare-morph 0.5s step-end;
