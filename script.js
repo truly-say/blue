@@ -14,44 +14,48 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     function animateMessage() {
-    let currentMessageIndex = 0;
-    let stage = 0;
-    function updateMessage() {
-        const currentMessage = characters[currentMessageIndex];
-        switch(stage) {
-            case 0: // 1초 0%, (메세지1)
-                textEl.textContent = currentMessage;
-                gaugeEl.style.transition = 'width 1s linear';
-                gaugeEl.style.width = '0%';
-                break;
-            case 1: // 2초 25%, (메세지1).
-                textEl.textContent = `${currentMessage}.`;
-                gaugeEl.style.width = '25%';
-                break;
-            case 2: // 3초 50%, (메세지1)..
-                textEl.textContent = `${currentMessage}..`;
-                gaugeEl.style.width = '50%';
-                break;
-            case 3: // 4초 75%, (메세지1)...
-                textEl.textContent = `${currentMessage}...`;
-                gaugeEl.style.width = '75%';
-                break;
-            case 4: // 5초 100%, (메세지1)...
-                textEl.textContent = `${currentMessage}...`;
-                gaugeEl.style.width = '100%';
-                break;
-            case 5: // 6초 0%, (메세지2) [즉시 루프]
-                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
-                textEl.textContent = characters[currentMessageIndex];
-                gaugeEl.style.transition = 'none';
-                gaugeEl.style.width = '0%';
-                stage = -1; // Reset to start immediately
-                break;
-        }
-        stage++;
-    }
-    updateMessage();
-    setInterval(updateMessage, 1000);
+   let currentMessageIndex = 0;
+   let stage = 0;
+   function updateMessage() {
+       const currentMessage = characters[currentMessageIndex];
+       switch(stage) {
+           case 0: // 1초 0%, (메세지1)
+               textEl.textContent = currentMessage;
+               gaugeEl.style.transition = 'width 1s linear';
+               gaugeEl.style.width = '0%';
+               break;
+           case 1: // 2초 25%, 변화 없음
+               gaugeEl.style.width = '25%';
+               break;
+           case 2: // 3초 50%, (메세지1).
+               textEl.textContent = `${currentMessage}.`;
+               gaugeEl.style.width = '50%';
+               break;
+           case 3: // 4초 75%, (메세지1)..
+               textEl.textContent = `${currentMessage}..`;
+               gaugeEl.style.width = '75%';
+               break;
+           case 4: // 5초 100%, (메세지1)...
+               textEl.textContent = `${currentMessage}...`;
+               gaugeEl.style.width = '100%';
+               break;
+           case 5: // 6초 0%, (메세지2)
+               currentMessageIndex = (currentMessageIndex + 1) % characters.length;
+               textEl.textContent = characters[currentMessageIndex];
+               gaugeEl.style.transition = 'none';
+               gaugeEl.style.width = '0%';
+               stage = -1;
+               break;
+       }
+       stage++;
+   }
+   
+   function immediateNextMessage() {
+       updateMessage();
+       setInterval(updateMessage, 1000);
+   }
+
+   immediateNextMessage();
 }
 
     function updateDateTime() {
