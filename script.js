@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
                gaugeEl.style.transition = 'none';
                gaugeEl.style.width = '0%';
-               stage = -1; // 즉시 1초 상태로 리셋
                break;
        }
        stage++;
