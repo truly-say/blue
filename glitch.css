@@ -14,7 +14,7 @@
   0% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
   100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
 }
-
+ 
 @keyframes glitch-anim {
   0% { clip: rect(47px, 9999px, 54px, 0); }
   5% { clip: rect(29px, 9999px, 84px, 0); }
