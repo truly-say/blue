@@ -41,8 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         textEl.intervalId = setInterval(updateMessage, 1000);
     }
 
-    animateMessage();
-});
 
     function updateDateTime() {
         const now = new Date();
