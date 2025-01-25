@@ -1,46 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const timeDisplay = document.getElementById('current-time');
-    const countdownDisplay = document.getElementById('countdown-display');
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
 
-     function animateMessage() {
+    const characters = [
+        "고라니가 코딩을 준비하고 있습니다",
+        "고라니가 절망을 하고 있습니다",
+        "고라니가 정신머리를 챙기고 있습니다",
+        "개능이 고라니를 보고 있습니다",
+        "개능이 감자를 키우고 있습니다",
+        "개능이 테트리스를 하고 있습니다"    
+    ];
+
+    function animateMessage() {
         let currentMessageIndex = 0;
-        let dotCount = 0;
         let stage = 0;
-        
+
         function updateMessage() {
             const currentMessage = characters[currentMessageIndex];
-            
+
             if (stage < 4) {
-                textEl.textContent = `${currentMessage}${'.'.repeat(Math.min(dotCount, 3))}`;
-                dotCount++;
-                
-                if (gaugeEl) {
-                    gaugeEl.style.width = `${(stage + 1) * 25}%`;
-                }
+                textEl.textContent = `${currentMessage}${'.'.repeat(stage + 1)}`;
+                gaugeEl.style.width = `${(stage + 1) * 25}%`;
             } else if (stage === 4) {
                 textEl.textContent = `${currentMessage}...`;
-                if (gaugeEl) {
-                    gaugeEl.style.width = '100%';
-                }
+                gaugeEl.style.width = '100%';
             } else {
                 currentMessageIndex = (currentMessageIndex + 1) % characters.length;
-                dotCount = 0;
-                
-                if (gaugeEl) {
-                    gaugeEl.style.width = '0%';
-                }
+                gaugeEl.style.width = '0%';
+                textEl.textContent = characters[currentMessageIndex];
+                stage = -1;
             }
-            
+
             stage++;
-            if (stage > 4) stage = 0;
         }
-        
+
         updateMessage();
-        textEl.intervalId = setInterval(updateMessage, 1000);
+        setInterval(updateMessage, 1000);
     }
 
+    animateMessage();
+});
 
     function updateDateTime() {
         const now = new Date();
