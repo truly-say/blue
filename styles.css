@@ -1,17 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@300;400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&family=Montserrat:wght@600&display=swap');
 @import url('glitch.css');
 
-: root {
-    --text - glitch: 0 px;
-    --danger - level: 0;
-    --primary - font: 'Noto Sans KR', sans - serif;
-    --accent - font: 'Montserrat', sans - serif;
-    --wave - color - 1: rgba(0, 105, 148, 0.5); /* Deep sea blue */
-    --wave - color - 2: rgba(0, 169, 204, 0.3); /* Bright ocean blue */
-    --wave - color - 3: rgba(32, 178, 170, 0.2); /* Turquoise */
+:root {
+    --text-glitch: 0px;
+    --danger-level: 0;
+    --primary-font: 'Noto Sans KR', sans-serif;
+    --accent-font: 'Montserrat', sans-serif;
+    --wave-color-1: rgba(0, 105, 148, 0.5); /* Deep sea blue */
+    --wave-color-2: rgba(0, 169, 204, 0.3); /* Bright ocean blue */
+    --wave-color-3: rgba(32, 178, 170, 0.2); /* Turquoise */
 }
-
 *{
     margin: 0;
     padding: 0;
