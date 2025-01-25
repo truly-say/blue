@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     gaugeEl.style.transition = 'width 1s linear';
                     stage = -1; // stage 리셋
-                }, 50); // 
+                }, 500); // 
 
                 break;
        }
