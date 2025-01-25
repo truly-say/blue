@@ -2,64 +2,64 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&family=Montserrat:wght@600&display=swap');
 @import url('glitch.css');
 
-:root { 
-  --text-glitch: 0px;
-  --danger-level: 0;
-  --primary-font: 'Noto Sans KR', sans-serif;
-  --accent-font: 'Montserrat', sans-serif;
-  --wave-color-1: rgba(0, 105, 148, 0.5);   /* Deep sea blue */
-  --wave-color-2: rgba(0, 169, 204, 0.3);   /* Bright ocean blue */
-  --wave-color-3: rgba(32, 178, 170, 0.2);  /* Turquoise */
+: root {
+    --text - glitch: 0 px;
+    --danger - level: 0;
+    --primary - font: 'Noto Sans KR', sans - serif;
+    --accent - font: 'Montserrat', sans - serif;
+    --wave - color - 1: rgba(0, 105, 148, 0.5); /* Deep sea blue */
+    --wave - color - 2: rgba(0, 169, 204, 0.3); /* Bright ocean blue */
+    --wave - color - 3: rgba(32, 178, 170, 0.2); /* Turquoise */
 }
-  
-* {
-  margin: 0; 
-  padding: 0;
-  box-sizing: border-box;
+
+*{
+    margin: 0;
+    padding: 0;
+    box - sizing: border - box;
 }
 
 body {
-  margin: 0;
-  font-family: var(--primary-font);
-  font-weight: 700;
-  line-height: 1.4;
-  background: linear-gradient(to bottom, #001f3f, #000810);
-  color: white;
-  min-height: 100vh;
-  overflow: auto !important;
-  height: auto;
+    margin: 0;
+    font - family: var (--primary - font);
+    font - weight: 700;
+    line - height: 1.4;
+    background: linear - gradient(to bottom, #001f3f, # 000810);
+    color: white;
+    min - height: 100 vh;
+    overflow: auto!important;
+    height: auto;
 }
-.school-image-overlay {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 200px;
-  opacity: 0.3;
-  z-index: 1;
-  pointer-events: none;
-  filter: grayscale(100%) contrast(150%) brightness(50%);
-  animation: subtle-distortion 10s infinite alternate;
-}
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 1rem 2rem;
-  background: rgba(0, 15, 31, 0.9);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
+.school - image - overlay {
+        position: absolute;
+        top: 20 % ;
+        left: 50 % ;
+        transform: translate(-50 % , -50 % );
+        width: 80 % ;
+        max - width: 200 px;
+        opacity: 0.3;
+        z - index: 1;
+        pointer - events: none;
+        filter: grayscale(100 % ) contrast(150 % ) brightness(50 % );
+        animation: subtle - distortion 10 s infinite alternate;
+    }
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100 % ;
+        padding: 1 rem 2 rem;
+        background: rgba(0, 15, 31, 0.9);
+        backdrop - filter: blur(10 px);
+        z - index: 1000;
+        display: flex;
+        justify - content: space - between;
+        align - items: center;
+        border - bottom: 1 px solid rgba(255, 255, 255, 0.1);
+    }
 
-.nav-logo {
-  position: relative;
-  text-decoration: none;
-  color: #4affff;
+    .nav - logo {
+        position: relative;
+        text - decoration: none;
+        color: #4affff;
   transition: transform 0.3s ease, color 0.3s ease;
   display: inline-block;
 }
@@ -71,144 +71,145 @@ body {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: #4affff;
-  transition: width 0.3s ease;
-}
+  background-color: # 4 affff;
+        transition: width 0.3 s ease;
+    }
 
-.nav-logo:hover {
-  transform: scale(1.05);
-  color: #ffffff;
-}
+    .nav - logo: hover {
+        transform: scale(1.05);
+        color: #ffffff;
+    }
 
-.nav-logo:hover::before {
-  width: 100%;
-}
+    .nav - logo: hover::before {
+        width: 100 % ;
+    }
 
 
-.container {
-  padding-top: 80px;
-  min-height: 100vh;
-  position: relative;
-  padding-bottom: 50px;
-}
-.hero-section, 
-.info-section {
-  position: relative;
-  z-index: 10;
-}
+    .container {
+        padding - top: 80 px;
+        min - height: 100 vh;
+        position: relative;
+        padding - bottom: 50 px;
+    }
+    .hero - section,
+    .info - section {
+        position: relative;
+        z - index: 10;
+    }
 
-.hero-section {
-  text-align: center;
-  padding: 4rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    .hero - section {
+        text - align: center;
+        padding: 4 rem 2 rem;
+        display: flex;
+        flex - direction: column;
+        align - items: center;
+    }
 
-.school-name {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 300;
-  letter-spacing: 2px;
-}
+    .school - name {
+        font - size: 1.2 rem;
+        margin - bottom: 1 rem;
+        color: rgba(255, 255, 255, 0.9);
+        font - weight: 300;
+        letter - spacing: 2 px;
+    }
 
 h1 {
-  font-size: 4rem;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: #fff;
-  margin-bottom: 1rem;
-  font-weight: 600;
+    font - size: 4 rem;
+    letter - spacing: 6 px;
+    text - transform: uppercase;
+    color: #fff;
+    margin - bottom: 1 rem;
+    font - weight: 600;
 }
 
 .subtitle {
-  font-size: 1.3rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 2rem;
-  font-weight: 300;
+    font - size: 1.3 rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin - bottom: 2 rem;
+    font - weight: 300;
 }
-body, .status-text, #progress-text {
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
-#progress-text {
-    font-family: monospace;
-  margin-top: 10px;
-}
-.info-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+body, .status - text, #progress - text {
+    font - family: 'Noto Sans KR', sans - serif;
 }
 
-.info-card {
-  background: rgba(0, 31, 63, 0.8);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-decoration: none;
-  color: white;
-  text-align: center;
-   z-index: 2;
+#progress - text {
+        font - family: monospace;
+        margin - top: 10 px;
+    }
+    .info - section {
+        display: grid;
+        grid - template - columns: repeat(auto - fit, minmax(300 px, 1 fr));
+        gap: 2 rem;
+        padding: 4 rem 2 rem;
+        max - width: 1200 px;
+        margin: 0 auto;
+    }
 
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
+    .info - card {
+        background: rgba(0, 31, 63, 0.8);
+        padding: 2 rem;
+        border - radius: 12 px;
+        box - shadow: 0 8 px 16 px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3 s ease,
+        box - shadow 0.3 s ease;
+        text - decoration: none;
+        color: white;
+        text - align: center;
+        z - index: 2;
 
-.info-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
+        cursor: pointer; -
+        webkit - tap - highlight - color: transparent;
+        touch - action: manipulation;
+    }
 
-.info-card p {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-}
+    .info - card h3 {
+        font - size: 1.5 rem;
+        margin - bottom: 0.5 rem;
+    }
 
-.info-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-}
+    .info - card p {
+        font - size: 1 rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
 
-.countdown {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-  color: rgba(255, 255, 255, 0.8);
-}
+    .info - card: hover {
+        transform: translateY(-5 px);
+        box - shadow: 0 12 px 24 px rgba(0, 0, 0, 0.3);
+    }
 
-.countdown-label {
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 0.5rem;
-  opacity: 0.7;
-}
+    .countdown {
+        display: flex;
+        flex - direction: column;
+        align - items: center;
+        margin - top: 2 rem;
+        color: rgba(255, 255, 255, 0.8);
+    }
 
-.countdown-numbers {
-  font-family: var(--accent-font);
-  font-size: 4rem;
-  font-weight: 600;
-  letter-spacing: -2px;
-  background: linear-gradient(45deg, #00b0ff, #0081cb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-align: center;
-}
-.system-status {
-    display: flex;
-     flex-direction: column;
-      align-items: center;
-    justify-content: center;
-    margin: 2rem 0;
- `  margin-top: -10px;
+    .countdown - label {
+        font - size: 1 rem;
+        text - transform: uppercase;
+        letter - spacing: 2 px;
+        margin - bottom: 0.5 rem;
+        opacity: 0.7;
+    }
+
+    .countdown - numbers {
+        font - family: var (--accent - font);
+        font - size: 4 rem;
+        font - weight: 600;
+        letter - spacing: -2 px;
+        background: linear - gradient(45 deg, #00b0ff, # 0081 cb); -
+        webkit - background - clip: text; -
+        webkit - text - fill - color: transparent;
+        text - align: center;
+    }
+    .system - status {
+        display: flex;
+        flex - direction: column;
+        align - items: center;
+        justify - content: center;
+        margin: 2 rem 0;
+        `  margin-top: -10px;
     font-family: 'Roboto Mono', monospace;
   }
 
