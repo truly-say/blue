@@ -3,97 +3,93 @@
 <head>   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Lam - Final Message</title>
+  <title>Blue Lam</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
+  <link rel="stylesheet" href="status-page-custom.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-  <style>
-    .message-container {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: rgba(0, 31, 63, 0.8);
-      position: relative;
-      overflow: hidden;
-    }
-    .terminal-screen {
-      width: 90%;
-      max-width: 800px;
-      height: 500px;
-      background: black;
-      color: #4affff;
-      font-family: 'Courier New', monospace;
-      padding: 20px;
-      border-radius: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-    .terminal-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      z-index: 10;
-      opacity: 1;
-      transition: opacity 2s ease;
-    }
-    .decryption-progress {
-      width: 100%;
-      height: 10px;
-      background: rgba(255,255,255,0.1);
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .decryption-bar {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(to right, #4affff, #0077be);
-      transition: width 3s ease;
-    }
-    .terminal-text {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      opacity: 0;
-      transition: opacity 2s ease;
-    }
-    .terminal-text.visible {
-      opacity: 1;
-    }
-  </style>
 </head>
 <body>
   <nav class="navbar">
     <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
     <div class="nav-controls">
       <div class="nav-time" id="current-datetime"></div>
-      <div class="nav-danger-level" id="danger-level">SYSTEM: DECRYPTING</div>
+      <div class="nav-danger-level" id="danger-level">SYSTEM: CRITICAL</div>
     </div>
   </nav>
 
-  <div class="container">
-    <div class="message-container">
-      <div class="decryption-progress">
-        <div class="decryption-bar" id="decryptionProgress"></div>
-      </div>
-      <div class="terminal-screen">
-        <div class="terminal-overlay"></div>
-        <div class="terminal-text" id="terminalMessage">
-이곳에 최종 메시지의 핵심 내용 작성
-- 프로젝트의 근본적인 진실
-- 캐릭터들의 최종 상태와 해결되지 않은 미스터리
-- 향후 전개될 수 있는 시나리오에 대한 암시
+  <div class="side-nav">
+    <a href="#first-message" class="side-nav-item" data-section="first-message">1차 메시지</a>
+    <a href="#second-message" class="side-nav-item" data-section="second-message">2차 메시지</a>
+    <a href="#final-revelation" class="side-nav-item" data-section="final-revelation">최종 계시</a>
+    <a href="#unresolved-mystery" class="side-nav-item" data-section="unresolved-mystery">미해결 미스터리</a>
+  </div>
 
-[ 추가 해독 필요 영역 ]
-일부 정보는 여전히 암호화되어 있으며, 
-완전한 해독을 위해서는 추가적인 조치가 필요함
+  <div class="container">
+    <section class="hero-section">
+      <h1 class="intermittent-glitch" data-text="최종 메시지">최종 메시지</h1>
+      <div class="subtitle">"우리는 결코 완벽하지 않았다"</div>
+    </section>
+
+    <section id="first-message" class="status-section">
+      <h2>1차 메시지</h2>
+      <div class="status-content">
+        <p>이곳에 1차 메시지의 핵심 암호와 그 의미에 대한 내용 작성</p>
+        <ul>
+          <li>초기 암호의 근본적인 의미</li>
+          <li>숨겨진 맥락</li>
+          <li>해독된 메시지의 중요성</li>
+        </ul>
+        <div class="status-gauge">
+          <div class="status-progress" id="firstMessageProgress"></div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section id="second-message" class="status-section">
+      <h2>2차 메시지</h2>
+      <div class="status-content">
+        <p>이곳에 2차 메시지의 심층적인 내용과 숨겨진 진실 작성</p>
+        <ul>
+          <li>1차 메시지와의 연관성</li>
+          <li>새롭게 드러난 비밀</li>
+          <li>캐릭터들 관련 얘기</li>
+        </ul>
+        <div class="status-gauge">
+          <div class="status-progress" id="secondMessageProgress"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="final-revelation" class="status-section">
+      <h2>최종 계시</h2>
+      <div class="status-content">
+        <p>이곳에 프로젝트의 최종적인 비밀과 충격적인 진실 작성</p>
+        <ul>
+          <li>모든 단서들이 모여 형성하는 전체 그림</li>
+          <li>예상치 못한 최종 전개</li>
+          <li>프로젝트의 근본적인 목적</li>
+        </ul>
+        <div class="status-gauge">
+          <div class="status-progress" id="finalRevelationProgress"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="unresolved-mystery" class="status-section">
+      <h2>미해결 미스터리</h2>
+      <div class="status-content">
+        <p>이곳에 여전히 해결되지 않은 의문과 향후 가능성 작성</p>
+        <ul>
+          <li>아직 풀리지 않은 의문들</li>
+          <li>향후 전개 가능성에 대한 암시</li>
+          <li>열린 결말의 의미</li>
+        </ul>
+        <div class="status-gauge">
+          <div class="status-progress" id="unresolvedMysteryProgress"></div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <div class="waves">
@@ -103,26 +99,52 @@
   </div>
 
   <script>
-    function initializeDecryption() {
-      const decryptionBar = document.getElementById('decryptionProgress');
-      const terminalOverlay = document.querySelector('.terminal-overlay');
-      const terminalMessage = document.getElementById('terminalMessage');
+    function updateActiveSection() {
+      const sections = document.querySelectorAll('.status-section');
+      const navItems = document.querySelectorAll('.side-nav-item');
 
-      let progress = 0;
-      const decryptionInterval = setInterval(() => {
-        progress += Math.random() * 20;
-        decryptionBar.style.width = `${Math.min(progress, 100)}%`;
-        
-        if (progress >= 100) {
-          clearInterval(decryptionInterval);
-          terminalOverlay.style.opacity = 0;
-          terminalMessage.classList.add('visible');
-          document.getElementById('danger-level').textContent = 'SYSTEM: DECODED';
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+          navItems.forEach(item => item.classList.remove('active'));
+          navItems[index].classList.add('active');
         }
-      }, 1000);
+      });
     }
 
-    window.addEventListener('load', initializeDecryption);
+    function simulateProgressBars() {
+      const progressBars = [
+        'firstMessageProgress',
+        'secondMessageProgress', 
+        'finalRevelationProgress', 
+        'unresolvedMysteryProgress'
+      ];
+
+      progressBars.forEach(barId => {
+        const progressBar = document.getElementById(barId);
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+          progress += Math.random() * 15;
+          progressBar.style.width = `${Math.min(progress, 100)}%`;
+          
+          if (progress >= 100) {
+            clearInterval(progressInterval);
+          }
+        }, 1000);
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveSection);
+    updateActiveSection();
+    simulateProgressBars();
+
+    document.querySelectorAll('.side-nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('href').substring(1);
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
   </script>
   <script src="script.js"></script>
 </body>
