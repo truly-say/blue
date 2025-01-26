@@ -17,64 +17,59 @@
     </div>
   </nav>
 
+  <div class="side-nav">
+    <a href="#current-status" class="side-nav-item" data-section="current-status">현재 상태</a>
+    <a href="#last-update" class="side-nav-item" data-section="last-update">마지막 업데이트</a>
+    <a href="#error-log" class="side-nav-item" data-section="error-log">오류 로그</a>
+  </div>
+
   <div class="container">
     <section class="hero-section">
-      <h1 class="intermittent-glitch" data-text="상태">상태</h1>
-      <div class="subtitle">"시스템 정보와 상태 보고"</div>
+      <h1 class="intermittent-glitch" data-text="시스템 상태">시스템 상태</h1>
+      <div class="subtitle">"알려지지 않은 시스템의 변동"</div>
     </section>
 
-    <section class="status-summary">
-      <h2>시스템 상태</h2>
-      <div class="status-overview">
-        <p>어쩌고 시스템 메시지</p>
-        <p>가장 큰 이슈:</p>
+    <section id="current-status" class="status-section">
+      <h2>현재 상태 - 2025.01.25</h2>
+      <div class="status-content">
+        <p>현재 시스템의 상태는 불안정한 상태입니다.</p>
+        <p>메인 시스템에서 비정상적인 오류가 발생하고 있으며, 데이터의 정확성에 영향을 미치고 있습니다.</p>
+        <p>지금 현재 경고가 발생한 위치: 네트워크 서버 A</p>
+      </div>
+      <div class="status-gauge">
+        <div class="status-progress"></div>
+        <div id="progress-text">경고: 시스템 복구 시급</div>
+      </div>
+    </section>
+
+    <section id="last-update" class="status-section">
+      <h2>마지막 업데이트 - 2025.01.24</h2>
+      <div class="status-content">
+        <p>2025년 1월 24일에 진행된 시스템 점검에서 주요 문제점이 발견되었습니다:</p>
         <ul>
-          <li>전체 데이터 처리 지연</li>
-          <li>프로젝트 서버 불안정</li>
-          <li>고급 암호화 해제 불가</li>
+          <li>전원 공급 문제로 인해 서버 다운타임 발생</li>
+          <li>데이터 동기화 중단</li>
+          <li>긴급 패치 필요: 보안 취약점 발견</li>
         </ul>
-      </div>
-    </section>
-
-    <section class="detailed-status">
-      <h2>상세 상태</h2>
-      <div class="status-item">
-        <div class="status-label">시스템 가용성</div>
-        <div class="status-value unstable">불안정</div>
-      </div>
-      <div class="status-item">
-        <div class="status-label">데이터 무결성</div>
-        <div class="status-value unstable">훼손됨</div>
-      </div>
-      <div class="status-item">
-        <div class="status-label">작동 온도</div>
-        <div class="status-value stable">정상</div>
-      </div>
-    </section>
-
-    <section class="critical-points">
-      <h2>위험 경고</h2>
-      <div class="critical-point">
-        <h3>고급 분석 서버</h3>
-        <div class="progress-bar-container">
-          <div class="progress-bar critical"></div>
+        <div class="progress-container">
+          <div class="progress-bar" style="width: 85%;"></div>
         </div>
-        <p>어쩌고 메시지</p>
-      </div>
-      <div class="critical-point">
-        <h3>시스템 종합 안전도</h3>
-        <div class="progress-bar-container">
-          <div class="progress-bar unstable"></div>
-        </div>
-        <p>시스템의 안전도가 현저히 낮은 상태입니다. 즉각적인 확인이 요구됩니다.</p>
       </div>
     </section>
 
-    <section class="encoded-message">
-      <h2>암호화된 메시지</h2>
-      <div class="message-container">
-        <p>[ENCRYPTED: JD8-N3R-BL5]</p>
-        <p>대충 숨겨진 메시지?.</p>
+    <section id="error-log" class="status-section">
+      <h2>오류 로그</h2>
+      <div class="status-content">
+        <p>최신 오류 로그</p>
+        <div class="log-entry">
+          <p>[ERROR] 2025-01-24 14:30 - 시스템 리셋 요청됨 - 코드: XG7-H9Y-T3A</p>
+          <p>[WARNING] 2025-01-24 15:00 - 오류 진단 실패</p>
+        </div>
+        <p>잠시 후 오류 로그가 갱신될 예정입니다.</p>
+      </div>
+      <div class="encrypted-log">
+        <p>[ENCRYPTED: FX5-J7D-Z2L]</p>
+        <p class="message-tooltip">(숨겨진 정보와 관련된 오류 코드)</p>
       </div>
     </section>
   </div>
@@ -84,6 +79,55 @@
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', () => {
+            const puzzleTriggers = document.querySelectorAll('.puzzle-trigger');
+            const progressBars = document.querySelectorAll('.progress-bar');
+
+            puzzleTriggers.forEach((trigger, index) => {
+                trigger.addEventListener('click', () => {
+                    const puzzles = [
+                        'SYSTEM_CHECK_KEY',
+                        'SERVER_REBOOT_CODE',
+                        'EMERGENCY_DIAGNOSE'
+                    ];
+                    alert(`${puzzles[index]} - 퍼즐 해제 조건 활성화`);
+                });
+            });
+
+            progressBars.forEach((bar, index) => {
+                const progressPercentages = [33, 66, 100];
+                bar.style.width = `${progressPercentages[index]}%`;
+            });
+        });
+    function updateActiveSection() {
+      const sections = document.querySelectorAll('.status-section');
+      const navItems = document.querySelectorAll('.side-nav-item');
+
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+          navItems.forEach(item => item.classList.remove('active'));
+          navItems[index].classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveSection);
+
+    // Initial call to set first section as active
+    updateActiveSection();
+
+    // Smooth scrolling for side nav
+    document.querySelectorAll('.side-nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('href').substring(1);
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
 
   <script src="script.js"></script>
 </body>
