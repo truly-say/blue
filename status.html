@@ -7,6 +7,206 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+<style>
+/* 전반적인 레이아웃 스타일 */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    padding: 20px;
+}
+
+/* 네비게이션 바 스타일 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f1f1f;
+    padding: 10px 20px;
+}
+
+.nav-logo {
+    font-size: 28px;
+    color: #e0e0e0;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+}
+
+.nav-logo.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ff4081;
+    text-shadow: 2px 0 red, -2px 0 blue;
+    animation: glitchEffect 1s infinite alternate;
+}
+
+.nav-controls {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    font-size: 14px;
+}
+
+.nav-time {
+    margin-bottom: 5px;
+}
+
+.nav-danger-level {
+    color: #ff7043;
+    font-weight: bold;
+}
+
+.side-nav {
+    position: fixed;
+    top: 80px;
+    left: 10px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-nav-item {
+    color: #ff4081;
+    text-decoration: none;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.side-nav-item:hover,
+.side-nav-item.active {
+    color: #ffffff;
+}
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hero-section h1 {
+    font-size: 50px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    color: #ff4081;
+}
+
+.hero-section .subtitle {
+    font-size: 18px;
+    color: #e0e0e0;
+}
+
+.status-section {
+    margin-bottom: 40px;
+}
+
+.status-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff4081;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.status-content {
+    background-color: #1e1e1e;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.status-gauge {
+    background-color: #333;
+    border-radius: 5px;
+    margin-top: 15px;
+    width: 100%;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.status-progress {
+    background-color: #ff4081;
+    width: 50%;
+    height: 100%;
+    animation: gaugePulse 3s infinite ease-in-out;
+}
+
+#progress-text {
+    position: absolute;
+    color: #fff;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* 간격 및 버전 검사 스타일 */
+.timeline-section {
+    margin: 20px 0;
+}
+
+.timeline-section p {
+    font-size: 14px;
+    color: #b0b0b0;
+}
+
+.timeline-section ul {
+    list-style-type: square;
+    padding-left: 20px;
+}
+
+.timeline-section .hover-detail {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 50;
+}
+
+.timeline-section:hover .hover-detail {
+    display: block;
+}
+
+/* 애니메이션 효과 */
+@keyframes glitchEffect {
+    0% {
+        transform: translate(-5px, 0);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(5px, 0);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translate(-5px, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes gaugePulse {
+    0% {
+        width: 45%;
+    }
+    50% {
+        width: 55%;
+    }
+    100% {
+        width: 50%;
+    }
+}
+</style>
+
 </head>
 <body>
   <nav class="navbar">
