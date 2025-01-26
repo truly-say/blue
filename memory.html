@@ -173,12 +173,12 @@ function createMemoryFragment(memory) {
   fragment.innerHTML = `
     <h3>${memory.title}</h3>
     <p>${memory.description}</p>
-    <div class="interactive-choice" id="${memory.id}-choice">
+    <div class="interactive-choice" id="${memory.id}-choice" style="display:none;">
       <p>${memory.question}</p>
       ${memory.choices.map(choice => 
         `<button onclick="selectChoice('${memory.id}', '${choice.value}')">${choice.text}</button>`
       ).join('')}
-      <div class="memory-result" id="${memory.id}-result"></div>
+      <div class="memory-result" id="${memory.id}-result" style="display:none;"></div>
     </div>
   `;
 
@@ -195,8 +195,6 @@ function selectChoice(memoryId, choice) {
 
   const choiceButtons = document.querySelectorAll(`#${memoryId}-choice button`);
   choiceButtons.forEach(button => button.disabled = true);
-
-  console.log(`Memory: ${memoryId}, Choice: ${choice}`);
 }
 
 function initializeMemories() {
@@ -205,7 +203,8 @@ function initializeMemories() {
     const fragment = createMemoryFragment(memory);
     container.appendChild(fragment);
 
-    fragment.addEventListener('click', () => {
+    const titleElement = fragment.querySelector('h3');
+    titleElement.addEventListener('click', () => {
       const choiceDiv = fragment.querySelector('.interactive-choice');
       choiceDiv.style.display = choiceDiv.style.display === 'block' ? 'none' : 'block';
     });
