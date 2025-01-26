@@ -119,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 }
     
-    
     function updateDateTime() {
         const now = new Date();
         const departureDate = new Date('2025-02-28T00:00:00');
@@ -142,19 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (countdownDisplay) {
             countdownDisplay.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-            if (diff <= 0) {
-                // 카운트다운 끝났을 때
-                nextSeriesContainer.style.display = 'block';  // 버튼을 표시
-            }
         }
-    }
-
-    // Add event listener to the "Next Series" button to navigate to the next series
-    if (nextSeriesBtn) {
-        nextSeriesBtn.addEventListener('click', () => {
-            window.location.href = 'next_series.html';  // 여기를 여러분의 "다음 시리즈" 페이지로 변경
-        });
     }
 
    const infoCards = document.querySelectorAll('.info-card');
