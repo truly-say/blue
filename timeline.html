@@ -3,7 +3,7 @@
 <head>   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Lam - Timeline</title>
+  <title>Blue Lam Graduation Cruise</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
@@ -24,17 +24,41 @@
     </section>
 
     <section class="info-section">
-      <div class="info-card timeline-entry">
-        <h3>2025.01.02</h3>
-        <p>프로젝트 시작 / 초기 시스템 구성</p>
+      <div class="info-card" onclick="scrollToSection('start')">
+        <h3>프로젝트 시작</h3>
+        <p>2025.01.02</p>
       </div>
-      <div class="info-card timeline-entry">
-        <h3>2025.01.15</h3>
-        <p>중간 진행 상황 점검 / 시스템 안정성 평가</p>
+      <div class="info-card" onclick="scrollToSection('midpoint')">
+        <h3>중간 점검</h3>
+        <p>2025.01.15</p>
       </div>
-      <div class="info-card timeline-entry">
-        <h3>2025.02.02</h3>
-        <p>최종 시리즈 종료 / 결과 분석</p>
+      <div class="info-card" onclick="scrollToSection('finale')">
+        <h3>최종 종료</h3>
+        <p>2025.02.02</p>
+      </div>
+    </section>
+
+    <section id="start" class="timeline-section">
+      <h2>프로젝트 시작 - 2025.01.02</h2>
+      <div class="timeline-content">
+        <p>초기 시스템 구성 및 기본 프레임워크 설립</p>
+        <p>핵심 목표 및 방향성 설정</p>
+      </div>
+    </section>
+
+    <section id="midpoint" class="timeline-section">
+      <h2>중간 점검 - 2025.01.15</h2>
+      <div class="timeline-content">
+        <p>시스템 안정성 평가</p>
+        <p>중간 진행 상황 분석 및 조정</p>
+      </div>
+    </section>
+
+    <section id="finale" class="timeline-section">
+      <h2>최종 종료 - 2025.02.02</h2>
+      <div class="timeline-content">
+        <p>최종 시리즈 종료</p>
+        <p>결과 분석 및 총괄 평가</p>
       </div>
     </section>
 
@@ -42,7 +66,6 @@
       <div class="status-gauge">
         <div class="status-progress"></div>
       </div>
-      <br>
       <div class="status-text"></div>
       <div id="progress-text"></div>
     </div>
@@ -54,6 +77,11 @@
     <div class="wave"></div>
   </div>
 
+  <script>
+    function scrollToSection(sectionId) {
+      document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
