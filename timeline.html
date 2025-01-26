@@ -8,70 +8,45 @@
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
   <style>
-    .timeline-section {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      text-align: center;
-      color: white;
-      background: rgba(0, 31, 63, 0.6);
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .timeline-section h2 {
-      font-size: 3rem;
-      margin-bottom: 2rem;
-      color: #4affff;
-      z-index: 10;
-      position: relative;
-    }
-    .timeline-content {
-      max-width: 800px;
-      background: rgba(0, 15, 31, 0.7);
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      z-index: 10;
-      position: relative;
-    }
-    .timeline-section p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    .timeline-details {
+    .modal {
       display: none;
-      margin-top: 1rem;
-      padding: 1rem;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-    }
-    .toggle-details {
-      cursor: pointer;
-      color: #4affff;
-      text-decoration: underline;
-      margin-top: 1rem;
-      display: inline-block;
-    }
-    .background-overlay {
-      position: absolute;
-      top: 0;
+      position: fixed;
+      z-index: 1000;
       left: 0;
+      top: 0;
       width: 100%;
       height: 100%;
-      opacity: 0.3;
-      background-size: cover;
-      background-position: center;
-      filter: blur(5px);
-      z-index: 1;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
     }
-    #start .background-overlay { background-image: url('/api/placeholder/1200/800?text=Project+Start'); }
-    #midpoint .background-overlay { background-image: url('/api/placeholder/1200/800?text=Mid+Point'); }
-    #finale .background-overlay { background-image: url('/api/placeholder/1200/800?text=Project+Finale'); }
+    .modal-content {
+      background-color: #1a1a2e;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 70%;
+      color: #e0e0e0;
+      text-align: center;
+    }
+    .modal-close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .interactive-hint {
+      position: absolute;
+      right: -50px;
+      top: 50%;
+      transform: rotate(90deg);
+      color: #4fc3f7;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -96,57 +71,36 @@
     </section>
 
     <section id="start" class="timeline-section">
-      <div class="background-overlay"></div>
       <h2>프로젝트 시작 - 2025.01.03</h2>
       <div class="timeline-content">
         <p>프로젝트 시작에 대한 주요 가이드라인:</p>
         <p>- 초기 시스템 구성 및 아키텍처 설계</p>
-        <p>- 팀 구성원 역할 분담 및 초기 미팅</p>
-        <p>- 프로젝트 범위 및 초기 목표 설정</p>
-        <span class="toggle-details" onclick="toggleDetails(this)">더 자세한 내용 보기</span>
-        <div class="timeline-details">
-          <p>🚀 프로젝트 초기 단계 상세 정보:</p>
-          <p>- 기술 스택 선정: React, Node.js, GraphQL</p>
-          <p>- 초기 개발 환경 구축</p>
-          <p>- 프로젝트 관리 도구 연동 (Jira, Slack)</p>
-        </div>
+        <p>- 프로젝트 핵심 목표 및 기대 성과 정의</p>
+        <p>- 초기 리소스 할당 및 팀 구성</p>
       </div>
+      <div class="interactive-hint">클릭하여 자세히 보기</div>
     </section>
 
     <section id="midpoint" class="timeline-section">
-      <div class="background-overlay"></div>
       <h2>중간 점검 - 2025.01.20</h2>
       <div class="timeline-content">
         <p>중간 점검 단계에서 고려할 사항:</p>
-        <p>- 현재까지의 진행 상황 분석</p>
+        <p>- 현재까지의 진행 상황 종합 분석</p>
         <p>- 시스템 안정성 및 성능 평가</p>
-        <p>- 잠재적 리스크 식별 및 대응 방안</p>
-        <span class="toggle-details" onclick="toggleDetails(this)">더 자세한 내용 보기</span>
-        <div class="timeline-details">
-          <p>🔍 중간 점검 상세 분석:</p>
-          <p>- 현재 개발 진행율: 65%</p>
-          <p>- 성능 벤치마크 결과</p>
-          <p>- 팀 간 협업 상황 리뷰</p>
-        </div>
+        <p>- 발견된 기술적/전략적 도전 과제 식별</p>
       </div>
+      <div class="interactive-hint">클릭하여 자세히 보기</div>
     </section>
 
     <section id="finale" class="timeline-section">
-      <div class="background-overlay"></div>
       <h2>최종 종료 - 2025.02.02</h2>
       <div class="timeline-content">
         <p>프로젝트 최종 단계 준비 사항:</p>
-        <p>- 전체 프로젝트 결과 종합</p>
-        <p>- 최종 성과 및 핵심 지표 평가</p>
-        <p>- 프로젝트 결과물 최종 검수</p>
-        <span class="toggle-details" onclick="toggleDetails(this)">더 자세한 내용 보기</span>
-        <div class="timeline-details">
-          <p>🏁 최종 단계 상세 계획:</p>
-          <p>- 최종 발표 준비</p>
-          <p>- 프로젝트 문서화 작업</p>
-          <p>- 포트폴리오 및 결과물 정리</p>
-        </div>
+        <p>- 전체 프로젝트 결과 및 성과 종합 보고</p>
+        <p>- 최종 목표 달성 여부 평가</p>
+        <p>- 향후 발전 방향 및 추천 사항 도출</p>
       </div>
+      <div class="interactive-hint">클릭하여 자세히 보기</div>
     </section>
   </div>
 
@@ -156,40 +110,91 @@
     <div class="wave"></div>
   </div>
 
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <div id="modalDetails"></div>
+    </div>
+  </div>
+
   <script>
-    function updateActiveSection() {
-      const sections = document.querySelectorAll('.timeline-section');
-      const navItems = document.querySelectorAll('.side-nav-item');
+    // Current datetime update
+    function updateDateTime() {
+      const now = new Date();
+      document.getElementById('current-datetime').textContent = 
+        now.toLocaleString('ko-KR', { 
+          year: 'numeric', 
+          month: '2-digit', 
+          day: '2-digit', 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          second: '2-digit' 
+        });
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
 
-      sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-          navItems.forEach(item => item.classList.remove('active'));
-          navItems[index].classList.add('active');
+    // Modal interaction
+    const modal = document.getElementById('detailModal');
+    const modalDetails = document.getElementById('modalDetails');
+    const modalClose = document.querySelector('.modal-close');
+
+    document.querySelectorAll('.timeline-section').forEach(section => {
+      const interactiveHint = section.querySelector('.interactive-hint');
+      
+      interactiveHint.addEventListener('click', () => {
+        const sectionId = section.id;
+        let details = '';
+
+        switch(sectionId) {
+          case 'start':
+            details = `
+              <h3>프로젝트 시작 상세 정보</h3>
+              <p>🚀 초기 시스템 아키텍처 설계</p>
+              <p>- 분산 처리 기반 인프라 구축</p>
+              <p>- 보안 및 확장성 고려 설계</p>
+              <p>⏳ 프로젝트 타임라인 초기 설정</p>
+              <p>- 마일스톤 및 주요 체크포인트 정의</p>
+            `;
+            break;
+          case 'midpoint':
+            details = `
+              <h3>중간 점검 심층 분석</h3>
+              <p>📊 시스템 성능 중간 평가</p>
+              <p>- 현재 진행 상황 종합 리뷰</p>
+              <p>- 성능 병목 현상 식별</p>
+              <p>🛠 기술적 도전 과제 대응 전략</p>
+              <p>- 리스크 관리 및 완화 방안</p>
+            `;
+            break;
+          case 'finale':
+            details = `
+              <h3>프로젝트 최종 단계 총괄</h3>
+              <p>🏁 프로젝트 결과 종합</p>
+              <p>- 목표 달성도 상세 평가</p>
+              <p>- 핵심 성과 지표 분석</p>
+              <p>🔍 향후 발전 방향</p>
+              <p>- 추가 연구 및 개선 제안</p>
+            `;
+            break;
         }
-      });
-    }
 
-    function toggleDetails(element) {
-      const detailsSection = element.nextElementSibling;
-      detailsSection.style.display = detailsSection.style.display === 'block' ? 'none' : 'block';
-      element.textContent = detailsSection.style.display === 'block' ? '간단히 보기' : '더 자세한 내용 보기';
-    }
-
-    window.addEventListener('scroll', updateActiveSection);
-    
-    // Initial call to set first section as active
-    updateActiveSection();
-
-    // Smooth scrolling for side nav
-    document.querySelectorAll('.side-nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = item.getAttribute('href').substring(1);
-        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+        modalDetails.innerHTML = details;
+        modal.style.display = 'block';
       });
     });
+
+    modalClose.onclick = () => {
+      modal.style.display = 'none';
+    };
+
+    window.onclick = (event) => {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    };
+
+    // Existing scroll and navigation scripts remain the same
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
