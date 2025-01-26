@@ -7,106 +7,6 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-  <style>
-    .timeline-section {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      text-align: center;
-      color: white;
-      background: rgba(0, 31, 63, 0.6);
-      margin-bottom: 2rem;
-    }
-    .timeline-section h2 {
-      font-size: 3rem;
-      margin-bottom: 2rem;
-      color: #4affff;
-    }
-    .timeline-content {
-      max-width: 800px;
-      background: rgba(0, 15, 31, 0.7);
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    .timeline-section p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    .side-nav {
-      position: fixed;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 15, 31, 0.7);
-      padding: 15px;
-      border-radius: 10px;
-      z-index: 1000;
-    }
-    .side-nav-item {
-      color: rgba(255,255,255,0.5);
-      text-decoration: none;
-      display: block;
-      margin: 10px 0;
-      transition: color 0.3s ease;
-    }
-    .side-nav-item.active {
-      color: #4affff;
-      font-weight: bold;
-    }
-    .hover-detail {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 15, 31, 0.9);
-            padding: 15px;
-            display: none;
-            z-index: 10;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            border-radius: 0 0 15px 15px;
-        }
-        .timeline-section:hover .hover-detail {
-            display: block;
-        }
-        .puzzle-trigger {
-            background-color: #4affff;
-            color: #001f3f;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-        .puzzle-trigger:hover {
-            background-color: #4affff;
-            opacity: 0.8;
-        }
-        .encrypted-log {
-            font-family: monospace;
-            color: #4affff;
-            margin-top: 10px;
-            word-break: break-all;
-        }
-        .progress-container {
-            background-color: rgba(74, 255, 255, 0.2);
-            border-radius: 10px;
-            height: 20px;
-            margin-top: 15px;
-        }
-        .progress-bar {
-            background-color: #4affff;
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -249,7 +149,7 @@
                 encryptedLog.textContent = '[ENCRYPTED: LM5-P3X-T9N]';
                 break;
             case 'finale':
-                hoverDetail.innerHTML += '<p>프로젝트 최종 단계의 미공개 전략</p>';
+                hoverDetail.innerHTML += '<p>각자의 미공개 정보</p>';
                 encryptedLog.textContent = '[ENCRYPTED: ZK7-H1Y-W4B]';
                 break;
         }
