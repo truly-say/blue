@@ -7,41 +7,6 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-  <style>
-    .timeline-section {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      text-align: center;
-      color: white;
-      background: rgba(0, 31, 63, 0.6);
-      margin-bottom: 2rem;
-    }
-    .timeline-section h2 {
-      font-size: 3rem;
-      margin-bottom: 2rem;
-      color: #4affff;
-    }
-    .timeline-content {
-      max-width: 800px;
-      background: rgba(0, 15, 31, 0.7);
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    .timeline-section p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    .info-card {
-      cursor: pointer;
-      text-decoration: none;
-    }
-  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -53,48 +18,82 @@
   </nav>
   
   <div class="container">
+    <img src="선청고등학교.png" alt="School Image" class="school-image-overlay">
+    
     <section class="hero-section">
+      <div class="school-name glitch-text" data-text="善淸高等學校">善淸高等學校</div>
       <h1 class="intermittent-glitch" data-text="타임라인">타임라인</h1>
       <div class="subtitle">"시간의 흔적, 우리의 여정"</div>
     </section>
 
     <section class="info-section">
-      <div class="info-card" data-target="start">
-        <h3>프로젝트 시작</h3>
-        <p>2025.01.02</p>
+      <div class="info-card glitch-hover" data-section="start">
+        <div class="info-card-inner">
+          <h3>프로젝트 시작</h3>
+          <p>2025.01.02</p>
+          <div class="card-overlay"></div>
+        </div>
       </div>
-      <div class="info-card" data-target="midpoint">
-        <h3>중간 점검</h3>
-        <p>2025.01.15</p>
+      <div class="info-card glitch-hover" data-section="midpoint">
+        <div class="info-card-inner">
+          <h3>중간 점검</h3>
+          <p>2025.01.15</p>
+          <div class="card-overlay"></div>
+        </div>
       </div>
-      <div class="info-card" data-target="analysis">
-        <h3>데이터 분석</h3>
-        <p>2025.01.28</p>
-      </div>
-      <div class="info-card" data-target="finale">
-        <h3>최종 종료</h3>
-        <p>2025.02.02</p>
+      <div class="info-card glitch-hover" data-section="finale">
+        <div class="info-card-inner">
+          <h3>최종 종료</h3>
+          <p>2025.02.02</p>
+          <div class="card-overlay"></div>
+        </div>
       </div>
     </section>
 
-    <!-- Rest of the HTML remains the same as in previous version -->
-    <script>
-      // Prevent default anchor behavior and implement smooth scrolling
-      document.querySelectorAll('.info-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-          e.preventDefault(); // Prevent any default behavior
-          e.stopPropagation(); // Stop event from propagating
-          
-          const targetId = card.getAttribute('data-target');
-          document.getElementById(targetId).scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
-          
-          return false; // Additional prevention of default navigation
-        });
-      });
-    </script>
+    <section id="start" class="timeline-section">
+      <h2>프로젝트 시작</h2>
+      <div class="timeline-content">
+        <p>프로젝트 초기 단계에 대한 상세 내용을 여기에 작성하세요.</p>
+      </div>
+    </section>
+
+    <section id="midpoint" class="timeline-section">
+      <h2>중간 점검</h2>
+      <div class="timeline-content">
+        <p>프로젝트 중간 진행 상황에 대한 상세 내용을 여기에 작성하세요.</p>
+      </div>
+    </section>
+
+    <section id="finale" class="timeline-section">
+      <h2>최종 종료</h2>
+      <div class="timeline-content">
+        <p>프로젝트 최종 마무리 단계에 대한 상세 내용을 여기에 작성하세요.</p>
+      </div>
+    </section>
+
+    <div class="system-status">
+      <div class="status-gauge">
+        <div class="status-progress"></div>
+      </div>
+      <div class="status-text"></div>
+      <div id="progress-text"></div>
+    </div>
   </div>
+
+  <div class="waves">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.info-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const sectionId = card.getAttribute('data-section');
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>
