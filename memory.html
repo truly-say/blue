@@ -6,6 +6,7 @@
   <title>Blue Lam - memory</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
+  <link rel="stylesheet" href="status-page-custom.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
 </head>
 <body>
@@ -13,48 +14,79 @@
     <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
     <div class="nav-controls">
       <div class="nav-time" id="current-datetime"></div>
-      <div class="nav-danger-level" id="danger-level">MEMORY: FRAGMENTED</div>
+      <div class="nav-danger-level" id="danger-level">FRAGMENT: SUSPENDED</div>
     </div>
   </nav>
 
   <div class="side-nav">
-    <a href="#memory-input" class="side-nav-item">01. 기억 입력</a>
-    <a href="#memory-distortion" class="side-nav-item">02. 기억 왜곡</a>
-    <a href="#memory-extraction" class="side-nav-item">03. 기억 추출</a>
-    <a href="#memory-synthesis" class="side-nav-item">04. 기억 재구성</a>
+    <a href="#departure" class="side-nav-item" data-section="departure">01. 출발</a>
+    <a href="#suspension" class="side-nav-item" data-section="suspension">02. 정지</a>
+    <a href="#fragments" class="side-nav-item" data-section="fragments">03. 조각</a>
+    <a href="#echo" class="side-nav-item" data-section="echo">04. 반향</a>
   </div>
 
   <div class="container">
-    <section id="memory-input" class="interactive-section">
-      <div class="glitch-terminal">
-        <input type="text" id="memory-input-field" placeholder="기억을 입력하세요...">
-        <button id="memory-submit">기록</button>
-      </div>
-      <div id="memory-display" class="memory-container"></div>
+    <section class="hero-section">
+      <h1 class="intermittent-glitch" data-text="메모리">청춘의 최종본</h1>
+      <div class="subtitle">"우리는 결코 완벽하지 않았다"</div>
     </section>
 
-    <section id="memory-distortion" class="interactive-section">
-      <div class="distortion-controls">
-        <div class="slider-container">
-          <label>기억 왜곡 강도</label>
-          <input type="range" id="distortion-slider" min="0" max="100" value="50">
+    <section id="departure" class="status-section">
+      <h2>출발</h2>
+      <div class="status-content">
+        <div class="special-event">
+          <h3>1월, 공허한 바다</h3>
+          <p>p는 텍스트 단락입니다</p>
+          <ul>
+            <li>ul에 li를 쓰면 불릿이 붙어요1</li>
+            <li>ul에 li를 쓰면 불릿이 붙어요2</li>
+            <li>ul에 li를 쓰면 불릿이 붙어요3</li>
+          </ul>
         </div>
-        <button id="distort-memories">왜곡</button>
-      </div>
-      <div id="distorted-memories" class="memory-container"></div>
-    </section>
-
-    <section id="memory-extraction" class="interactive-section">
-      <div class="extraction-zone">
-        <button id="random-memory">무작위 기억 추출</button>
-        <div id="extracted-memory" class="memory-display"></div>
+        <div class="status-gauge">
+          <div class="status-progress" id="departureProgress"></div>
+        </div>
       </div>
     </section>
 
-    <section id="memory-synthesis" class="interactive-section">
-      <div class="synthesis-controls">
-        <button id="synthesize-memories">기억 재구성</button>
-        <div id="synthesized-memory" class="memory-container"></div>
+    <section id="fragments" class="status-section">
+      <h2>조각</h2>
+      <div class="status-content">
+        <div class="critical-revelation">
+          <h3>부서진 기억</h3>
+          <blockquote>
+            "blockquote는 이렇게 뜬답니다"
+          </blockquote>
+          <ul>
+            <li>ul에 li를 쓰면 불릿이 붙어요1</li>
+            <li>ul에 li를 쓰면 불릿이 붙어요2</li>
+            <li>ul에 li를 쓰면 불릿이 붙어요3</li>
+          </ul>
+        </div>
+        <div class="status-gauge">
+          <div class="status-progress" id="fragmentsProgress"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="echo" class="status-section">
+      <h2>반향</h2>
+      <div class="status-content">
+        <div class="open-questions">
+          <h3>슬슬 뭐쓸지 생각이 안나네</h3>
+          <p>p는 텍스트 단락입니다3</p>
+          <ul>
+            <li>ul에 li를 쓰면 불릿이 붙어요1</li>
+            <li>ul에 li를 쓰면 불릿이 붙어요2</li>
+            <li>ul에 li를 쓰면 불릿이 붙어요3</li>
+          </ul>
+          <div class="warning-message">
+            경고: 기억은 쉽게 잊히지 않습니다
+          </div>
+        </div>
+        <div class="status-gauge">
+          <div class="status-progress" id="echoProgress"></div>
+        </div>
       </div>
     </section>
   </div>
@@ -66,88 +98,53 @@
   </div>
 
   <script>
-    class MemorySystem {
-      constructor() {
-        this.memories = [];
-        this.initializeEventListeners();
-      }
+    function updateActiveSection() {
+      const sections = document.querySelectorAll('.status-section');
+      const navItems = document.querySelectorAll('.side-nav-item');
 
-      initializeEventListeners() {
-        document.getElementById('memory-submit').addEventListener('click', () => this.inputMemory());
-        document.getElementById('distort-memories').addEventListener('click', () => this.distortMemories());
-        document.getElementById('random-memory').addEventListener('click', () => this.extractRandomMemory());
-        document.getElementById('synthesize-memories').addEventListener('click', () => this.synthesizeMemories());
-      }
-
-      inputMemory() {
-        const input = document.getElementById('memory-input-field');
-        const memory = input.value.trim();
-        if (memory) {
-          this.memories.push(memory);
-          this.updateMemoryDisplay();
-          input.value = '';
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+          navItems.forEach(item => item.classList.remove('active'));
+          navItems[index].classList.add('active');
         }
-      }
-
-      updateMemoryDisplay() {
-        const display = document.getElementById('memory-display');
-        display.innerHTML = this.memories.map((mem, index) => 
-          `<div class="memory-item" data-index="${index}">${mem} 
-            <span class="delete-memory">✖</span>
-          </div>`
-        ).join('');
-
-        display.querySelectorAll('.delete-memory').forEach(del => {
-          del.addEventListener('click', (e) => {
-            const index = e.target.parentElement.dataset.index;
-            this.memories.splice(index, 1);
-            this.updateMemoryDisplay();
-          });
-        });
-      }
-
-      distortMemories() {
-        const intensity = document.getElementById('distortion-slider').value;
-        const distortedMemories = this.memories.map(memory => {
-          const glitchFactor = Math.random() * (intensity / 100);
-          return memory.split('').map(char => 
-            Math.random() < glitchFactor ? this.glitchCharacter(char) : char
-          ).join('');
-        });
-
-        const distortedDisplay = document.getElementById('distorted-memories');
-        distortedDisplay.innerHTML = distortedMemories.map(mem => 
-          `<div class="distorted-memory">${mem}</div>`
-        ).join('');
-      }
-
-      glitchCharacter(char) {
-        const glitchChars = '!@#$%^&*()_+{}|:"<>?`~';
-        return Math.random() < 0.5 ? glitchChars[Math.floor(Math.random() * glitchChars.length)] : char;
-      }
-
-      extractRandomMemory() {
-        if (this.memories.length > 0) {
-          const randomIndex = Math.floor(Math.random() * this.memories.length);
-          const extractedMemory = document.getElementById('extracted-memory');
-          extractedMemory.textContent = this.memories[randomIndex];
-        }
-      }
-
-      synthesizeMemories() {
-        if (this.memories.length > 1) {
-          const synthesizedMemory = this.memories
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 2)
-            .join(' + ');
-
-          const synthesizedDisplay = document.getElementById('synthesized-memory');
-          synthesizedDisplay.textContent = synthesizedMemory;
-        }
-      }
+      });
     }
 
-    new MemorySystem();
+    function simulateProgressBars() {
+      const progressBars = [
+        'departureProgress',
+        'suspensionProgress', 
+        'fragmentsProgress', 
+        'echoProgress'
+      ];
+
+      progressBars.forEach(barId => {
+        const progressBar = document.getElementById(barId);
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+          progress += Math.random() * 15;
+          progressBar.style.width = `${Math.min(progress, 100)}%`;
+          
+          if (progress >= 100) {
+            clearInterval(progressInterval);
+          }
+        }, 1000);
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveSection);
+    updateActiveSection();
+    simulateProgressBars();
+
+    document.querySelectorAll('.side-nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('href').substring(1);
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
   </script>
+  <script src="script.js"></script>
 </body>
 </html>
