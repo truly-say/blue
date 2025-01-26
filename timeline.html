@@ -37,6 +37,9 @@
       line-height: 1.6;
       margin-bottom: 1rem;
     }
+    .info-card {
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -50,55 +53,78 @@
   
   <div class="container">
     <section class="hero-section">
-      <h1 class="intermittent-glitch" data-text="Timeline">Timeline</h1>
+      <h1 class="intermittent-glitch" data-text="타임라인">타임라인</h1>
       <div class="subtitle">"시간의 흔적, 우리의 여정"</div>
     </section>
 
     <section class="info-section">
-      <div class="info-card" data-target="start">
+      <a href="#start" class="info-card" data-target="start">
         <h3>프로젝트 시작</h3>
-        <p>2025.01.03</p>
-      </div>
-      <div class="info-card" data-target="analysis">
+        <p>2025.01.02</p>
+      </a>
+      <a href="#midpoint" class="info-card" data-target="midpoint">
+        <h3>중간 점검</h3>
+        <p>2025.01.15</p>
+      </a>
+      <a href="#analysis" class="info-card" data-target="analysis">
         <h3>데이터 분석</h3>
         <p>2025.01.28</p>
-      </div>
-      <div class="info-card" data-target="finale">
+      </a>
+      <a href="#finale" class="info-card" data-target="finale">
         <h3>최종 종료</h3>
         <p>2025.02.02</p>
-      </div>
+      </a>
     </section>
 
     <section id="start" class="timeline-section">
-      <h2>프로젝트 시작 - 2025.01.03</h2>
+      <h2>프로젝트 시작 - 2025.01.02</h2>
       <div class="timeline-content">
-        <p>여기에 프로젝트 시작에 대한 주요 가이드라인을 작성. 예를 들어:</p>
-        <p>- 이런게 있엇어요</p>
-        <p>- 이렇게 시작을 했었고요</p>
-        <p>- 애들은 대충 이랬답니다~</p>
+        <p>여기에 프로젝트 시작에 대한 주요 가이드라인을 작성하세요. 예를 들어:</p>
+        <p>- 초기 시스템 구성 방법</p>
+        <p>- 핵심 목표 및 방향성 설정</p>
+        <p>- 팀 구성 및 초기 전략 수립</p>
+      </div>
+    </section>
+
+    <section id="midpoint" class="timeline-section">
+      <h2>중간 점검 - 2025.01.15</h2>
+      <div class="timeline-content">
+        <p>중간 점검 단계에서 다음 사항을 고려하세요:</p>
+        <p>- 현재까지의 진행 상황 분석</p>
+        <p>- 시스템 안정성 평가</p>
+        <p>- 발견된 문제점 및 개선 방안 논의</p>
       </div>
     </section>
 
     <section id="analysis" class="timeline-section">
       <h2>데이터 분석 - 2025.01.28</h2>
       <div class="timeline-content">
-        <p>데이터 분석 단계에서 다음을 수행:</p>
+        <p>데이터 분석 단계에서 다음을 수행하세요:</p>
         <p>- 수집된 데이터 종합 분석</p>
-        <p>- 애들이 지금 어디까지 햇남</p>
-        <p>- ㅇ러가지 러닝 중 있던 일?</p>
+        <p>- 트렌드 및 패턴 식별</p>
+        <p>- 예측 모델 수립</p>
       </div>
     </section>
 
     <section id="finale" class="timeline-section">
       <h2>최종 종료 - 2025.02.02</h2>
       <div class="timeline-content">
-        <p>프로젝트 최종 단계:</p>
+        <p>프로젝트 최종 단계에서 다음을 준비하세요:</p>
         <p>- 전체 프로젝트 결과 총괄</p>
-        <p>- 최종 결과 평가</p>
-        <p>- 이쯤에서 다음 조건 해금 힌트</p>
+        <p>- 최종 성과 평가</p>
+        <p>- 향후 발전 방향 제시</p>
       </div>
     </section>
-    
+
+    <div class="system-status">
+      <div class="status-gauge">
+        <div class="status-progress"></div>
+      </div>
+      <div class="status-text"></div>
+      <div id="progress-text"></div>
+    </div>
+  </div>
+
   <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
@@ -106,9 +132,10 @@
   </div>
 
   <script>
-    // Smooth scroll to section when info card is clicked
+    // Prevent default anchor behavior and implement smooth scrolling
     document.querySelectorAll('.info-card').forEach(card => {
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default anchor behavior
         const targetId = card.getAttribute('data-target');
         document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
       });
