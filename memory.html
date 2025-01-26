@@ -5,8 +5,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Lam - Memory</title>
   <style id="base-styles">
-    /* (Previous CSS remains the same) */
-    .memory-result {
+    :root {
+      --bg-color: #0a0a1a;
+      --text-color: #e0e0ff;
+      --accent-color: #4a90e2;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      perspective: 1000px;
+    }
+
+    .memory-fragment {
+      background-color: rgba(74, 144, 226, 0.1);
+      border-left: 4px solid var(--accent-color);
+      margin: 20px 0;
+      padding: 15px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .memory-fragment:hover {
+      transform: translateX(10px) rotateY(5deg);
+      background-color: rgba(74, 144, 226, 0.2);
+    }
+
+    .memory-fragment h3 {
+      margin-top: 0;
+      color: var(--accent-color);
+    }
+
+    .interactive-choice {
+      display: none;
+      margin-top: 15px;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+    }
+
+    .interactive-choice button {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .interactive-choice button:hover {
+      background-color: #6ab0ff;
+    }
+.memory-result {
       background-color: rgba(74, 144, 226, 0.15);
       padding: 15px;
       margin-top: 10px;
@@ -15,6 +75,16 @@
     }
     .hidden {
       display: none;
+    }
+    .waves {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(transparent, var(--bg-color));
+      opacity: 0.3;
+      z-index: -1;
     }
   </style>
 </head>
