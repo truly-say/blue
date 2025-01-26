@@ -1,22 +1,81 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>   
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Status - Blue Lam</title>
-  <link rel="stylesheet" href="glitch.css">
+  <title>Blue Lam Graduation Cruise - Status</title>
   <link rel="stylesheet" href="styles.css">
-</head> 
+  <link rel="stylesheet" href="glitch.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+</head>
 <body>
   <nav class="navbar">
-    <a href="index.html" class="nav-logo">BLUE LAM</a>
-    <div class="nav-time" id="current-time"></div>
+    <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
+    <div class="nav-controls">
+      <div class="nav-time" id="current-datetime"></div>
+      <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
+    </div>
   </nav>
 
   <div class="container">
     <section class="hero-section">
-      <div class="school-name glitch-text" data-text="Status">Status</div>
-      <h1 class="glitch-text" data-text="PREPARING FOR DEPARTURE">PREPARING FOR DEPARTURE</h1>
+      <h1 class="intermittent-glitch" data-text="상태">상태</h1>
+      <div class="subtitle">"시스템 정보와 상태 보고"</div>
+    </section>
+
+    <section class="status-summary">
+      <h2>시스템 상태</h2>
+      <div class="status-overview">
+        <p>어쩌고 시스템 메시지</p>
+        <p>가장 큰 이슈:</p>
+        <ul>
+          <li>전체 데이터 처리 지연</li>
+          <li>프로젝트 서버 불안정</li>
+          <li>고급 암호화 해제 불가</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="detailed-status">
+      <h2>상세 상태</h2>
+      <div class="status-item">
+        <div class="status-label">시스템 가용성</div>
+        <div class="status-value unstable">불안정</div>
+      </div>
+      <div class="status-item">
+        <div class="status-label">데이터 무결성</div>
+        <div class="status-value unstable">훼손됨</div>
+      </div>
+      <div class="status-item">
+        <div class="status-label">작동 온도</div>
+        <div class="status-value stable">정상</div>
+      </div>
+    </section>
+
+    <section class="critical-points">
+      <h2>위험 경고</h2>
+      <div class="critical-point">
+        <h3>고급 분석 서버</h3>
+        <div class="progress-bar-container">
+          <div class="progress-bar critical"></div>
+        </div>
+        <p>어쩌고 메시지</p>
+      </div>
+      <div class="critical-point">
+        <h3>시스템 종합 안전도</h3>
+        <div class="progress-bar-container">
+          <div class="progress-bar unstable"></div>
+        </div>
+        <p>시스템의 안전도가 현저히 낮은 상태입니다. 즉각적인 확인이 요구됩니다.</p>
+      </div>
+    </section>
+
+    <section class="encoded-message">
+      <h2>암호화된 메시지</h2>
+      <div class="message-container">
+        <p>[ENCRYPTED: JD8-N3R-BL5]</p>
+        <p>대충 숨겨진 메시지?.</p>
+      </div>
     </section>
   </div>
 
@@ -25,7 +84,7 @@
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
   <script src="script.js"></script>
 </body>
 </html>
