@@ -1,22 +1,51 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+<head>   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Timeline - Blue Lam</title>
+  <title>Blue Lam - Timeline</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="glitch.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
 </head>
 <body>
   <nav class="navbar">
-    <a href="index.html" class="nav-logo">BLUE LAM</a>
-    <div class="nav-time" id="current-time"></div>
+    <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
+    <div class="nav-controls">
+      <div class="nav-time" id="current-datetime"></div>
+      <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
+    </div>
   </nav>
-
+  
   <div class="container">
     <section class="hero-section">
-      <div class="school-name glitch-text" data-text="Timeline">Timeline</div>
-      <h1 class="glitch-text" data-text="2025.01.02 ~ 2025.02.02">2025.01.02 ~ 2025.02.02</h1>
+      <h1 class="intermittent-glitch" data-text="타임라인">타임라인</h1>
+      <div class="subtitle">"시간의 흔적, 우리의 여정"</div>
     </section>
+
+    <section class="info-section">
+      <div class="info-card timeline-entry">
+        <h3>2025.01.02</h3>
+        <p>프로젝트 시작 / 초기 시스템 구성</p>
+      </div>
+      <div class="info-card timeline-entry">
+        <h3>2025.01.15</h3>
+        <p>중간 진행 상황 점검 / 시스템 안정성 평가</p>
+      </div>
+      <div class="info-card timeline-entry">
+        <h3>2025.02.02</h3>
+        <p>최종 시리즈 종료 / 결과 분석</p>
+      </div>
+    </section>
+
+    <div class="system-status">
+      <div class="status-gauge">
+        <div class="status-progress"></div>
+      </div>
+      <br>
+      <div class="status-text"></div>
+      <div id="progress-text"></div>
+    </div>
   </div>
 
   <div class="waves">
@@ -24,6 +53,7 @@
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
