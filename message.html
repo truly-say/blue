@@ -3,19 +3,104 @@
 <head>   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Message - Blue Lam</title>
+  <title>Blue Lam - Final Message</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="glitch.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <style>
+    .message-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+      color: white;
+      background: rgba(0, 31, 63, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+    .decoded-message {
+      max-width: 800px;
+      background: rgba(0, 15, 31, 0.9);
+      padding: 3rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 50px rgba(74,255,255,0.2);
+      position: relative;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    .decoded-message.visible {
+      opacity: 1;
+    }
+    .message-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(0,0,0,0.8), rgba(74,255,255,0.1));
+      z-index: 1;
+    }
+    .decryption-progress {
+      width: 100%;
+      height: 10px;
+      background: rgba(255,255,255,0.1);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .decryption-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(to right, #4affff, #0077be);
+      transition: width 3s ease;
+    }
+    .message-title {
+      color: #4affff;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+    .message-content {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
-    <a href="index.html" class="nav-logo">BLUE LAM</a>
-    <div class="nav-time" id="current-time"></div>
+    <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
+    <div class="nav-controls">
+      <div class="nav-time" id="current-datetime"></div>
+      <div class="nav-danger-level" id="danger-level">SYSTEM: FINAL STAGE</div>
+    </div>
   </nav>
 
-  <div class="container"> 
-    <section class="hero-section">
-      <div class="school-name glitch-text" data-text="Message">Message</div>
-      <h1 class="glitch-text" data-text="熱望">"熱望"</h1>
+  <div class="container">
+    <section class="message-section">
+      <div class="message-overlay"></div>
+      <div class="decryption-progress">
+        <div class="decryption-bar" id="decryptionProgress"></div>
+      </div>
+
+      <div class="decoded-message" id="finalMessage">
+        <h2 class="message-title">최종 메시지</h2>
+        <div class="message-content">
+          <p>이곳에 프로젝트의 최종 메시지 핵심 내용 작성</p>
+          <ul>
+            <li>최종 해독된 메시지의 핵심 의미</li>
+            <li>프로젝트의 진실과 최종 목적</li>
+            <li>캐릭터들의 최종 상태 및 결말</li>
+          </ul>
+          <p><strong>추가 해독 필요 영역:</strong></p>
+          <p>이곳에 아직 완전히 해독되지 않은 메시지 부분에 대한 힌트 작성</p>
+        </div>
+      </div>
     </section>
   </div>
 
@@ -24,6 +109,27 @@
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
+
+  <script>
+    function initializeDecryption() {
+      const decryptionBar = document.getElementById('decryptionProgress');
+      const finalMessage = document.getElementById('finalMessage');
+
+      let progress = 0;
+      const decryptionInterval = setInterval(() => {
+        progress += Math.random() * 20;
+        decryptionBar.style.width = `${Math.min(progress, 100)}%`;
+        
+        if (progress >= 100) {
+          clearInterval(decryptionInterval);
+          finalMessage.classList.add('visible');
+          document.getElementById('danger-level').textContent = 'SYSTEM: DECODED';
+        }
+      }, 1000);
+    }
+
+    window.addEventListener('load', initializeDecryption);
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
