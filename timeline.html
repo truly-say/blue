@@ -37,6 +37,27 @@
       line-height: 1.6;
       margin-bottom: 1rem;
     }
+    .side-nav {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 15, 31, 0.7);
+      padding: 15px;
+      border-radius: 10px;
+      z-index: 1000;
+    }
+    .side-nav-item {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      display: block;
+      margin: 10px 0;
+      transition: color 0.3s ease;
+    }
+    .side-nav-item.active {
+      color: #4affff;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -48,6 +69,12 @@
     </div>
   </nav>
   
+  <div class="side-nav">
+    <a href="#start" class="side-nav-item" data-section="start">프로젝트 시작</a>
+    <a href="#midpoint" class="side-nav-item" data-section="midpoint">중간 점검</a>
+    <a href="#finale" class="side-nav-item" data-section="finale">최종 종료</a>
+  </div>
+
   <div class="container">
     <section class="hero-section">
       <h1 class="intermittent-glitch" data-text="타임라인">타임라인</h1>
@@ -55,22 +82,22 @@
     </section>
 
     <section id="start" class="timeline-section">
-      <h2>프로젝트 시작 - 2025.01.02</h2>
+      <h2>프로젝트 시작 - 2025.01.03</h2>
       <div class="timeline-content">
         <p>프로젝트 시작에 대한 주요 가이드라인:</p>
         <p>- 초기 시스템 구성에 대해 여기에 작성</p>
-        <p>- 핵심 목표 및 방향성 설정 내용 추가</p>
-        <p>- 팀 구성 및 초기 전략 수립 설명</p>
+        <p>- 프로젝트 주요 목표와 애들 상태</p>
+        <p>- 계획 구성 및 어쩌고 여튼 앞배경</p>
       </div>
     </section>
 
     <section id="midpoint" class="timeline-section">
-      <h2>중간 점검 - 2025.01.15</h2>
+      <h2>중간 점검 - 2025.01.20</h2>
       <div class="timeline-content">
         <p>중간 점검 단계에서 고려할 사항:</p>
         <p>- 현재까지의 진행 상황 분석 내용</p>
         <p>- 시스템 안정성 평가 결과</p>
-        <p>- 발견된 문제점 및 개선 방안</p>
+        <p>- 발견된 문제점 및 예측 결과</p>
       </div>
     </section>
 
@@ -79,19 +106,10 @@
       <div class="timeline-content">
         <p>프로젝트 최종 단계 준비 사항:</p>
         <p>- 전체 프로젝트 결과 총괄</p>
-        <p>- 최종 성과 평가 방법</p>
-        <p>- 향후 발전 방향 제시</p>
+        <p>- 최종 성과 평가</p>
+        <p>- 이쯤에 해금 조건 힌트</p>
       </div>
     </section>
-
-    <div class="system-status">
-      <div class="status-gauge">
-        <div class="status-progress"></div>
-      </div>
-      <div class="status-text"></div>
-      <div id="progress-text"></div>
-    </div>
-  </div>
 
   <div class="waves">
     <div class="wave"></div>
@@ -99,6 +117,34 @@
     <div class="wave"></div>
   </div>
 
+  <script>
+    function updateActiveSection() {
+      const sections = document.querySelectorAll('.timeline-section');
+      const navItems = document.querySelectorAll('.side-nav-item');
+
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+          navItems.forEach(item => item.classList.remove('active'));
+          navItems[index].classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveSection);
+    
+    // Initial call to set first section as active
+    updateActiveSection();
+
+    // Smooth scrolling for side nav
+    document.querySelectorAll('.side-nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('href').substring(1);
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
