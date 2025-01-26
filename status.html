@@ -1,212 +1,140 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+<head>   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Lam Graduation Cruise - Status</title>
-  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-<style>
-/* 전반적인 레이아웃 스타일 */
-body {
-    background-color: #121212;
-    color: #e0e0e0;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    padding: 20px;
-}
-
-/* 네비게이션 바 스타일 */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1f1f1f;
-    padding: 10px 20px;
-}
-
-.nav-logo {
-    font-size: 28px;
-    color: #e0e0e0;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-weight: bold;
-    position: relative;
-}
-
-.nav-logo.glitch-text::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: #ff4081;
-    text-shadow: 2px 0 red, -2px 0 blue;
-    animation: glitchEffect 1s infinite alternate;
-}
-
-.nav-controls {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    font-size: 14px;
-}
-
-.nav-time {
-    margin-bottom: 5px;
-}
-
-.nav-danger-level {
-    color: #ff7043;
-    font-weight: bold;
-}
-
-.side-nav {
-    position: fixed;
-    top: 80px;
-    left: 10px;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-}
-
-.side-nav-item {
-    color: #ff4081;
-    text-decoration: none;
-    margin: 10px 0;
-    font-size: 16px;
-}
-
-.side-nav-item:hover,
-.side-nav-item.active {
-    color: #ffffff;
-}
-
-.hero-section {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.hero-section h1 {
-    font-size: 50px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-    color: #ff4081;
-}
-
-.hero-section .subtitle {
-    font-size: 18px;
-    color: #e0e0e0;
-}
-
-.status-section {
-    margin-bottom: 40px;
-}
-
-.status-section h2 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #ff4081;
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.status-content {
-    background-color: #1e1e1e;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
-.status-gauge {
-    background-color: #333;
-    border-radius: 5px;
-    margin-top: 15px;
-    width: 100%;
-    height: 20px;
-    overflow: hidden;
-    position: relative;
-}
-
-.status-progress {
-    background-color: #ff4081;
-    width: 50%;
-    height: 100%;
-    animation: gaugePulse 3s infinite ease-in-out;
-}
-
-#progress-text {
-    position: absolute;
-    color: #fff;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 14px;
-    font-weight: bold;
-    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
-}
-
-/* 간격 및 버전 검사 스타일 */
-.timeline-section {
-    margin: 20px 0;
-}
-
-.timeline-section p {
-    font-size: 14px;
-    color: #b0b0b0;
-}
-
-.timeline-section ul {
-    list-style-type: square;
-    padding-left: 20px;
-}
-
-.timeline-section .hover-detail {
-    display: none;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    z-index: 50;
-}
-
-.timeline-section:hover .hover-detail {
-    display: block;
-}
-
-/* 애니메이션 효과 */
-@keyframes glitchEffect {
-    0% {
-        transform: translate(-5px, 0);
-        opacity: 1;
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f8f8;
+      color: #333;
     }
-    50% {
-        transform: translate(5px, 0);
-        opacity: 0.7;
+    .navbar {
+      background: #000;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      font-size: 18px;
     }
-    100% {
-        transform: translate(-5px, 0);
-        opacity: 1;
+    .nav-logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      text-transform: uppercase;
     }
-}
-
-@keyframes gaugePulse {
-    0% {
-        width: 45%;
+    .nav-controls {
+      display: flex;
+      gap: 20px;
     }
-    50% {
-        width: 55%;
+    .nav-time, .nav-danger-level {
+      color: white;
+      font-weight: bold;
     }
-    100% {
-        width: 50%;
+    .side-nav {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      background: #333;
+      padding-top: 20px;
+      width: 200px;
+      height: 100%;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     }
-}
-</style>
-
+    .side-nav-item {
+      display: block;
+      padding: 15px;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .side-nav-item:hover, .side-nav-item.active {
+      background: #555;
+      cursor: pointer;
+    }
+    .container {
+      margin-left: 220px;
+      padding: 40px;
+    }
+    .hero-section {
+      margin-bottom: 40px;
+    }
+    .hero-section h1 {
+      font-size: 48px;
+      color: #222;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 20px;
+      color: #666;
+    }
+    .status-section {
+      background: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .status-section h2 {
+      font-size: 32px;
+      color: #222;
+      text-align: center;
+    }
+    .status-content {
+      margin-top: 20px;
+    }
+    .status-content p, .status-content ul {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .status-content ul {
+      list-style: none;
+      padding-left: 20px;
+    }
+    .status-content li {
+      margin-bottom: 10px;
+      padding-left: 10px;
+      position: relative;
+    }
+    .status-content li::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: -10px;
+      width: 6px;
+      height: 6px;
+      background-color: #3498db;
+      border-radius: 50%;
+    }
+    .waves {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+    }
+    .wave {
+      background: #0099ff;
+      height: 5px;
+      margin: 1px;
+      animation: wave 5s infinite;
+    }
+    @keyframes wave {
+      0% { transform: scaleY(1); }
+      50% { transform: scaleY(1.5); }
+      100% { transform: scaleY(1); }
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -216,60 +144,51 @@ body {
       <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
     </div>
   </nav>
-
+  
   <div class="side-nav">
     <a href="#current-status" class="side-nav-item" data-section="current-status">현재 상태</a>
-    <a href="#last-update" class="side-nav-item" data-section="last-update">마지막 업데이트</a>
-    <a href="#error-log" class="side-nav-item" data-section="error-log">오류 로그</a>
+    <a href="#system-health" class="side-nav-item" data-section="system-health">시스템 상태</a>
+    <a href="#alerts" class="side-nav-item" data-section="alerts">알림</a>
   </div>
 
   <div class="container">
     <section class="hero-section">
-      <h1 class="intermittent-glitch" data-text="시스템 상태">시스템 상태</h1>
-      <div class="subtitle">"알려지지 않은 시스템의 변동"</div>
+      <h1 class="intermittent-glitch" data-text="상태">상태</h1>
+      <div class="subtitle">"시스템 상태와 경고를 추적하라!"</div>
     </section>
 
     <section id="current-status" class="status-section">
-      <h2>현재 상태 - 2025.01.25</h2>
+      <h2>현재 상태</h2>
       <div class="status-content">
-        <p>현재 시스템의 상태는 불안정한 상태입니다.</p>
-        <p>메인 시스템에서 비정상적인 오류가 발생하고 있으며, 데이터의 정확성에 영향을 미치고 있습니다.</p>
-        <p>지금 현재 경고가 발생한 위치: 네트워크 서버 A</p>
-      </div>
-      <div class="status-gauge">
-        <div class="status-progress"></div>
-        <div id="progress-text">경고: 시스템 복구 시급</div>
-      </div>
-    </section>
-
-    <section id="last-update" class="status-section">
-      <h2>마지막 업데이트 - 2025.01.24</h2>
-      <div class="status-content">
-        <p>2025년 1월 24일에 진행된 시스템 점검에서 주요 문제점이 발견되었습니다:</p>
+        <p>현재 시스템 상태:</p>
         <ul>
-          <li>전원 공급 문제로 인해 서버 다운타임 발생</li>
-          <li>데이터 동기화 중단</li>
-          <li>긴급 패치 필요: 보안 취약점 발견</li>
+          <li>프로젝트: 활성화 중</li>
+          <li>서버 상태: 안정적</li>
+          <li>데이터베이스 연결: 정상</li>
         </ul>
-        <div class="progress-container">
-          <div class="progress-bar" style="width: 85%;"></div>
-        </div>
       </div>
     </section>
 
-    <section id="error-log" class="status-section">
-      <h2>오류 로그</h2>
+    <section id="system-health" class="status-section">
+      <h2>시스템 상태</h2>
       <div class="status-content">
-        <p>최신 오류 로그</p>
-        <div class="log-entry">
-          <p>[ERROR] 2025-01-24 14:30 - 시스템 리셋 요청됨 - 코드: XG7-H9Y-T3A</p>
-          <p>[WARNING] 2025-01-24 15:00 - 오류 진단 실패</p>
-        </div>
-        <p>잠시 후 오류 로그가 갱신될 예정입니다.</p>
+        <p>시스템 모니터링 결과:</p>
+        <ul>
+          <li>CPU 사용률: 25%</li>
+          <li>메모리 사용률: 40%</li>
+          <li>디스크 사용률: 60%</li>
+        </ul>
       </div>
-      <div class="encrypted-log">
-        <p>[ENCRYPTED: FX5-J7D-Z2L]</p>
-        <p class="message-tooltip">(숨겨진 정보와 관련된 오류 코드)</p>
+    </section>
+
+    <section id="alerts" class="status-section">
+      <h2>알림</h2>
+      <div class="status-content">
+        <p>현재 발생한 경고 및 알림:</p>
+        <ul>
+          <li>알림 1: 서버 과부하 임박</li>
+          <li>알림 2: 업데이트 필요 (보안 패치)</li>
+        </ul>
       </div>
     </section>
   </div>
@@ -281,45 +200,15 @@ body {
   </div>
 
   <script>
-      document.addEventListener('DOMContentLoaded', () => {
-            const puzzleTriggers = document.querySelectorAll('.puzzle-trigger');
-            const progressBars = document.querySelectorAll('.progress-bar');
-
-            puzzleTriggers.forEach((trigger, index) => {
-                trigger.addEventListener('click', () => {
-                    const puzzles = [
-                        'SYSTEM_CHECK_KEY',
-                        'SERVER_REBOOT_CODE',
-                        'EMERGENCY_DIAGNOSE'
-                    ];
-                    alert(`${puzzles[index]} - 퍼즐 해제 조건 활성화`);
-                });
-            });
-
-            progressBars.forEach((bar, index) => {
-                const progressPercentages = [33, 66, 100];
-                bar.style.width = `${progressPercentages[index]}%`;
-            });
-        });
-    function updateActiveSection() {
-      const sections = document.querySelectorAll('.status-section');
-      const navItems = document.querySelectorAll('.side-nav-item');
-
-      sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-          navItems.forEach(item => item.classList.remove('active'));
-          navItems[index].classList.add('active');
-        }
-      });
+    // Update real-time datetime in navigation
+    function updateDateTime() {
+      const currentTime = new Date();
+      document.getElementById("current-datetime").innerText = currentTime.toLocaleString();
     }
 
-    window.addEventListener('scroll', updateActiveSection);
+    setInterval(updateDateTime, 1000);
 
-    // Initial call to set first section as active
-    updateActiveSection();
-
-    // Smooth scrolling for side nav
+    // Smooth scrolling for navigation
     document.querySelectorAll('.side-nav-item').forEach(item => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
