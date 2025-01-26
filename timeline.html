@@ -1,163 +1,123 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>   
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Lam Graduation Cruise - Timeline</title>
+  <title>Blue Lam Project Status</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="glitch.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <link rel="stylesheet" href="status-glitch.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 </head>
 <body>
   <nav class="navbar">
     <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
     <div class="nav-controls">
       <div class="nav-time" id="current-datetime"></div>
-      <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
+      <div class="nav-status" id="project-status">프로젝트 상태: 안정적</div>
     </div>
   </nav>
-  
+
   <div class="side-nav">
-    <a href="#start" class="side-nav-item" data-section="start">프로젝트 시작</a>
-    <a href="#midpoint" class="side-nav-item" data-section="midpoint">중간 점검</a>
-    <a href="#finale" class="side-nav-item" data-section="finale">최종 종료</a>
+    <a href="#start-status" class="side-nav-item" data-section="start">프로젝트 시작</a>
+    <a href="#progress-status" class="side-nav-item" data-section="progress">진행 상황</a>
+    <a href="#end-status" class="side-nav-item" data-section="end">최종 상태</a>
   </div>
 
   <div class="container">
-    <section class="hero-section">
-      <h1 class="intermittent-glitch" data-text="타임라인">타임라인</h1>
-      <div class="subtitle">"시간의 흔적, 우리의 여정"</div>
-    </section>
-
-    <section id="start" class="timeline-section">
+    <!-- 시작 상태 -->
+    <section id="start-status" class="status-section">
       <h2>프로젝트 시작 - 2025.01.03</h2>
-      <div class="timeline-content">
-        <p>프로젝트 시작에 대한 주요 가이드라인:</p>
-        <p>- 초기 시스템 구성에 대해 여기에 작성</p>
-        <p>- 프로젝트 주요 목표와 애들 상태</p>
-        <p>- 계획 구성 및 어쩌고 여튼 앞배경</p>
+      <div class="status-details">
+        <p>프로젝트가 시작되었습니다. 초기 시스템 구축 및 구성 작업이 진행 중입니다.</p>
+        <p>주요 작업 목록:</p>
+        <ul>
+          <li>초기 서버 셋업</li>
+          <li>프론트엔드 기술 선택</li>
+          <li>백엔드 API 기본 구축</li>
+        </ul>
+      </div>
+
+      <div class="status-progress">
+        <div class="status-bar">
+          <div class="progress-indicator" style="width: 40%;"></div>
+        </div>
+        <p>진행 상황: 40% 완료</p>
       </div>
     </section>
 
-    <section id="midpoint" class="timeline-section">
-      <h2>중간 점검 - 2025.01.20</h2>
-      <div class="timeline-content">
-        <p>중간 점검 단계에서 고려할 사항:</p>
-        <p>- 현재까지의 진행 상황 분석 내용</p>
-        <p>- 시스템 안정성 평가 결과</p>
-        <p>- 발견된 문제점 및 예측 결과</p>
+    <!-- 진행 중인 상태 -->
+    <section id="progress-status" class="status-section">
+      <h2>진행 상황 - 2025.01.20</h2>
+      <div class="status-details">
+        <p>프로젝트의 중간 점검이 완료되었습니다. 많은 작업이 진행되었으나, 몇 가지 문제가 발견되었습니다.</p>
+        <p>핵심 이슈:</p>
+        <ul>
+          <li>API 응답 속도 지연</li>
+          <li>리뷰 시스템 오류 수정</li>
+          <li>UI 개선 필요</li>
+        </ul>
+      </div>
+
+      <div class="status-progress">
+        <div class="status-bar">
+          <div class="progress-indicator" style="width: 70%;"></div>
+        </div>
+        <p>진행 상황: 70% 완료</p>
       </div>
     </section>
 
-    <section id="finale" class="timeline-section">
+    <!-- 종료 상태 -->
+    <section id="end-status" class="status-section">
       <h2>최종 종료 - 2025.02.02</h2>
-      <div class="timeline-content">
-        <p>프로젝트 최종 단계 준비 사항:</p>
-        <p>- 전체 프로젝트 결과 총괄</p>
-        <p>- 최종 성과 평가</p>
-        <p>- 이쯤에 해금 조건 힌트</p>
+      <div class="status-details">
+        <p>최종 점검을 마친 프로젝트가 종료되었습니다. 모든 기능이 원활하게 실행되고 있습니다.</p>
+        <p>결과:</p>
+        <ul>
+          <li>전체 시스템 기능 동작 정상</li>
+          <li>성공적인 배포 완료</li>
+          <li>고객 테스트 완료</li>
+        </ul>
+      </div>
+
+      <div class="status-progress">
+        <div class="status-bar">
+          <div class="progress-indicator" style="width: 100%;"></div>
+        </div>
+        <p>진행 상황: 100% 완료</p>
       </div>
     </section>
+    
+    <!-- 실시간 시간 및 상태 업데이트 -->
+    <div class="system-status">
+      <div class="current-status">
+        <h3>실시간 시스템 상태:</h3>
+        <p id="live-status">서버 안정성: 정상</p>
+        <p>실시간 업데이트가 이루어지고 있습니다.</p>
+      </div>
+    </div>
 
-  <div class="waves">
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
   </div>
 
   <script>
-      document.addEventListener('DOMContentLoaded', () => {
-            const puzzleTriggers = document.querySelectorAll('.puzzle-trigger');
-            const progressBars = document.querySelectorAll('.progress-bar');
-
-            puzzleTriggers.forEach((trigger, index) => {
-                trigger.addEventListener('click', () => {
-                    const puzzles = [
-                        'BLUE_START_2025',
-                        'MIDPOINT_CIPHER',
-                        'FINAL_SEQUENCE'
-                    ];
-                    alert(`${puzzles[index]} - 퍼즐 힌트 활성화`);
-                });
-            });
-
-            progressBars.forEach((bar, index) => {
-                const progressPercentages = [33, 66, 100];
-                bar.style.width = `${progressPercentages[index]}%`;
-            });
-        });
-    function updateActiveSection() {
-      const sections = document.querySelectorAll('.timeline-section');
-      const navItems = document.querySelectorAll('.side-nav-item');
-
-      sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-          navItems.forEach(item => item.classList.remove('active'));
-          navItems[index].classList.add('active');
-        }
-      });
+    // 실시간 날짜 업데이트
+    function updateDateTime() {
+      const currentTime = new Date();
+      document.getElementById("current-datetime").innerText = currentTime.toLocaleString();
     }
 
-    window.addEventListener('scroll', updateActiveSection);
-    
-    // Initial call to set first section as active
-    updateActiveSection();
+    setInterval(updateDateTime, 1000); // 매초마다 시간 갱신
 
-    // Smooth scrolling for side nav
-    document.querySelectorAll('.side-nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = item.getAttribute('href').substring(1);
-        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+    // 실시간 서버 상태 (변수 상태 시뮬레이션)
+    function updateLiveStatus() {
+      const statusElement = document.getElementById("live-status");
+      const statuses = ["서버 안정성: 정상", "⚠서버 안정성: 불안정", "시스템 장애"];
+      const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+      statusElement.textContent = randomStatus;
+    }
+
+    setInterval(updateLiveStatus, 5000); // 5초마다 서버 상태 업데이트
   </script>
+
   <script src="script.js"></script>
 </body>
 </html>
-
-<script>
-    // Add hover detail sections to existing timeline sections
-    document.querySelectorAll('.timeline-section').forEach(section => {
-        const hoverDetail = document.createElement('div');
-        hoverDetail.classList.add('hover-detail');
-        
-        const progressContainer = document.createElement('div');
-        progressContainer.classList.add('progress-container');
-        
-        const progressBar = document.createElement('div');
-        progressBar.classList.add('progress-bar');
-        
-        progressContainer.appendChild(progressBar);
-        
-        const puzzleTrigger = document.createElement('div');
-        puzzleTrigger.classList.add('puzzle-trigger');
-        puzzleTrigger.textContent = '숨겨진 퍼즐 해제';
-        
-        const encryptedLog = document.createElement('div');
-        encryptedLog.classList.add('encrypted-log');
-        
-        const sectionId = section.id;
-        switch(sectionId) {
-            case 'start':
-                hoverDetail.innerHTML += '<p>프로젝트 초기 시스템 구성의 숨겨진 세부사항</p>';
-                encryptedLog.textContent = '[ENCRYPTED: XG9-K2F-Q7R]';
-                break;
-            case 'midpoint':
-                hoverDetail.innerHTML += '<p>중간 점검 단계의 비공개 분석 결과</p>';
-                encryptedLog.textContent = '[ENCRYPTED: LM5-P3X-T9N]';
-                break;
-            case 'finale':
-                hoverDetail.innerHTML += '<p>각자의 미공개 정보</p>';
-                encryptedLog.textContent = '[ENCRYPTED: ZK7-H1Y-W4B]';
-                break;
-        }
-        
-        hoverDetail.appendChild(progressContainer);
-        hoverDetail.appendChild(puzzleTrigger);
-        hoverDetail.appendChild(encryptedLog);
-        
-        section.appendChild(hoverDetail);
-    });
-</script>
