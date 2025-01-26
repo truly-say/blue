@@ -1,126 +1,150 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <style>
-        .locked-content {
-            filter: blur(10px);
-            pointer-events: none;
-            opacity: 0.5;
-            transition: all 0.5s ease;
-        }
-        .unlocked-content {
-            filter: blur(0);
-            pointer-events: auto;
-            opacity: 1;
-        }
-        .unlock-progress {
-            background: rgba(74, 255, 255, 0.2);
-            height: 10px;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        .interaction-tracker {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 15, 31, 0.7);
-            padding: 10px;
-            color: #4affff;
-        }
-        .secret-section {
-            display: none;
-            background: rgba(0, 31, 63, 0.8);
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 15px;
-        }
-    </style>
+<head>   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blue Lam Graduation Cruise - Timeline</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="glitch.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <style>
+    .timeline-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+      color: white;
+      background: rgba(0, 31, 63, 0.6);
+      margin-bottom: 2rem;
+    }
+    .timeline-section h2 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      color: #4affff;
+    }
+    .timeline-content {
+      max-width: 800px;
+      background: rgba(0, 15, 31, 0.7);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .timeline-section p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .side-nav {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 15, 31, 0.7);
+      padding: 15px;
+      border-radius: 10px;
+      z-index: 1000;
+    }
+    .side-nav-item {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      display: block;
+      margin: 10px 0;
+      transition: color 0.3s ease;
+    }
+    .side-nav-item.active {
+      color: #4affff;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
+    <div class="nav-controls">
+      <div class="nav-time" id="current-datetime"></div>
+      <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
+    </div>
+  </nav>
+  
+  <div class="side-nav">
+    <a href="#start" class="side-nav-item" data-section="start">프로젝트 시작</a>
+    <a href="#midpoint" class="side-nav-item" data-section="midpoint">중간 점검</a>
+    <a href="#finale" class="side-nav-item" data-section="finale">최종 종료</a>
+  </div>
+
+  <div class="container">
+    <section class="hero-section">
+      <h1 class="intermittent-glitch" data-text="타임라인">타임라인</h1>
+      <div class="subtitle">"시간의 흔적, 우리의 여정"</div>
+    </section>
+
     <section id="start" class="timeline-section">
-        <div class="unlock-progress" id="startProgress"></div>
-        <h2>프로젝트 시작 - 2025.01.03</h2>
-        <div class="timeline-content locked-content" id="startContent">
-            <p>시스템 초기화 및 기본 아키텍처 구성</p>
-            <p>주요 준비 사항:
-                - 초기 인프라 설정
-                - 기술적 기반 마련
-                - 프로젝트 로드맵 최적화</p>
-        </div>
-        <div class="secret-section" id="startSecret">
-            <h3>숨겨진 프로젝트 시작 데이터</h3>
-            <p>초기 시스템 설정에 대한 상세 기술 문서</p>
-        </div>
+      <h2>프로젝트 시작 - 2025.01.03</h2>
+      <div class="timeline-content">
+        <p>프로젝트 시작에 대한 주요 가이드라인:</p>
+        <p>- 초기 시스템 구성에 대해 여기에 작성</p>
+        <p>- 프로젝트 주요 목표와 애들 상태</p>
+        <p>- 계획 구성 및 어쩌고 여튼 앞배경</p>
+      </div>
     </section>
 
     <section id="midpoint" class="timeline-section">
-        <div class="unlock-progress" id="midProgress"></div>
-        <h2>중간 점검 - 2025.01.20</h2>
-        <div class="timeline-content locked-content" id="midContent">
-            <p>프로젝트 중간 평가 및 시스템 안정성 분석</p>
-            <p>주요 평가 지표:
-                - 기술적 성능 검증
-                - 리스크 식별
-                - 최적화 전략 수립</p>
-        </div>
-        <div class="secret-section" id="midSecret">
-            <h3>중간 평가 상세 보고서</h3>
-            <p>내부 시스템 성능 및 개선점 분석</p>
-        </div>
+      <h2>중간 점검 - 2025.01.20</h2>
+      <div class="timeline-content">
+        <p>중간 점검 단계에서 고려할 사항:</p>
+        <p>- 현재까지의 진행 상황 분석 내용</p>
+        <p>- 시스템 안정성 평가 결과</p>
+        <p>- 발견된 문제점 및 예측 결과</p>
+      </div>
     </section>
 
     <section id="finale" class="timeline-section">
-        <div class="unlock-progress" id="finalProgress"></div>
-        <h2>최종 종료 - 2025.02.02</h2>
-        <div class="timeline-content locked-content" id="finalContent">
-            <p>프로젝트 최종 단계 종합 평가</p>
-            <p>최종 목표:
-                - 전체 결과 통합
-                - 성과 지표 분석
-                - 향후 발전 방향 제시</p>
-        </div>
-        <div class="secret-section" id="finalSecret">
-            <h3>프로젝트 최종 결과 및 전략</h3>
-            <p>종합적인 프로젝트 성과 보고서</p>
-        </div>
+      <h2>최종 종료 - 2025.02.02</h2>
+      <div class="timeline-content">
+        <p>프로젝트 최종 단계 준비 사항:</p>
+        <p>- 전체 프로젝트 결과 총괄</p>
+        <p>- 최종 성과 평가</p>
+        <p>- 이쯤에 해금 조건 힌트</p>
+      </div>
     </section>
 
-    <div class="interaction-tracker" id="interactionTracker">
-        상호작용: 0 / 100
-    </div>
+  <div class="waves">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
 
-    <script>
-        let interactions = 0;
-        const sections = ['start', 'mid', 'final'];
+  <script>
+    function updateActiveSection() {
+      const sections = document.querySelectorAll('.timeline-section');
+      const navItems = document.querySelectorAll('.side-nav-item');
 
-        function trackInteraction() {
-            interactions++;
-            document.getElementById('interactionTracker').textContent = `상호작용: ${interactions} / 100`;
-            updateUnlockProgress();
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+          navItems.forEach(item => item.classList.remove('active'));
+          navItems[index].classList.add('active');
         }
+      });
+    }
 
-        function updateUnlockProgress() {
-            sections.forEach(section => {
-                const progress = Math.min(interactions * 3, 100);
-                const progressElement = document.getElementById(`${section}Progress`);
-                const contentElement = document.getElementById(`${section}Content`);
-                const secretElement = document.getElementById(`${section}Secret`);
+    window.addEventListener('scroll', updateActiveSection);
+    
+    // Initial call to set first section as active
+    updateActiveSection();
 
-                if (progressElement) progressElement.style.width = `${progress}%`;
-                
-                if (progress >= 100) {
-                    if (contentElement) contentElement.classList.add('unlocked-content');
-                    if (secretElement) secretElement.style.display = 'block';
-                }
-            });
-        }
-
-        // Add interaction tracking to various elements
-        document.addEventListener('click', trackInteraction);
-        document.addEventListener('mousemove', (e) => {
-            if (Math.random() < 0.01) trackInteraction();
-        });
-        document.addEventListener('keypress', trackInteraction);
-    </script>
+    // Smooth scrolling for side nav
+    document.querySelectorAll('.side-nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('href').substring(1);
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>
