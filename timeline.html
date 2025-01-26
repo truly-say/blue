@@ -7,6 +7,36 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <style>
+    /* 기본 스타일 */
+    .hover-detail {
+      display: none;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      top: 20px;
+      left: 0;
+      max-width: 300px;
+    }
+
+    /* 타임라인 섹션에 마우스를 올리면 세부 내용이 보이게 설정 */
+    .timeline-section:hover .hover-detail {
+      display: block;
+    }
+
+    /* 퍼즐 트리거 스타일 */
+    .puzzle-trigger {
+      color: #ff0;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 5px;
+      border: 2px solid #ff0;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -26,7 +56,7 @@
   <div class="container">
     <section class="hero-section">
       <h1 class="intermittent-glitch" data-text="타임라인">타임라인</h1>
-      <div class="subtitle">"시간의 흔적, 우리의 청춘"</div>
+      <div class="subtitle">"시간의 흔적, 우리의 여정"</div>
     </section>
 
     <section id="start" class="timeline-section">
@@ -36,6 +66,15 @@
         <p>- 초기 시스템 구성에 대해 여기에 작성</p>
         <p>- 프로젝트 주요 목표와 애들 상태</p>
         <p>- 계획 구성 및 어쩌고 여튼 앞배경</p>
+      </div>
+      <!-- 숨겨진 세부 사항 -->
+      <div class="hover-detail">
+        <p>프로젝트 초기 시스템 구성의 숨겨진 세부사항</p>
+        <div class="progress-container">
+          <div class="progress-bar" style="width: 33%;"></div>
+        </div>
+        <div class="puzzle-trigger" data-section="start">숨겨진 퍼즐 해제</div>
+        <div class="encrypted-log">[ENCRYPTED: XG9-K2F-Q7R]</div>
       </div>
     </section>
 
@@ -47,6 +86,15 @@
         <p>- 시스템 안정성 평가 결과</p>
         <p>- 발견된 문제점 및 예측 결과</p>
       </div>
+      <!-- 숨겨진 세부 사항 -->
+      <div class="hover-detail">
+        <p>중간 점검 단계의 비공개 분석 결과</p>
+        <div class="progress-container">
+          <div class="progress-bar" style="width: 66%;"></div>
+        </div>
+        <div class="puzzle-trigger" data-section="midpoint">숨겨진 퍼즐 해제</div>
+        <div class="encrypted-log">[ENCRYPTED: LM5-P3X-T9N]</div>
+      </div>
     </section>
 
     <section id="finale" class="timeline-section">
@@ -56,6 +104,15 @@
         <p>- 전체 프로젝트 결과 총괄</p>
         <p>- 최종 성과 평가</p>
         <p>- 이쯤에 해금 조건 힌트</p>
+      </div>
+      <!-- 숨겨진 세부 사항 -->
+      <div class="hover-detail">
+        <p>각자의 미공개 정보</p>
+        <div class="progress-container">
+          <div class="progress-bar" style="width: 100%;"></div>
+        </div>
+        <div class="puzzle-trigger" data-section="finale">숨겨진 퍼즐 해제</div>
+        <div class="encrypted-log">[ENCRYPTED: ZK7-H1Y-W4B]</div>
       </div>
     </section>
 
@@ -86,6 +143,7 @@
                 bar.style.width = `${progressPercentages[index]}%`;
             });
         });
+
     function updateActiveSection() {
       const sections = document.querySelectorAll('.timeline-section');
       const navItems = document.querySelectorAll('.side-nav-item');
@@ -116,48 +174,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-<script>
-    // Add hover detail sections to existing timeline sections
-    document.querySelectorAll('.timeline-section').forEach(section => {
-        const hoverDetail = document.createElement('div');
-        hoverDetail.classList.add('hover-detail');
-        
-        const progressContainer = document.createElement('div');
-        progressContainer.classList.add('progress-container');
-        
-        const progressBar = document.createElement('div');
-        progressBar.classList.add('progress-bar');
-        
-        progressContainer.appendChild(progressBar);
-        
-        const puzzleTrigger = document.createElement('div');
-        puzzleTrigger.classList.add('puzzle-trigger');
-        puzzleTrigger.textContent = '숨겨진 퍼즐 해제';
-        
-        const encryptedLog = document.createElement('div');
-        encryptedLog.classList.add('encrypted-log');
-        
-        const sectionId = section.id;
-        switch(sectionId) {
-            case 'start':
-                hoverDetail.innerHTML += '<p>프로젝트 초기 시스템 구성의 숨겨진 세부사항</p>';
-                encryptedLog.textContent = '[ENCRYPTED: XG9-K2F-Q7R]';
-                break;
-            case 'midpoint':
-                hoverDetail.innerHTML += '<p>중간 점검 단계의 비공개 분석 결과</p>';
-                encryptedLog.textContent = '[ENCRYPTED: LM5-P3X-T9N]';
-                break;
-            case 'finale':
-                hoverDetail.innerHTML += '<p>각자의 미공개 정보</p>';
-                encryptedLog.textContent = '[ENCRYPTED: ZK7-H1Y-W4B]';
-                break;
-        }
-        
-        hoverDetail.appendChild(progressContainer);
-        hoverDetail.appendChild(puzzleTrigger);
-        hoverDetail.appendChild(encryptedLog);
-        
-        section.appendChild(hoverDetail);
-    });
-</script>
