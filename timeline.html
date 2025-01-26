@@ -7,6 +7,72 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <style>
+    .timeline-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+      color: white;
+      background: rgba(0, 31, 63, 0.6);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .timeline-section h2 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      color: #4affff;
+      z-index: 10;
+      position: relative;
+    }
+    .timeline-content {
+      max-width: 800px;
+      background: rgba(0, 15, 31, 0.7);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 10;
+      position: relative;
+    }
+    .timeline-section p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .timeline-details {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+    }
+    .toggle-details {
+      cursor: pointer;
+      color: #4affff;
+      text-decoration: underline;
+      margin-top: 1rem;
+      display: inline-block;
+    }
+    .background-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+      background-size: cover;
+      background-position: center;
+      filter: blur(5px);
+      z-index: 1;
+    }
+    #start .background-overlay { background-image: url('/api/placeholder/1200/800?text=Project+Start'); }
+    #midpoint .background-overlay { background-image: url('/api/placeholder/1200/800?text=Mid+Point'); }
+    #finale .background-overlay { background-image: url('/api/placeholder/1200/800?text=Project+Finale'); }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -30,34 +96,59 @@
     </section>
 
     <section id="start" class="timeline-section">
+      <div class="background-overlay"></div>
       <h2>프로젝트 시작 - 2025.01.03</h2>
       <div class="timeline-content">
         <p>프로젝트 시작에 대한 주요 가이드라인:</p>
-        <p>- 초기 시스템 구성에 대해 여기에 작성</p>
-        <p>- 프로젝트 주요 목표와 애들 상태</p>
-        <p>- 계획 구성 및 어쩌고 여튼 앞배경</p>
+        <p>- 초기 시스템 구성 및 아키텍처 설계</p>
+        <p>- 팀 구성원 역할 분담 및 초기 미팅</p>
+        <p>- 프로젝트 범위 및 초기 목표 설정</p>
+        <span class="toggle-details" onclick="toggleDetails(this)">더 자세한 내용 보기</span>
+        <div class="timeline-details">
+          <p>🚀 프로젝트 초기 단계 상세 정보:</p>
+          <p>- 기술 스택 선정: React, Node.js, GraphQL</p>
+          <p>- 초기 개발 환경 구축</p>
+          <p>- 프로젝트 관리 도구 연동 (Jira, Slack)</p>
+        </div>
       </div>
     </section>
 
     <section id="midpoint" class="timeline-section">
+      <div class="background-overlay"></div>
       <h2>중간 점검 - 2025.01.20</h2>
       <div class="timeline-content">
         <p>중간 점검 단계에서 고려할 사항:</p>
-        <p>- 현재까지의 진행 상황 분석 내용</p>
-        <p>- 시스템 안정성 평가 결과</p>
-        <p>- 발견된 문제점 및 예측 결과</p>
+        <p>- 현재까지의 진행 상황 분석</p>
+        <p>- 시스템 안정성 및 성능 평가</p>
+        <p>- 잠재적 리스크 식별 및 대응 방안</p>
+        <span class="toggle-details" onclick="toggleDetails(this)">더 자세한 내용 보기</span>
+        <div class="timeline-details">
+          <p>🔍 중간 점검 상세 분석:</p>
+          <p>- 현재 개발 진행율: 65%</p>
+          <p>- 성능 벤치마크 결과</p>
+          <p>- 팀 간 협업 상황 리뷰</p>
+        </div>
       </div>
     </section>
 
     <section id="finale" class="timeline-section">
+      <div class="background-overlay"></div>
       <h2>최종 종료 - 2025.02.02</h2>
       <div class="timeline-content">
         <p>프로젝트 최종 단계 준비 사항:</p>
-        <p>- 전체 프로젝트 결과 총괄</p>
-        <p>- 최종 성과 평가</p>
-        <p>- 이쯤에 해금 조건 힌트</p>
+        <p>- 전체 프로젝트 결과 종합</p>
+        <p>- 최종 성과 및 핵심 지표 평가</p>
+        <p>- 프로젝트 결과물 최종 검수</p>
+        <span class="toggle-details" onclick="toggleDetails(this)">더 자세한 내용 보기</span>
+        <div class="timeline-details">
+          <p>🏁 최종 단계 상세 계획:</p>
+          <p>- 최종 발표 준비</p>
+          <p>- 프로젝트 문서화 작업</p>
+          <p>- 포트폴리오 및 결과물 정리</p>
+        </div>
       </div>
     </section>
+  </div>
 
   <div class="waves">
     <div class="wave"></div>
@@ -66,26 +157,6 @@
   </div>
 
   <script>
-      document.addEventListener('DOMContentLoaded', () => {
-            const puzzleTriggers = document.querySelectorAll('.puzzle-trigger');
-            const progressBars = document.querySelectorAll('.progress-bar');
-
-            puzzleTriggers.forEach((trigger, index) => {
-                trigger.addEventListener('click', () => {
-                    const puzzles = [
-                        'BLUE_START_2025',
-                        'MIDPOINT_CIPHER',
-                        'FINAL_SEQUENCE'
-                    ];
-                    alert(`${puzzles[index]} - 퍼즐 힌트 활성화`);
-                });
-            });
-
-            progressBars.forEach((bar, index) => {
-                const progressPercentages = [33, 66, 100];
-                bar.style.width = `${progressPercentages[index]}%`;
-            });
-        });
     function updateActiveSection() {
       const sections = document.querySelectorAll('.timeline-section');
       const navItems = document.querySelectorAll('.side-nav-item');
@@ -97,6 +168,12 @@
           navItems[index].classList.add('active');
         }
       });
+    }
+
+    function toggleDetails(element) {
+      const detailsSection = element.nextElementSibling;
+      detailsSection.style.display = detailsSection.style.display === 'block' ? 'none' : 'block';
+      element.textContent = detailsSection.style.display === 'block' ? '간단히 보기' : '더 자세한 내용 보기';
     }
 
     window.addEventListener('scroll', updateActiveSection);
@@ -116,48 +193,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-<script>
-    // Add hover detail sections to existing timeline sections
-    document.querySelectorAll('.timeline-section').forEach(section => {
-        const hoverDetail = document.createElement('div');
-        hoverDetail.classList.add('hover-detail');
-        
-        const progressContainer = document.createElement('div');
-        progressContainer.classList.add('progress-container');
-        
-        const progressBar = document.createElement('div');
-        progressBar.classList.add('progress-bar');
-        
-        progressContainer.appendChild(progressBar);
-        
-        const puzzleTrigger = document.createElement('div');
-        puzzleTrigger.classList.add('puzzle-trigger');
-        puzzleTrigger.textContent = '숨겨진 퍼즐 해제';
-        
-        const encryptedLog = document.createElement('div');
-        encryptedLog.classList.add('encrypted-log');
-        
-        const sectionId = section.id;
-        switch(sectionId) {
-            case 'start':
-                hoverDetail.innerHTML += '<p>프로젝트 초기 시스템 구성의 숨겨진 세부사항</p>';
-                encryptedLog.textContent = '[ENCRYPTED: XG9-K2F-Q7R]';
-                break;
-            case 'midpoint':
-                hoverDetail.innerHTML += '<p>중간 점검 단계의 비공개 분석 결과</p>';
-                encryptedLog.textContent = '[ENCRYPTED: LM5-P3X-T9N]';
-                break;
-            case 'finale':
-                hoverDetail.innerHTML += '<p>각자의 미공개 정보</p>';
-                encryptedLog.textContent = '[ENCRYPTED: ZK7-H1Y-W4B]';
-                break;
-        }
-        
-        hoverDetail.appendChild(progressContainer);
-        hoverDetail.appendChild(puzzleTrigger);
-        hoverDetail.appendChild(encryptedLog);
-        
-        section.appendChild(hoverDetail);
-    });
-</script>
