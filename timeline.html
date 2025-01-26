@@ -58,6 +58,54 @@
       color: #4affff;
       font-weight: bold;
     }
+    .hover-detail {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 15, 31, 0.9);
+            padding: 15px;
+            display: none;
+            z-index: 10;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            border-radius: 0 0 15px 15px;
+        }
+        .timeline-section:hover .hover-detail {
+            display: block;
+        }
+        .puzzle-trigger {
+            background-color: #4affff;
+            color: #001f3f;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .puzzle-trigger:hover {
+            background-color: #4affff;
+            opacity: 0.8;
+        }
+        .encrypted-log {
+            font-family: monospace;
+            color: #4affff;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+        .progress-container {
+            background-color: rgba(74, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 20px;
+            margin-top: 15px;
+        }
+        .progress-bar {
+            background-color: #4affff;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
   </style>
 </head>
 <body>
@@ -118,6 +166,26 @@
   </div>
 
   <script>
+      document.addEventListener('DOMContentLoaded', () => {
+            const puzzleTriggers = document.querySelectorAll('.puzzle-trigger');
+            const progressBars = document.querySelectorAll('.progress-bar');
+
+            puzzleTriggers.forEach((trigger, index) => {
+                trigger.addEventListener('click', () => {
+                    const puzzles = [
+                        'BLUE_START_2025',
+                        'MIDPOINT_CIPHER',
+                        'FINAL_SEQUENCE'
+                    ];
+                    alert(`${puzzles[index]} - 퍼즐 힌트 활성화`);
+                });
+            });
+
+            progressBars.forEach((bar, index) => {
+                const progressPercentages = [33, 66, 100];
+                bar.style.width = `${progressPercentages[index]}%`;
+            });
+        });
     function updateActiveSection() {
       const sections = document.querySelectorAll('.timeline-section');
       const navItems = document.querySelectorAll('.side-nav-item');
@@ -148,3 +216,48 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+<script>
+    // Add hover detail sections to existing timeline sections
+    document.querySelectorAll('.timeline-section').forEach(section => {
+        const hoverDetail = document.createElement('div');
+        hoverDetail.classList.add('hover-detail');
+        
+        const progressContainer = document.createElement('div');
+        progressContainer.classList.add('progress-container');
+        
+        const progressBar = document.createElement('div');
+        progressBar.classList.add('progress-bar');
+        
+        progressContainer.appendChild(progressBar);
+        
+        const puzzleTrigger = document.createElement('div');
+        puzzleTrigger.classList.add('puzzle-trigger');
+        puzzleTrigger.textContent = '숨겨진 퍼즐 해제';
+        
+        const encryptedLog = document.createElement('div');
+        encryptedLog.classList.add('encrypted-log');
+        
+        const sectionId = section.id;
+        switch(sectionId) {
+            case 'start':
+                hoverDetail.innerHTML += '<p>프로젝트 초기 시스템 구성의 숨겨진 세부사항</p>';
+                encryptedLog.textContent = '[ENCRYPTED: XG9-K2F-Q7R]';
+                break;
+            case 'midpoint':
+                hoverDetail.innerHTML += '<p>중간 점검 단계의 비공개 분석 결과</p>';
+                encryptedLog.textContent = '[ENCRYPTED: LM5-P3X-T9N]';
+                break;
+            case 'finale':
+                hoverDetail.innerHTML += '<p>프로젝트 최종 단계의 미공개 전략</p>';
+                encryptedLog.textContent = '[ENCRYPTED: ZK7-H1Y-W4B]';
+                break;
+        }
+        
+        hoverDetail.appendChild(progressContainer);
+        hoverDetail.appendChild(puzzleTrigger);
+        hoverDetail.appendChild(encryptedLog);
+        
+        section.appendChild(hoverDetail);
+    });
+</script>
