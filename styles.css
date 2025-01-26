@@ -100,11 +100,6 @@ body {
   top: 0;
   bottom: 0;
   width: 120px;
-  background: linear-gradient(
-    45deg, 
-    rgba(74,255,255,0.05), 
-    rgba(0,31,63,0.3)
-  );
   z-index: 2;
   pointer-events: none;
   overflow: hidden;
