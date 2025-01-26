@@ -62,6 +62,53 @@
     .hidden {
       display: none;
     }
+     
+    .memory-scroll {
+      width: 100%;
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    .memory-section {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      scroll-snap-align: start;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 20px;
+      transition: background 1s ease;
+    }
+
+    .memory-section h2 {
+      font-size: 3rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      margin-bottom: 15px;
+    }
+
+    .memory-section p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .memory-section.overlay::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5); /* 어두운 오버레이 */
+      z-index: -1;
+    }
   </style>
 </head>
 <body>
@@ -86,7 +133,27 @@
     </section>
   <div class="container" id="memories-container">
     <!-- 메모리 조각이 여기에 동적으로 삽입. -->
-    <div class="waves">
+    <div class="memory-scroll">
+    <!-- 첫 번째 섹션 -->
+    <section class="memory-section" style="background-image: url('https://source.unsplash.com/1600x900/?ocean');">
+      <h2>첫 번째 섹션</h2>
+      <p>메세지 메세지 메세지 메세지 메세지 메세지 메세지 메세지 메세지 메세지 </p>
+    </section>
+
+    <!-- 두 번째 섹션 -->
+    <section class="memory-section" style="background-image: url('https://source.unsplash.com/1600x900/?storm');">
+      <h2>두 번째 섹션</h2>
+      <p>메세지 메세지 메세지 메세지 메세지 메세지 메세지 메세지 메세지 메세지</p>
+    </section>
+
+    <!-- 세 번째 섹션 -->
+    <section class="memory-section" style="background-image: url('https://source.unsplash.com/1600x900/?island');">
+      <h2>세 번째 섹션</h2>
+      <p>메세지 메세지 메세지 메세지 메세지 메세지 메세지 메세지 메세지 메세지</p>
+    </section>
+  </div>
+     
+     <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
@@ -227,7 +294,13 @@ function updateCurrentDateTime() {
     });
     datetimeElement.textContent = formattedDateTime;
   }
-  
+  const sections = document.querySelectorAll('.memory-section');
+    sections.forEach((section, index) => {
+      section.addEventListener('scroll', () => {
+        console.log(`Section ${index + 1} in view`);
+        // 스크롤 트리거 효과 추가 가능
+      });
+    });
   updateTime();
   setInterval(updateTime, 1000);
 }
