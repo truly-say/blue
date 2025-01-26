@@ -3,148 +3,165 @@
 <head>   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Lam - memory</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="glitch.css">
-  <link rel="stylesheet" href="status-page-custom.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <title>Blue Lam - Memory</title>
+  <style id="base-styles">
+    :root {
+      --bg-color: #0a0a1a;
+      --text-color: #e0e0ff;
+      --accent-color: #4a90e2;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      perspective: 1000px;
+    }
+
+    .memory-fragment {
+      background-color: rgba(74, 144, 226, 0.1);
+      border-left: 4px solid var(--accent-color);
+      margin: 20px 0;
+      padding: 15px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .memory-fragment:hover {
+      transform: translateX(10px) rotateY(5deg);
+      background-color: rgba(74, 144, 226, 0.2);
+    }
+
+    .memory-fragment h3 {
+      margin-top: 0;
+      color: var(--accent-color);
+    }
+
+    .interactive-choice {
+      display: none;
+      margin-top: 15px;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+    }
+
+    .interactive-choice button {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .interactive-choice button:hover {
+      background-color: #6ab0ff;
+    }
+
+    .waves {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(transparent, var(--bg-color));
+      opacity: 0.3;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
-  <nav class="navbar">
-    <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
-    <div class="nav-controls">
-      <div class="nav-time" id="current-datetime"></div>
-      <div class="nav-danger-level" id="danger-level">FRAGMENT: SUSPENDED</div>
-    </div>
-  </nav>
-
-  <div class="side-nav">
-    <a href="#departure" class="side-nav-item" data-section="departure">01. 출발</a>
-    <a href="#suspension" class="side-nav-item" data-section="suspension">02. 정지</a>
-    <a href="#fragments" class="side-nav-item" data-section="fragments">03. 조각</a>
-    <a href="#echo" class="side-nav-item" data-section="echo">04. 반향</a>
+  <div class="container" id="memories-container">
+    <!-- Memory fragments will be dynamically inserted here -->
   </div>
 
-  <div class="container">
-    <section class="hero-section">
-      <h1 class="intermittent-glitch" data-text="메모리">청춘의 최종본</h1>
-      <div class="subtitle">"우리는 결코 완벽하지 않았다"</div>
-    </section>
+  <div class="waves"></div>
 
-    <section id="departure" class="status-section">
-      <h2>출발</h2>
-      <div class="status-content">
-        <div class="special-event">
-          <h3>1월, 공허한 바다</h3>
-          <p>p는 텍스트 단락입니다</p>
-          <ul>
-            <li>ul에 li를 쓰면 불릿이 붙어요1</li>
-            <li>ul에 li를 쓰면 불릿이 붙어요2</li>
-            <li>ul에 li를 쓰면 불릿이 붙어요3</li>
-          </ul>
-        </div>
-        <div class="status-gauge">
-          <div class="status-progress" id="departureProgress"></div>
-        </div>
-      </div>
-    </section>
+  <script id="memory-template">
+    const memoryData = [
+      {
+        id: 'departure-memory',
+        title: '01. 출발의 순간',
+        description: '이곳에 출발 장면에 대한 상세 설명을 넣으세요.',
+        question: '어떤 감정이 가장 강렬했나요?',
+        choices: [
+          { text: '희망', value: 'hope' },
+          { text: '두려움', value: 'fear' },
+          { text: '기대', value: 'anticipation' }
+        ]
+      },
+      {
+        id: 'battle-memory',
+        title: '02. 마지막 대결',
+        description: '이곳에 마지막 대결 장면에 대한 상세 설명을 넣으세요.',
+        question: '당신의 선택은?',
+        choices: [
+          { text: '협상', value: 'negotiate' },
+          { text: '대립', value: 'conflict' },
+          { text: '타협', value: 'compromise' }
+        ]
+      },
+      {
+        id: 'echo-memory',
+        title: '03. 반향',
+        description: '이곳에 마지막 반향 장면에 대한 상세 설명을 넣으세요.',
+        question: '무엇이 가장 기억에 남나요?',
+        choices: [
+          { text: '우정', value: 'friendship' },
+          { text: '갈등', value: 'conflict' },
+          { text: '변화', value: 'transformation' }
+        ]
+      }
+    ];
 
-    <section id="fragments" class="status-section">
-      <h2>조각</h2>
-      <div class="status-content">
-        <div class="critical-revelation">
-          <h3>부서진 기억</h3>
-          <blockquote>
-            "blockquote는 이렇게 뜬답니다"
-          </blockquote>
-          <ul>
-            <li>ul에 li를 쓰면 불릿이 붙어요1</li>
-            <li>ul에 li를 쓰면 불릿이 붙어요2</li>
-            <li>ul에 li를 쓰면 불릿이 붙어요3</li>
-          </ul>
+    function createMemoryFragment(memory) {
+      const fragment = document.createElement('div');
+      fragment.className = 'memory-fragment';
+      fragment.id = memory.id;
+      
+      fragment.innerHTML = `
+        <h3>${memory.title}</h3>
+        <p>${memory.description}</p>
+        <div class="interactive-choice" id="${memory.id}-choice">
+          <p>${memory.question}</p>
+          ${memory.choices.map(choice => 
+            `<button onclick="selectChoice('${memory.id}', '${choice.value}')">${choice.text}</button>`
+          ).join('')}
         </div>
-        <div class="status-gauge">
-          <div class="status-progress" id="fragmentsProgress"></div>
-        </div>
-      </div>
-    </section>
+      `;
 
-    <section id="echo" class="status-section">
-      <h2>반향</h2>
-      <div class="status-content">
-        <div class="open-questions">
-          <h3>슬슬 뭐쓸지 생각이 안나네</h3>
-          <p>p는 텍스트 단락입니다3</p>
-          <ul>
-            <li>ul에 li를 쓰면 불릿이 붙어요1</li>
-            <li>ul에 li를 쓰면 불릿이 붙어요2</li>
-            <li>ul에 li를 쓰면 불릿이 붙어요3</li>
-          </ul>
-          <div class="warning-message">
-            경고: 기억은 쉽게 잊히지 않습니다
-          </div>
-        </div>
-        <div class="status-gauge">
-          <div class="status-progress" id="echoProgress"></div>
-        </div>
-      </div>
-    </section>
-  </div>
+      return fragment;
+    }
 
-  <div class="waves">
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-  </div>
+    function initializeMemories() {
+      const container = document.getElementById('memories-container');
+      memoryData.forEach(memory => {
+        const fragment = createMemoryFragment(memory);
+        container.appendChild(fragment);
 
-  <script>
-    function updateActiveSection() {
-      const sections = document.querySelectorAll('.status-section');
-      const navItems = document.querySelectorAll('.side-nav-item');
-
-      sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-          navItems.forEach(item => item.classList.remove('active'));
-          navItems[index].classList.add('active');
-        }
+        fragment.addEventListener('click', () => {
+          const choiceDiv = fragment.querySelector('.interactive-choice');
+          choiceDiv.style.display = choiceDiv.style.display === 'block' ? 'none' : 'block';
+        });
       });
     }
 
-    function simulateProgressBars() {
-      const progressBars = [
-        'departureProgress',
-        'suspensionProgress', 
-        'fragmentsProgress', 
-        'echoProgress'
-      ];
-
-      progressBars.forEach(barId => {
-        const progressBar = document.getElementById(barId);
-        let progress = 0;
-        const progressInterval = setInterval(() => {
-          progress += Math.random() * 15;
-          progressBar.style.width = `${Math.min(progress, 100)}%`;
-          
-          if (progress >= 100) {
-            clearInterval(progressInterval);
-          }
-        }, 1000);
-      });
+    function selectChoice(memoryId, choice) {
+      console.log(`Memory: ${memoryId}, Choice: ${choice}`);
+      alert('기억이 천천히 되살아납니다...');
     }
 
-    window.addEventListener('scroll', updateActiveSection);
-    updateActiveSection();
-    simulateProgressBars();
-
-    document.querySelectorAll('.side-nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = item.getAttribute('href').substring(1);
-        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', initializeMemories);
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
