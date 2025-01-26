@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>   
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Lam Graduation Cruise - Timeline</title>
@@ -16,9 +16,19 @@
       color: #fff;
       padding: 15px;
       border-radius: 5px;
-      top: 20px;
+      top: 10px;
       left: 0;
       max-width: 300px;
+      z-index: 10;
+    }
+
+    .timeline-section {
+      position: relative;
+      padding: 20px;
+      border: 1px solid #ddd;
+      margin-bottom: 20px;
+      overflow: hidden;
+      background-color: #f9f9f9;
     }
 
     /* 타임라인 섹션에 마우스를 올리면 세부 내용이 보이게 설정 */
@@ -35,10 +45,27 @@
       padding: 5px;
       border: 2px solid #ff0;
       border-radius: 5px;
+      display: inline-block;
+    }
+
+    /* 진행 바 */
+    .progress-container {
+      margin-top: 10px;
+      background-color: #ddd;
+      height: 10px;
+      border-radius: 5px;
+      width: 100%;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background-color: #76c7c0;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
+
   <nav class="navbar">
     <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
     <div class="nav-controls">
@@ -46,7 +73,7 @@
       <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
     </div>
   </nav>
-  
+
   <div class="side-nav">
     <a href="#start" class="side-nav-item" data-section="start">프로젝트 시작</a>
     <a href="#midpoint" class="side-nav-item" data-section="midpoint">중간 점검</a>
@@ -54,11 +81,6 @@
   </div>
 
   <div class="container">
-    <section class="hero-section">
-      <h1 class="intermittent-glitch" data-text="타임라인">타임라인</h1>
-      <div class="subtitle">"시간의 흔적, 우리의 여정"</div>
-    </section>
-
     <section id="start" class="timeline-section">
       <h2>프로젝트 시작 - 2025.01.03</h2>
       <div class="timeline-content">
@@ -115,6 +137,7 @@
         <div class="encrypted-log">[ENCRYPTED: ZK7-H1Y-W4B]</div>
       </div>
     </section>
+  </div>
 
   <div class="waves">
     <div class="wave"></div>
@@ -123,54 +146,26 @@
   </div>
 
   <script>
-      document.addEventListener('DOMContentLoaded', () => {
-            const puzzleTriggers = document.querySelectorAll('.puzzle-trigger');
-            const progressBars = document.querySelectorAll('.progress-bar');
+    document.addEventListener('DOMContentLoaded', () => {
+      const puzzleTriggers = document.querySelectorAll('.puzzle-trigger');
+      const progressBars = document.querySelectorAll('.progress-bar');
 
-            puzzleTriggers.forEach((trigger, index) => {
-                trigger.addEventListener('click', () => {
-                    const puzzles = [
-                        'BLUE_START_2025',
-                        'MIDPOINT_CIPHER',
-                        'FINAL_SEQUENCE'
-                    ];
-                    alert(`${puzzles[index]} - 퍼즐 힌트 활성화`);
-                });
-            });
-
-            progressBars.forEach((bar, index) => {
-                const progressPercentages = [33, 66, 100];
-                bar.style.width = `${progressPercentages[index]}%`;
-            });
+      puzzleTriggers.forEach((trigger, index) => {
+        trigger.addEventListener('click', () => {
+          const puzzles = [
+            'BLUE_START_2025',
+            'MIDPOINT_CIPHER',
+            'FINAL_SEQUENCE'
+          ];
+          alert(`${puzzles[index]} - 퍼즐 힌트 활성화`);
         });
-
-    function updateActiveSection() {
-      const sections = document.querySelectorAll('.timeline-section');
-      const navItems = document.querySelectorAll('.side-nav-item');
-
-      sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-          navItems.forEach(item => item.classList.remove('active'));
-          navItems[index].classList.add('active');
-        }
       });
-    }
 
-    window.addEventListener('scroll', updateActiveSection);
-    
-    // Initial call to set first section as active
-    updateActiveSection();
-
-    // Smooth scrolling for side nav
-    document.querySelectorAll('.side-nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = item.getAttribute('href').substring(1);
-        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      progressBars.forEach((bar, index) => {
+        const progressPercentages = [33, 66, 100];
+        bar.style.width = `${progressPercentages[index]}%`;
       });
     });
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
