@@ -423,7 +423,39 @@ body, .status-text, #progress-text {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
+@media screen and (min-width: 769px) {
+  .container {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+  }
 
+  .info-section {
+    position: absolute;
+    left: 20%; /* Adjust this value to control how much of the cards are cut off */
+    width: 80%; 
+    max-width: 1000px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    transform: perspective(1000px) rotateX(2deg) rotateY(-5deg);
+  }
+
+  .info-card {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .info-card h3 {
+    align-self: flex-start;
+  }
+
+  .info-card:nth-child(odd) {
+    transform: translateX(-5px) rotate(-2deg);
+  }
+
+  .info-card:nth-child(even) {
+    transform: translateX(5px) rotate(2deg);
+  }
+}
 @media screen and (max-width: 768px) {
   .container::before,
   .container::after {
@@ -446,10 +478,11 @@ body, .status-text, #progress-text {
         font-size: 1rem;
       }
       .info-section {
-        grid-template-columns: 1fr;
-        padding: 2rem;
-        gap: 1rem;
-      }
+    grid-template-columns: 1fr;
+    padding: 2rem;
+    gap: 1rem;
+    transform: perspective(1000px) rotateX(2deg) rotateY(-1deg);
+  }
       .info-card {
         min-height: 150px;
         margin: 0.5rem 0;
