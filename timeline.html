@@ -3,10 +3,41 @@
 <head>   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Lam Graduation Cruise</title>
+  <title>Blue Lam Graduation Cruise - Timeline</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <style>
+    .timeline-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+      color: white;
+      background: rgba(0, 31, 63, 0.6);
+      margin-bottom: 2rem;
+    }
+    .timeline-section h2 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      color: #4affff;
+    }
+    .timeline-content {
+      max-width: 800px;
+      background: rgba(0, 15, 31, 0.7);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .timeline-section p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -24,15 +55,19 @@
     </section>
 
     <section class="info-section">
-      <div class="info-card" onclick="scrollToSection('start')">
+      <div class="info-card" data-target="start">
         <h3>프로젝트 시작</h3>
         <p>2025.01.02</p>
       </div>
-      <div class="info-card" onclick="scrollToSection('midpoint')">
+      <div class="info-card" data-target="midpoint">
         <h3>중간 점검</h3>
         <p>2025.01.15</p>
       </div>
-      <div class="info-card" onclick="scrollToSection('finale')">
+      <div class="info-card" data-target="analysis">
+        <h3>데이터 분석</h3>
+        <p>2025.01.28</p>
+      </div>
+      <div class="info-card" data-target="finale">
         <h3>최종 종료</h3>
         <p>2025.02.02</p>
       </div>
@@ -41,36 +76,43 @@
     <section id="start" class="timeline-section">
       <h2>프로젝트 시작 - 2025.01.02</h2>
       <div class="timeline-content">
-        <p>초기 시스템 구성 및 기본 프레임워크 설립</p>
-        <p>핵심 목표 및 방향성 설정</p>
+        <p>여기에 프로젝트 시작에 대한 주요 가이드라인을 작성하세요. 예를 들어:</p>
+        <p>- 초기 시스템 구성 방법</p>
+        <p>- 핵심 목표 및 방향성 설정</p>
+        <p>- 팀 구성 및 초기 전략 수립</p>
       </div>
     </section>
 
     <section id="midpoint" class="timeline-section">
       <h2>중간 점검 - 2025.01.15</h2>
       <div class="timeline-content">
-        <p>시스템 안정성 평가</p>
-        <p>중간 진행 상황 분석 및 조정</p>
+        <p>중간 점검 단계에서 다음 사항을 고려하세요:</p>
+        <p>- 현재까지의 진행 상황 분석</p>
+        <p>- 시스템 안정성 평가</p>
+        <p>- 발견된 문제점 및 개선 방안 논의</p>
+      </div>
+    </section>
+
+    <section id="analysis" class="timeline-section">
+      <h2>데이터 분석 - 2025.01.28</h2>
+      <div class="timeline-content">
+        <p>데이터 분석 단계에서 다음을 수행하세요:</p>
+        <p>- 수집된 데이터 종합 분석</p>
+        <p>- 트렌드 및 패턴 식별</p>
+        <p>- 예측 모델 수립</p>
       </div>
     </section>
 
     <section id="finale" class="timeline-section">
       <h2>최종 종료 - 2025.02.02</h2>
       <div class="timeline-content">
-        <p>최종 시리즈 종료</p>
-        <p>결과 분석 및 총괄 평가</p>
+        <p>프로젝트 최종 단계에서 다음을 준비하세요:</p>
+        <p>- 전체 프로젝트 결과 총괄</p>
+        <p>- 최종 성과 평가</p>
+        <p>- 향후 발전 방향 제시</p>
       </div>
     </section>
-
-    <div class="system-status">
-      <div class="status-gauge">
-        <div class="status-progress"></div>
-      </div>
-      <div class="status-text"></div>
-      <div id="progress-text"></div>
-    </div>
-  </div>
-
+    
   <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
@@ -78,9 +120,13 @@
   </div>
 
   <script>
-    function scrollToSection(sectionId) {
-      document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-    }
+    // Smooth scroll to section when info card is clicked
+    document.querySelectorAll('.info-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const targetId = card.getAttribute('data-target');
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
   </script>
   <script src="script.js"></script>
 </body>
