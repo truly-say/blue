@@ -144,20 +144,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Page transition effect
-    const infoCards = document.querySelectorAll('.info-card');
-    if (infoCards) {
-        infoCards.forEach((card) => {
-            card.addEventListener('click', (e) => {
-                const page = card.getAttribute('data-page');
+   const infoCards = document.querySelectorAll('.info-card');
+    
+    infoCards.forEach((card) => {
+        card.addEventListener('click', (e) => {
+            const page = card.getAttribute('data-page');
+            
+            // Ensure page attribute exists
+            if (page) {
                 document.body.style.transition = 'opacity 0.5s ease';
                 document.body.style.opacity = '0';
+
                 setTimeout(() => {
                     window.location.href = `${page}.html`;
                 }, 500);
-            });
+            }
         });
-    }
+    });
 
     infoCards.forEach((card) => {
     card.addEventListener('click', (e) => {
