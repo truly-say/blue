@@ -6,13 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const glitchTarget = document.querySelector('.intermittent-glitch');
    
     const characters = [
-        "고라니가 홈페이지를 준비하고 있습니다",
-        "고라니가 절망을 하고 있습니다",
-        "고라니가 정신머리를 챙기고 있습니다",
-        "개능이 고라니를 보고 있습니다",
-        "개능이 감자를 키우고 있습니다",
-        "개능이 테트리스를 하고 있습니다",
-        "[11기 졸업생]이 잠에서 깼습니다",
+       "[11기 졸업생]이 잠에서 깼습니다",
         "[11기 졸업생]이 토끼 인형을 챙기고 있습니다",
         "[11기 졸업생]이 업무 준비를 하고 있습니다",
         "[11기 졸업생]이 경영 지식을 배우고 있습니다",
