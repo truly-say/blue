@@ -73,70 +73,67 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
   function animateMessage() {
-    let currentMessageIndex = 0;
-    let stage = 0;
-    let usedMessages = [];
-    let currentMessage = ''; // Declare currentMessage outside the function
-    
-    function getRandomUniqueMessage() {
-        if (usedMessages.length === characters.length) {
-            usedMessages = [];
-        }
-
-        let randomMessage;
-        do {
-            randomMessage = characters[Math.floor(Math.random() * characters.length)];
-        } while (usedMessages.includes(randomMessage));
-
-        usedMessages.push(randomMessage);
-        return randomMessage;
-    }
-    
-    function updateMessage() {
-        // Update currentMessage at the start of each cycle
-        if (stage === 0) {
-            currentMessage = getRandomUniqueMessage();
+        let stage = 0;
+        let currentMessage = '';
+        let isRestrictedAccess = false;
+        
+        function updateMessage() {
+            // Update currentMessage at the start of each cycle
+            if (stage === 0) {
+                currentMessage = getRandomUniqueMessage();
+                isRestrictedAccess = currentMessage === "y_pred = model.predict(X_test)";
+                
+                // Reset styles
+                textEl.classList.remove('restricted-access');
+                textEl.style.color = '';
+            }
+            
+            // For restricted access message, show for 2 seconds then change
+            if (isRestrictedAccess && stage === 2) {
+                textEl.textContent = "[접근 권한 없음]";
+                textEl.classList.add('restricted-access');
+                stage = 4; // Skip to end of cycle
+                return;
+            }
+            
+            switch(stage) {
+                case 0:
+                    textEl.textContent = currentMessage;
+                    gaugeEl.style.transition = 'none';
+                    gaugeEl.style.width = '0%';
+                    setTimeout(() => {
+                        gaugeEl.style.transition = 'width 1s linear';
+                        gaugeEl.style.width = '25%';
+                    }, 50);
+                    break;
+                case 1:
+                    textEl.textContent = `${currentMessage}.`;
+                    gaugeEl.style.width = '50%';
+                    break;
+                case 2:
+                    textEl.textContent = `${currentMessage}..`;
+                    gaugeEl.style.width = '75%';
+                    break;
+                case 3:
+                    textEl.textContent = `${currentMessage}...`;
+                    gaugeEl.style.width = '100%';
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    stage = -1;
+                    break;
+            }
+            stage++;
         }
         
-        switch(stage) {
-            case 0:
-                textEl.textContent = currentMessage;
-                gaugeEl.style.transition = 'none';
-                gaugeEl.style.width = '0%';
-                setTimeout(() => {
-                    gaugeEl.style.transition = 'width 1s linear';
-                    gaugeEl.style.width = '25%';
-                }, 50);
-                break;
-            case 1:
-               textEl.textContent = `${currentMessage}.`;
-                gaugeEl.style.width = '50%';
-                break;
-            case 2:
-                textEl.textContent = `${currentMessage}..`;
-                gaugeEl.style.width = '75%';
-                break;
-            case 3:
-                textEl.textContent = `${currentMessage}...`;
-                gaugeEl.style.width = '100%';
-                break;
-            case 4:
-                break;
-            case 5:
-                currentMessageIndex = (currentMessageIndex + 1) % characters.length;
-                stage = -1;
-                break;
-       }
-       stage++;
-   }
-   
-   function immediateNextMessage() {
-       updateMessage();
-       setInterval(updateMessage, 1000);
-   }
+        function immediateNextMessage() {
+            updateMessage();
+            setInterval(updateMessage, 1000);
+        }
 
-   immediateNextMessage();
-}
+        immediateNextMessage();
+    }
    function triggerRandomGlitch() {
   if (Math.random() < 0.2) {  // 20% chance every 5 seconds
     glitchTarget.classList.add('glitch-active');
