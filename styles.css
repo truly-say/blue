@@ -240,22 +240,29 @@ body, .status-text, #progress-text {
   text-align: center;
 }
 .system-status {
-    display: flex;
-     flex-direction: column;
-      align-items: center;
-    justify-content: center;
-    margin: 2rem 0;
- `  margin-top: -10px;
-    font-family: 'Roboto Mono', monospace;
-  }
+  position: relative;  /* 자식 요소들의 기준점 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;  /* 프로그레스 바와 동일한 최대 너비 */
+  margin: 2rem auto;
+  margin-top: -10px;
+  font-family: 'Roboto Mono', monospace;
+  padding-top: 100px;  /* 이미지를 위한 공간 확보 */
+}
 
-  .status-text {
-    color: var(--ghostly-white, #fff);
-    font-size: 1.5rem;
-    letter-spacing: 0.5rem;
-    text-align: center;
-  }
+.status-text {
+  margin-top: 1rem;
+  color: var(--ghostly-white, #fff);
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+  text-align: center;
+}
+
 .status-gauge {
+  position: relative;  /* 이미지 위치의 기준점 */
   width: 100%;
   max-width: 300px;
   height: 5px;
@@ -265,6 +272,7 @@ body, .status-text, #progress-text {
 .status-progress {
   height: 100%;
   background-color: #4affff;
+  transition: width 0.3s ease;
 }
 /* status-page-custom.css */
 .status-section {
@@ -541,41 +549,35 @@ body, .status-text, #progress-text {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 .status-image-overlay {
-    position: absolute;
-    left: 50%;
-    bottom: 120px;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 80px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-    z-index: 10;
-    object-fit: contain;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 20px);  /* 프로그레스 바 위로 20px 간격 */
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  object-fit: contain;
 }
 
 .bounce-active {
-    animation: overlay-bounce 1.2s cubic-bezier(0.36, 0, 0.66, -0.56) infinite;
-    /* 
-    cubic-bezier(0.36, 0, 0.66, -0.56)는 포물선과 비슷한 곡선을 만듭니다:
-    - 시작할 때 천천히 올라가다가
-    - 정점에서 잠시 머물고
-    - 떨어질 때는 더 빠르게 떨어지는 효과
-    */
+  animation: overlay-bounce 1.2s cubic-bezier(0.36, 0, 0.66, -0.56) infinite;
 }
 
 @keyframes overlay-bounce {
-    0% { 
-        transform: translateX(-50%) translateY(0);
-        animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0.33);
-    }
-    50% { 
-        transform: translateX(-50%) translateY(-15px);
-        animation-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
-    }
-    100% { 
-        transform: translateX(-50%) translateY(0);
-    }
+  0% { 
+    transform: translateX(-50%) translateY(0);
+    animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0.33);
+  }
+  50% { 
+    transform: translateX(-50%) translateY(-15px);
+    animation-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+  }
+  100% { 
+    transform: translateX(-50%) translateY(0);
+  }
 }
 @media screen and (max-width: 768px) {
   .container::before,
@@ -611,4 +613,19 @@ body, .status-text, #progress-text {
       .info-card h3 {
         font-size: 1.3rem;
       }
+  .system-status {
+    max-width: 280px;
+    padding-top: 80px;
+  }
+  
+  .status-image-overlay {
+    width: 60px;
+    height: 60px;
+    bottom: calc(100% + 15px);
+  }
+  
+  .status-text {
+    font-size: 1.2rem;
+    letter-spacing: 0.3rem;
+  }
     }
