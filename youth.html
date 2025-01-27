@@ -3,98 +3,206 @@
 <head>   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="youth-styles.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #2b4a75, #3e5983, #a8c4e0);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #fff;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: rgba(26, 42, 58, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .nav-time {
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .nav-danger-level {
+      font-size: 0.9rem;
+      color: #ff4444;
+    }
+
+    .container {
+      padding-top: 80px; /* Space for fixed navbar */
+      min-height: calc(100vh - 80px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .school-image-overlay {
+      width: 80%;
+      max-width: 200px;
+      opacity: 0.3;
+      filter: grayscale(80%) brightness(0.4);
+      margin: 2rem 0;
+    }
+
+    .system-status {
+      width: 80%;
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+
+    .status-gauge {
+      height: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .status-progress {
+      height: 100%;
+      background: #ff4444;
+      width: 60%;
+      transition: width 0.3s ease;
+    }
+
+    .info-section {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .glitch-text {
+      position: relative;
+      display: inline-block;
+      animation: glitch 5s infinite;
+    }
+
+    @keyframes glitch {
+      2%, 64% {
+        transform: translate(2px,0) skew(0deg);
+      }
+      4%, 60% {
+        transform: translate(-2px,0) skew(0deg);
+      }
+      62% {
+        transform: translate(0,0) skew(5deg); 
+      }
+    }
+  </style>
   <title>미완성 청춘에게</title>
 </head>
 <body>
-  <div class="overlay"></div>
   <nav class="navbar">
     <a href="#" class="nav-logo">2028.01</a>
     <div class="nav-controls">
-      <div class="nav-time" id="current-datetime"></div>
+      <div class="nav-time" id="current-datetime">2025.01.27 12:00:00</div>
       <div class="nav-danger-level">SYSTEM: UNSTABLE</div>
     </div>
   </nav>
   
   <div class="container">
-    <div class="winter-snow"></div>
     <img src="선청고등학교.png" alt="School Image" class="school-image-overlay" id="schoolImage">
+    
     <section class="hero-section">
       <div class="school-name glitch-text" data-text="善淸高等學校">善淸高等學校</div>
       <h1 class="glitch-text" data-text="미완성 청춘에게">미완성 청춘에게</h1>
       <div class="subtitle">"어쩌고 부제목"</div>
     </section>
-  </div>
-<section>
+
     <div class="system-status">
       <div class="status-gauge">
         <div class="status-progress"></div>
       </div>
-      <br>
       <div class="status-text"></div>
-      <!-- Add progress text element -->
       <div id="progress-text"></div>
     </div>
+
     <section class="info-section">
       <div class="info-card glitch-hover" data-page="index">
         <div class="info-card-inner">
           <h3>회상하기</h3>
           <p>2025.01.02 ~ 2025.02.02</p>
-          <div class="card-overlay"></div>
         </div>
       </div>
       <div class="info-card glitch-hover" data-page="reboot">
         <div class="info-card-inner">
           <h3>나아가기</h3>
           <p id="status-message">SYSTEM DEGRADATION IMMINENT</p>
-          <div class="card-overlay"></div>
         </div>
       </div>
     </section>
+  </div>
 
-  
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Snow effect code remains the same
-      const snowContainer = document.querySelector(".winter-snow");
-      const snowflakeCount = 100;
-      
-      for (let i = 0; i < snowflakeCount; i++) {
-        const snowflake = document.createElement("div");
-        snowflake.classList.add("snowflake");
-        snowflake.style.left = `${Math.random() * 100}vw`;
-        snowflake.style.opacity = `${0.4 + Math.random() * 0.6}`;
-        snowflake.style.width = snowflake.style.height = `${3 + Math.random() * 4}px`;
-        snowflake.style.animationDelay = `${Math.random() * 5}s`;
-        snowflake.style.animationDuration = `${10 + Math.random() * 20}s`;
-        snowContainer.appendChild(snowflake);
+  <script>
+    // Update current time
+    function updateDateTime() {
+      const now = new Date();
+      const formatted = now.toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }).replace(/\./g, '.');
+      document.getElementById('current-datetime').textContent = formatted;
+    }
+    
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    // Image glitch effect
+    const schoolImage = document.getElementById('schoolImage');
+    
+    function triggerImageGlitch() {
+      if (Math.random() < 0.1) {
+        schoolImage.classList.add('glitching');
+        
+        setTimeout(() => {
+          schoolImage.src = '홍련.png';
+        }, 100);
+
+        setTimeout(() => {
+          schoolImage.src = '선청고등학교.png';
+          schoolImage.classList.remove('glitching');
+        }, 500);
       }
+    }
 
-      // Image glitch effect
-      const schoolImage = document.getElementById('schoolImage');
-      let isOriginalImage = true;
-
-      function triggerImageGlitch() {
-        if (Math.random() < 0.1) { // 10% chance
-          schoolImage.classList.add('glitching');
-          
-          // Switch to 홍련.png
-          setTimeout(() => {
-            schoolImage.src = '홍련.png';
-          }, 100);
-
-          // Switch back after 0.5 seconds
-          setTimeout(() => {
-            schoolImage.src = '선청고등학교.png';
-            schoolImage.classList.remove('glitching');
-          }, 500);
-        }
-      }
-
-      // Trigger glitch effect every 5 seconds
-      setInterval(triggerImageGlitch, 5000);
+    setInterval(triggerImageGlitch, 5000);
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
