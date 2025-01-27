@@ -6,16 +6,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const countdownDisplay = document.querySelector('#countdown');
     const glitchTarget = document.querySelector('.intermittent-glitch');
     
-    // 메시지와 이미지 매핑을 객체로 관리
+    // 메시지와 이미지 매핑
     const messageConfig = {
         "현진우가 슬기로운 감빵 생활 중입니다": "선청고등학교.png",
-        "이지훈이 상황 파악을 하고 있습니다": "선청고등학교.png",
-        "y_pred = model.predict(X_test)": "선청고등학교.png",
-        // "메시지": "이미지경로.png" 형식으로 추가
+        // 여기에 다른 메시지와 이미지 매핑 추가
     };
 
-    const characters = Object.keys(messageConfig);
-    
+    const characters = [
+        "이지훈이 상황 파악을 하고 있습니다",
+        "단하율이 취재를 준비하고 있습니다",
+        "단하율이 14기에게 연락을 시도하고 있습니다",
+        "단하율이 자료를 정리하고 있습니다",
+        "y_pred = model.predict(X_test)",
+        "현진우가 슬기로운 감빵 생활 중입니다",
+        "현진우가 교도관 옆에서 밥을 먹고 있습니다",
+        "현진우가 침대에서 뒤척거리고 있습니다"
+    ];
+
     // 이미지 요소들을 보관할 객체
     const imageElements = {};
     
@@ -37,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let usedMessages = [];
     let currentlyVisibleImage = null;
+    let cycleInProgress = false;
     
     function getRandomUniqueMessage() {
         if (usedMessages.length === characters.length) {
@@ -54,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showImage(message) {
         // 이전 이미지 숨기기
-        if (currentlyVisibleImage) {
+        if (currentlyVisibleImage && currentlyVisibleImage !== imageElements[message]) {
             currentlyVisibleImage.style.opacity = '0';
             currentlyVisibleImage.classList.remove('bounce-active');
             setTimeout(() => {
@@ -72,69 +80,64 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function animateMessage() {
-        let stage = 0;
-        let currentMessage = '';
-        let isRestrictedAccess = false;
+    async function runMessageCycle(message) {
+        cycleInProgress = true;
+        const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
         
-        function updateMessage() {
-            if (stage === 0) {
-                currentMessage = getRandomUniqueMessage();
-                isRestrictedAccess = currentMessage === "y_pred = model.predict(X_test)";
-                
-                textEl.classList.remove('restricted-access');
-                textEl.style.color = '';
-
-                if (messageConfig[currentMessage]) {
-                    showImage(currentMessage);
-                }
-            }
-            
-            if (isRestrictedAccess && stage === 2) {
-                textEl.textContent = "[접근 권한 없음]";
-                textEl.classList.add('restricted-access');
-                stage = 4;
-                return;
-            }
-            
-            switch(stage) {
-                case 0:
-                    textEl.textContent = currentMessage;
-                    gaugeEl.style.transition = 'none';
-                    gaugeEl.style.width = '0%';
-                    setTimeout(() => {
-                        gaugeEl.style.transition = 'width 1s linear';
-                        gaugeEl.style.width = '25%';
-                    }, 50);
-                    break;
-                case 1:
-                    textEl.textContent = `${currentMessage}.`;
-                    gaugeEl.style.width = '50%';
-                    break;
-                case 2:
-                    textEl.textContent = `${currentMessage}..`;
-                    gaugeEl.style.width = '75%';
-                    break;
-                case 3:
-                    textEl.textContent = `${currentMessage}...`;
-                    gaugeEl.style.width = '100%';
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    stage = -1;
-                    break;
-            }
-            stage++;
+        // 프로그래스 바 리셋
+        gaugeEl.style.transition = 'none';
+        gaugeEl.style.width = '0%';
+        
+        // 기본 메시지 표시
+        textEl.textContent = message;
+        if (messageConfig[message]) {
+            showImage(message);
         }
+        
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // 첫 번째 점
+        if (!isRestrictedAccess) {
+            gaugeEl.style.transition = 'width 1s linear';
+            gaugeEl.style.width = '33%';
+            textEl.textContent = `${message}.`;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+        
+        // 두 번째 점
+        if (!isRestrictedAccess) {
+            gaugeEl.style.width = '66%';
+            textEl.textContent = `${message}..`;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        } else {
+            textEl.textContent = "[접근 권한 없음]";
+            textEl.classList.add('restricted-access');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+        
+        // 세 번째 점
+        if (!isRestrictedAccess) {
+            gaugeEl.style.width = '100%';
+            textEl.textContent = `${message}...`;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+        
+        cycleInProgress = false;
+    }
 
-        setInterval(updateMessage, 1000);
-        updateMessage();
+    async function startMessageLoop() {
+        while (true) {
+            if (!cycleInProgress) {
+                const message = getRandomUniqueMessage();
+                await runMessageCycle(message);
+            }
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
     }
 
     // 초기화 및 시작
     initializeImages();
-    animateMessage();
+    startMessageLoop();
 
     function triggerRandomGlitch() {
         if (Math.random() < 0.2) {  // 20% chance every 5 seconds
