@@ -3,12 +3,43 @@
 <head>   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Lam Graduation Cruise</title>
+  <title>미완성 청춘에게</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="youth-styles.css">
-<link rel="stylesheet" href="glitch.css">
+  <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-  <meta name="description" content="2025 Blue Lam Graduation Cruise - 청춘의 최종본">
+  <meta name="description" content="미완성 청춘에게">
+  <style>
+    /* Snow falling animation */
+    @keyframes snow {
+      0% {
+        transform: translateY(-100px);
+      }
+      100% {
+        transform: translateY(100vh);
+      }
+    }
+
+    .snowflake {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.8);
+      opacity: 0.9;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: snow linear infinite;
+    }
+
+    /* 눈송이의 크기와 속도에 다양한 효과 추가 */
+    .snowflake:nth-child(odd) {
+      animation-duration: 4s;
+    }
+
+    .snowflake:nth-child(even) {
+      animation-duration: 6s;
+    }
+  </style>
 </head>
 <body>
   <div class="horror-glitch"></div>
@@ -27,23 +58,24 @@
       <div class="school-name glitch-text" data-text="善淸高等學校">善淸高等學校</div>
       <h1 class="intermittent-glitch" data-text="미완성 청춘에게">미완성 청춘에게</h1>
       <div class="subtitle">"어쩌고 부제목"</div>
+    </section>
   </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-  const snowContainer = document.createElement('div');
-  snowContainer.classList.add('snow');
-  document.body.appendChild(snowContainer);
-  
-  for (let i = 0; i < 150; i++) {  // 150개의 눈송이 
-    const snowflake = document.createElement('div');
-    snowflake.classList.add('snowflake');
-    snowflake.style.left = `${Math.random() * 100}vw`; // 화면의 랜덤 위치
-    snowflake.style.animationDuration = `${3 + Math.random() * 3}s`; // 랜덤 속도
-    snowflake.style.animationDelay = `${-Math.random() * 6}s`; // 랜덤 딜레이
-    snowContainer.appendChild(snowflake);
-  }
-});
-
+      const snowContainer = document.createElement('div');
+      snowContainer.classList.add('snow');
+      document.body.appendChild(snowContainer);
+      
+      for (let i = 0; i < 150; i++) {  // 150개의 눈송이 생성
+        const snowflake = document.createElement('div');
+        snowflake.classList.add('snowflake');
+        snowflake.style.left = `${Math.random() * 100}vw`; // 랜덤 위치
+        snowflake.style.animationDuration = `${3 + Math.random() * 3}s`; // 랜덤 애니메이션 속도
+        snowflake.style.animationDelay = `${-Math.random() * 6}s`; // 랜덤 딜레이
+        snowContainer.appendChild(snowflake);
+      }
+    });
   </script>
   <script src="script.js"></script>
 </body>
