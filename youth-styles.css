@@ -28,9 +28,17 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none; /* 인터랙션 차단 */
-  z-index: 999;
+  z-index: 1;
+}
+h1 {
+  font-size: 2.5rem;
+  margin: 0.5rem 0;
 }
 
+.subtitle {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
 .snowflake {
   position: absolute;
   top: -10%; /* 화면 위에서 시작 */
@@ -98,20 +106,23 @@ body {
         opacity: 1;
       }
     }
+.school-name {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
 
-    .school-image-overlay {
-      position: absolute;
-      top: 20%;
+.school-image-overlay {
+  position: absolute;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
   max-width: 200px;
   opacity: 0.3;
   z-index: 1;
-  pointer-events: none;
-      filter: grayscale(80%) brightness(0.4);
-      transition: opacity 0.2s ease;
-    }
+  filter: grayscale(80%) brightness(0.4);
+  transition: opacity 0.2s ease;
+}
 
     .school-image-overlay.glitching {
       animation: imageGlitch 0.5s steps(2) forwards;
@@ -131,28 +142,29 @@ body {
       gap: 2rem;
     }
 
-    .container {
+.container {
   position: relative;
-  padding-top: 40px; /* Space for fixed navbar */
-  min-height: 100vh;
+  padding-top: 60px; /* Space for navbar */
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2rem; /* Adds consistent spacing between sections */
 }
+
 .hero-section {
   width: 100%;
+  text-align: center;
   padding: 1rem;
-  margin-top: 1rem;
   position: relative;
   z-index: 2;
 }
 .info-section {
+  width: 90%;
+  max-width: 1200px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  width: 90%;
-  max-width: 1200px;
-  margin: 2rem auto;
   padding: 1rem;
 }
 
@@ -175,6 +187,10 @@ body {
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding-top: 40px;
+  }
+  
   .info-section {
     grid-template-columns: 1fr;
   }
@@ -182,4 +198,36 @@ body {
   .system-status {
     width: 95%;
   }
+  
+  .school-name {
+    font-size: 1.2rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+.system-status {
+  width: 90%;
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+}
+
+.status-gauge {
+  width: 100%;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.status-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #4a90e2, #63b3ed);
+  width: 75%;
+  transition: width 0.3s ease;
 }
