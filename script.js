@@ -138,26 +138,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 초기화 및 시작
     initializeImages();
     startMessageLoop();
-
-    function triggerRandomGlitch() {
-        if (Math.random() < 0.2) {  // 20% chance every 5 seconds
-            glitchTarget.classList.add('glitch-active');
-            
-            // Rare chance of text morphing
-            if (Math.random() < 0.3) {
-                glitchTarget.classList.add('text-morph');
-            }
-            
-            setTimeout(() => {
-                glitchTarget.classList.remove('glitch-active', 'text-morph');
-            }, 500);
-        }
-    }
     
+    // 시간 업데이트 함수
     function updateDateTime() {
         const now = new Date();
         const departureDate = new Date('2025-02-28T00:00:00');
         const diff = departureDate - now;
+        
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -179,6 +166,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 글리치 효과
+    function triggerRandomGlitch() {
+        if (Math.random() < 0.2) {
+            glitchTarget.classList.add('glitch-active');
+            if (Math.random() < 0.3) {
+                glitchTarget.classList.add('text-morph');
+            }
+            setTimeout(() => {
+                glitchTarget.classList.remove('glitch-active', 'text-morph');
+            }, 500);
+        }
+    }
+
+    // 인터벌 설정
+    setInterval(updateDateTime, 1000);
+    setInterval(triggerRandomGlitch, 5000);
+    
     const infoCards = document.querySelectorAll('.info-card');
     
     infoCards.forEach((card) => {
@@ -200,10 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial calls
     animateMessage();
     updateDateTime();
-
-    // Intervals
-    setInterval(updateDateTime, 1000);
-    setInterval(triggerRandomGlitch, 5000);
 
     // Page restoration
     window.addEventListener('pageshow', (event) => {
