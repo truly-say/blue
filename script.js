@@ -131,7 +131,7 @@ async function runMessageCycle(message) {
     animateProgress(3000, 100);
     
     // 메시지 진행
-    let dots = '';
+   let dots = '';
     for (let i = 0; i < 3; i++) {
         if (isRestrictedAccess && i === 1) {
             cancelAnimationFrame(progressAnimation);
@@ -146,10 +146,10 @@ async function runMessageCycle(message) {
         await new Promise(resolve => setTimeout(resolve, 1000));
     }
     
-    // 프로그레스 바가 끝날 때까지 대기
+    // Wait for progress bar completion
     await new Promise(resolve => setTimeout(resolve, 3000));
     
-    // 이미지 숨기기
+    // Clean up
     if (currentlyVisibleImage) {
         currentlyVisibleImage.style.opacity = '0';
         currentlyVisibleImage.classList.remove('bounce-active');
