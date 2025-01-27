@@ -68,26 +68,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 이미지 표시 함수
     function showImage(message) {
-        console.log(`Showing image for: ${message}`);
-        
-        if (currentlyVisibleImage) {
-            currentlyVisibleImage.style.opacity = '0';
-            currentlyVisibleImage.classList.remove('bounce-active');
-            setTimeout(() => {
-                currentlyVisibleImage.style.visibility = 'hidden';
-            }, 500);
-        }
-
-        const newImage = imageElements[message];
-        if (newImage) {
-            newImage.style.visibility = 'visible';
-            setTimeout(() => {
-                newImage.style.opacity = '1';
-                newImage.classList.add('bounce-active');
-            }, 50);
-            currentlyVisibleImage = newImage;
-        }
+    console.log(`Showing image for: ${message}`);
+    
+    if (currentlyVisibleImage) {
+        currentlyVisibleImage.style.opacity = '0';
+        currentlyVisibleImage.classList.remove('bounce-active');
+        setTimeout(() => {
+            currentlyVisibleImage.style.visibility = 'hidden';
+        }, 500);
     }
+
+    const newImage = imageElements[message];
+    if (newImage) {
+        newImage.style.visibility = 'visible';
+        setTimeout(() => {
+            newImage.style.opacity = '1';
+            newImage.classList.add('bounce-active');
+        }, 50);
+        currentlyVisibleImage = newImage;
+    }
+}
 
     // 프로그레스 바 애니메이션 함수
     function animateProgress(duration, targetProgress) {
@@ -112,44 +112,54 @@ document.addEventListener('DOMContentLoaded', () => {
         
         progressAnimation = requestAnimationFrame(update);
     }
-
-    // 메시지 사이클 실행 함수
-    async function runMessageCycle(message) {
-        if (!textEl || !gaugeEl) return;
-        
-        cycleInProgress = true;
-        const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
-        
-        // 프로그레스 바 리셋
-        gaugeEl.style.width = '0%';
-        
-        // 메시지 표시
-        textEl.textContent = message;
-        if (messageConfig[message]) {
-            showImage(message);
-        }
-
-        // 프로그레스 바 애니메이션
-        animateProgress(3000, 100);
-        
-        // 메시지 진행
-        let dots = '';
-        for (let i = 0; i < 3; i++) {
-            if (isRestrictedAccess && i === 1) {
-                cancelAnimationFrame(progressAnimation);
-                textEl.textContent = "[접근 권한 없음]";
-                textEl.classList.add('restricted-access');
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                break;
-            }
-            
-            dots += '.';
-            textEl.textContent = `${message}${dots}`;
-            await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-        
-        cycleInProgress = false;
+async function runMessageCycle(message) {
+    if (!textEl || !gaugeEl) return;
+    
+    cycleInProgress = true;
+    const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
+    
+    // 프로그레스 바 리셋
+    gaugeEl.style.width = '0%';
+    
+    // 메시지 표시
+    textEl.textContent = message;
+    if (messageConfig[message]) {
+        showImage(message);
     }
+
+    // 프로그레스 바 애니메이션
+    animateProgress(3000, 100);
+    
+    // 메시지 진행
+    let dots = '';
+    for (let i = 0; i < 3; i++) {
+        if (isRestrictedAccess && i === 1) {
+            cancelAnimationFrame(progressAnimation);
+            textEl.textContent = "[접근 권한 없음]";
+            textEl.classList.add('restricted-access');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            break;
+        }
+        
+        dots += '.';
+        textEl.textContent = `${message}${dots}`;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
+    // 프로그레스 바가 끝날 때까지 대기
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    // 이미지 숨기기
+    if (currentlyVisibleImage) {
+        currentlyVisibleImage.style.opacity = '0';
+        currentlyVisibleImage.classList.remove('bounce-active');
+        setTimeout(() => {
+            currentlyVisibleImage.style.visibility = 'hidden';
+        }, 500);
+    }
+    
+    cycleInProgress = false;
+}
 
     // 메시지 루프 시작 함수
     async function startMessageLoop() {
