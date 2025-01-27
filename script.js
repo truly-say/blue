@@ -6,15 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const countdownDisplay = document.querySelector('#countdown');
     const glitchTarget = document.querySelector('.intermittent-glitch');
     
-    const messageConfig = {
-        "현진우가 슬기로운 감빵 생활 중입니다": "선청고등학교.png",
-        // 여기에 다른 메시지와 이미지 매핑 추가
-    };
+    const statusMessages = [
+    "현진우가 슬기로운 감빵 생활 중입니다",
+    "y_pred = model.predict(X_test)",
+    "현진우가 침대에서 뒤척거리고 있습니다"
+];
 
-    const characters = [
-        "y_pred = model.predict(X_test)",
-        "현진우가 침대에서 뒤척거리고 있습니다"
-    ];
+// 또는 반대로 messageConfig를 모든 메시지에 대해 정의
+const messageConfig = {
+    "현진우가 슬기로운 감빵 생활 중입니다": "선청고등학교.png",
+    "y_pred = model.predict(X_test)": null,
+    "현진우가 침대에서 뒤척거리고 있습니다": null
+};
 
     const imageElements = {};
     let usedMessages = [];
