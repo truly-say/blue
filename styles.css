@@ -543,9 +543,16 @@ body, .status-text, #progress-text {
 }
 /* status-overlay-styles.css */
 .status-message-image {
-    border: 2px solid red; /* 이미지 영역 확인용 */
-    background: rgba(255,0,0,0.1); /* 이미지 영역 확인용 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -200%);
+    max-width: 200px;
+    transition: opacity 0.5s ease;
+    z-index: 10;
+    pointer-events: none;
 }
+
 .message-bounce {
     animation: message-bounce 0.5s ease;
 }
