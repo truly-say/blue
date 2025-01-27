@@ -553,8 +553,8 @@ body, .status-text, #progress-text {
 .status-image-overlay {
     position: absolute;
     left: 50%;
-    bottom: 50%;  /* 중앙 정렬을 위해 수정 */
-    transform: translate(-50%, 50%);  /* 중앙 정렬 */
+    bottom: 120px;  /* 중앙 정렬을 위해 수정 */
+    transform: translateX(-50%);  /* 중앙 정렬 */
     width: 80px;
     height: 80px;
     opacity: 0;
