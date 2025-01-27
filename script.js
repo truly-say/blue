@@ -1,32 +1,41 @@
 // script.js
 document.addEventListener('DOMContentLoaded', () => {
+    // 기본 요소 선택
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
     const timeDisplay = document.querySelector('#current-datetime');
     const countdownDisplay = document.querySelector('#countdown');
     const glitchTarget = document.querySelector('.intermittent-glitch');
+    const container = document.querySelector('.container'); // 컨테이너 선택자 추가
     
+    // 메시지와 이미지 설정
     const messageConfig = {
         "현진우가 슬기로운 감빵 생활 중입니다": "선청고등학교.png",
-        // 여기에 다른 메시지와 이미지 매핑 추가
     };
 
+    // 표시할 메시지 목록
     const characters = [
         "y_pred = model.predict(X_test)",
-        "현진우가 침대에서 뒤척거리고 있습니다"
+        "현진우가 침대에서 뒤척거리고 있습니다",
+        "현진우가 슬기로운 감빵 생활 중입니다"
     ];
 
+    // 상태 변수
     const imageElements = {};
     let usedMessages = [];
     let currentlyVisibleImage = null;
+    let cycleInProgress = false;
+    let progressAnimation = null;
     
-   function initializeImages() {
-        console.log('Initializing images...');
+    // 이미지 초기화 함수
+    function initializeImages() {
+        if (!container) {
+            console.error('Container element not found');
+            return;
+        }
         
         Object.entries(messageConfig).forEach(([message, imagePath]) => {
-            console.log(`Creating image element for message: ${message}`);
-            console.log(`Image path: ${imagePath}`);
-            
+            console.log(`Creating image for: ${message}`);
             const img = document.createElement('img');
             img.src = imagePath;
             img.alt = "Status Image";
@@ -34,22 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
             img.style.opacity = '0';
             img.style.visibility = 'hidden';
             
-            // 이미지 로드 이벤트 추가
-            img.onload = () => {
-                console.log(`Image loaded successfully: ${imagePath}`);
-            };
-            
-            img.onerror = () => {
-                console.error(`Failed to load image: ${imagePath}`);
-            };
+            img.onload = () => console.log(`Image loaded: ${imagePath}`);
+            img.onerror = () => console.error(`Image load failed: ${imagePath}`);
             
             container.appendChild(img);
             imageElements[message] = img;
         });
-        
-        console.log('Available image elements:', imageElements);
     }
 
+    // 랜덤 메시지 선택 함수
     function getRandomUniqueMessage() {
         if (usedMessages.length === characters.length) {
             usedMessages = [];
@@ -64,11 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return randomMessage;
     }
 
+    // 이미지 표시 함수
     function showImage(message) {
-        console.log(`Attempting to show image for message: ${message}`);
+        console.log(`Showing image for: ${message}`);
         
         if (currentlyVisibleImage) {
-            console.log('Hiding current visible image');
             currentlyVisibleImage.style.opacity = '0';
             currentlyVisibleImage.classList.remove('bounce-active');
             setTimeout(() => {
@@ -78,18 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const newImage = imageElements[message];
         if (newImage) {
-            console.log('Found matching image element');
             newImage.style.visibility = 'visible';
             setTimeout(() => {
                 newImage.style.opacity = '1';
                 newImage.classList.add('bounce-active');
             }, 50);
             currentlyVisibleImage = newImage;
-        } else {
-            console.log('No matching image found for message');
         }
     }
 
+    // 프로그레스 바 애니메이션 함수
     function animateProgress(duration, targetProgress) {
         const startTime = Date.now();
         const startProgress = parseFloat(gaugeEl.style.width) || 0;
@@ -113,30 +113,45 @@ document.addEventListener('DOMContentLoaded', () => {
         progressAnimation = requestAnimationFrame(update);
     }
 
-    
+    // 메시지 사이클 실행 함수
     async function runMessageCycle(message) {
-        console.log(`Starting message cycle for: ${message}`);
+        if (!textEl || !gaugeEl) return;
         
-        // 기본 메시지 표시
+        cycleInProgress = true;
+        const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
+        
+        // 프로그레스 바 리셋
+        gaugeEl.style.width = '0%';
+        
+        // 메시지 표시
         textEl.textContent = message;
-        
-        // 이미지가 있는 메시지인 경우 이미지 표시
         if (messageConfig[message]) {
-            console.log(`Message has associated image: ${messageConfig[message]}`);
             showImage(message);
-        } else {
-            console.log('No image associated with this message');
         }
 
-        // 메시지 진행 로직...
+        // 프로그레스 바 애니메이션
+        animateProgress(3000, 100);
+        
+        // 메시지 진행
         let dots = '';
         for (let i = 0; i < 3; i++) {
+            if (isRestrictedAccess && i === 1) {
+                cancelAnimationFrame(progressAnimation);
+                textEl.textContent = "[접근 권한 없음]";
+                textEl.classList.add('restricted-access');
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                break;
+            }
+            
             dots += '.';
             textEl.textContent = `${message}${dots}`;
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
+        
+        cycleInProgress = false;
     }
 
+    // 메시지 루프 시작 함수
     async function startMessageLoop() {
         while (true) {
             if (!cycleInProgress) {
@@ -147,10 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 초기화 및 시작
-    initializeImages();
-    startMessageLoop();
-    
     // 시간 업데이트 함수
     function updateDateTime() {
         const now = new Date();
@@ -178,8 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 글리치 효과 함수
     function triggerRandomGlitch() {
-        if (Math.random() < 0.2) {
+        if (glitchTarget && Math.random() < 0.2) {
             glitchTarget.classList.add('glitch-active');
             if (Math.random() < 0.3) {
                 glitchTarget.classList.add('text-morph');
@@ -190,11 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    setInterval(updateDateTime, 1000);
-    setInterval(triggerRandomGlitch, 5000);
-    
+    // 페이지 전환 효과
     const infoCards = document.querySelectorAll('.info-card');
-    
     infoCards.forEach((card) => {
         card.addEventListener('click', (e) => {
             const page = card.getAttribute('data-page');
@@ -207,27 +216,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // 페이지 로드 시 투명도 리셋
     window.addEventListener('pageshow', (event) => {
         document.body.style.opacity = '1';
     });
 
-
-
-    // 임시 코드
-    let userInput = ""; // 사용자가 입력한 키를 저장하는 변수
-
-document.addEventListener("keydown", (event) => {
-  userInput += event.key.toLowerCase(); // 입력된 키를 소문자로 추가
-
-  // "lam" 입력 확인
-  if (userInput.endsWith("lam")) {
-    // youth.html로 이동
-    window.location.href = "youth.html";
-  }
-
-  // 입력 값이 너무 길어지지 않도록 최대 10자만 저장
-  if (userInput.length > 10) {
-    userInput = userInput.slice(-10);
-  }
-});
+    // 초기화 및 인터벌 설정
+    initializeImages();
+    startMessageLoop();
+    setInterval(updateDateTime, 1000);
+    setInterval(triggerRandomGlitch, 5000);
 });
