@@ -10,34 +10,49 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
   <meta name="description" content="미완성 청춘에게">
   <style>
-    /* Snow falling animation */
+    /* 눈송이가 부드럽게 떨어지는 애니메이션 */
     @keyframes snow {
       0% {
-        transform: translateY(-100px);
+        transform: translateY(-10%);
+        opacity: 0.8;
       }
       100% {
-        transform: translateY(100vh);
+        transform: translateY(110vh);
+        opacity: 0;
       }
     }
 
     .snowflake {
       position: absolute;
-      width: 5px;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.8);
-      opacity: 0.9;
+      top: -10%; /* 화면 위에서 시작 */
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      opacity: 0.9;
       pointer-events: none;
       animation: snow linear infinite;
     }
 
-    /* 눈송이의 크기와 속도에 다양한 효과 추가 */
+    /* 랜덤 애니메이션 */
+    .snowflake {
+      animation-duration: calc(8s + 4s * random()); /* 느린 속도 */
+      animation-delay: calc(-10s + random() * 5s);
+      left: calc(100% * random()); /* 랜덤 위치 */
+    }
+
+    /* 다양한 크기와 효과 추가 */
     .snowflake:nth-child(odd) {
-      animation-duration: 4s;
+      width: 10px;
+      height: 10px;
+      animation-duration: 12s;
     }
 
     .snowflake:nth-child(even) {
-      animation-duration: 6s;
+      width: 6px;
+      height: 6px;
+      animation-duration: 10s;
     }
   </style>
 </head>
@@ -62,17 +77,17 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const snowContainer = document.createElement('div');
       snowContainer.classList.add('snow');
       document.body.appendChild(snowContainer);
       
-      for (let i = 0; i < 150; i++) {  // 150개의 눈송이 생성
+      for (let i = 0; i < 50; i++) { // 눈송이 50개 (조금만)
         const snowflake = document.createElement('div');
         snowflake.classList.add('snowflake');
-        snowflake.style.left = `${Math.random() * 100}vw`; // 랜덤 위치
-        snowflake.style.animationDuration = `${3 + Math.random() * 3}s`; // 랜덤 애니메이션 속도
-        snowflake.style.animationDelay = `${-Math.random() * 6}s`; // 랜덤 딜레이
+        snowflake.style.left = `${Math.random() * 100}vw`; // 랜덤한 x 위치
+        snowflake.style.animationDuration = `${8 + Math.random() * 4}s`; // 느리게 떨어짐
+        snowflake.style.animationDelay = `${-Math.random() * 5}s`; // 시간 차이 추가
         snowContainer.appendChild(snowflake);
       }
     });
