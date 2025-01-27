@@ -31,6 +31,19 @@ body {
   pointer-events: none; /* 인터랙션 차단 */
   z-index: 999;
 }
+.school-image-overlay {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 200px;
+  opacity: 0.3;
+  z-index: 1;
+  pointer-events: none;
+  filter: grayscale(100%) contrast(150%) brightness(50%);
+  animation: subtle-distortion 10s infinite alternate;
+}
 
 .snowflake {
   position: absolute;
