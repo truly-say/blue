@@ -37,6 +37,23 @@
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const snowContainer = document.createElement('div');
+  snowContainer.classList.add('snow');
+  document.body.appendChild(snowContainer);
+  
+  for (let i = 0; i < 150; i++) {  // 150개의 눈송이 
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.style.left = `${Math.random() * 100}vw`; // 화면의 랜덤 위치
+    snowflake.style.animationDuration = `${3 + Math.random() * 3}s`; // 랜덤 속도
+    snowflake.style.animationDelay = `${-Math.random() * 6}s`; // 랜덤 딜레이
+    snowContainer.appendChild(snowflake);
+  }
+});
+
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
