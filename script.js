@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
@@ -17,10 +16,34 @@ document.addEventListener('DOMContentLoaded', () => {
         "현진우가 침대에서 뒤척거리고 있습니다"
     ];
 
+    // CSS 스타일 추가
+    const style = document.createElement('style');
+    style.textContent = `
+        .status-image-overlay {
+            position: absolute;
+            top: -150px; /* 프로그래스 바 위쪽에 위치하도록 조정 */
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 200px;
+            transition: opacity 0.5s ease;
+            z-index: 10;
+        }
+        
+        .bounce-active {
+            animation: bounce 0.5s ease;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+            100% { transform: translateX(-50%) translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
+
     // 이미지 요소들을 보관할 객체
     const imageElements = {};
     
-    // 이미지 요소들을 미리 생성하고 설정
     function initializeImages() {
         const container = document.querySelector('.container');
         
@@ -39,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let usedMessages = [];
     let currentlyVisibleImage = null;
     let cycleInProgress = false;
+    let currentProgressInterval = null;
     
     function getRandomUniqueMessage() {
         if (usedMessages.length === characters.length) {
@@ -55,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showImage(message) {
-        // 이전 이미지 숨기기
         if (currentlyVisibleImage && currentlyVisibleImage !== imageElements[message]) {
             currentlyVisibleImage.style.opacity = '0';
             currentlyVisibleImage.classList.remove('bounce-active');
@@ -64,14 +87,36 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         }
 
-        // 새 이미지 표시
         const newImage = imageElements[message];
         if (newImage) {
             newImage.style.visibility = 'visible';
-            newImage.style.opacity = '1';
-            newImage.classList.add('bounce-active');
+            setTimeout(() => {
+                newImage.style.opacity = '1';
+                newImage.classList.add('bounce-active');
+            }, 50);
             currentlyVisibleImage = newImage;
         }
+    }
+
+    function updateProgress(startValue, endValue, duration) {
+        const startTime = Date.now();
+        
+        if (currentProgressInterval) {
+            clearInterval(currentProgressInterval);
+        }
+        
+        currentProgressInterval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const currentWidth = startValue + (endValue - startValue) * progress;
+            
+            gaugeEl.style.width = `${currentWidth}%`;
+            
+            if (progress >= 1) {
+                clearInterval(currentProgressInterval);
+                currentProgressInterval = null;
+            }
+        }, 16);
     }
 
     async function runMessageCycle(message) {
@@ -90,30 +135,21 @@ document.addEventListener('DOMContentLoaded', () => {
         
         await new Promise(resolve => setTimeout(resolve, 1000));
         
-        // 첫 번째 점
-        if (!isRestrictedAccess) {
-            gaugeEl.style.transition = 'width 1s linear';
-            gaugeEl.style.width = '33%';
-            textEl.textContent = `${message}.`;
-            await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-        
-        // 두 번째 점
-        if (!isRestrictedAccess) {
-            gaugeEl.style.width = '66%';
-            textEl.textContent = `${message}..`;
-            await new Promise(resolve => setTimeout(resolve, 1000));
-        } else {
+        if (isRestrictedAccess) {
+            // 특수 메시지의 경우 프로그래스 40%까지만 진행
+            updateProgress(0, 40, 2000);
             textEl.textContent = "[접근 권한 없음]";
             textEl.classList.add('restricted-access');
-            await new Promise(resolve => setTimeout(resolve, 2000));
-        }
-        
-        // 세 번째 점
-        if (!isRestrictedAccess) {
-            gaugeEl.style.width = '100%';
-            textEl.textContent = `${message}...`;
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 3000));
+        } else {
+            // 일반 메시지는 정상적으로 진행
+            let dots = '';
+            for (let i = 0; i < 3; i++) {
+                updateProgress(i * 33, (i + 1) * 33, 1000);
+                dots += '.';
+                textEl.textContent = `${message}${dots}`;
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
         }
         
         cycleInProgress = false;
@@ -133,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeImages();
     startMessageLoop();
     
-    // 시간 업데이트 함수
+    // 나머지 기존 코드 (시간 업데이트, 글리치 효과 등) 유지
     function updateDateTime() {
         const now = new Date();
         const departureDate = new Date('2025-02-28T00:00:00');
@@ -160,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 글리치 효과
     function triggerRandomGlitch() {
         if (Math.random() < 0.2) {
             glitchTarget.classList.add('glitch-active');
@@ -173,21 +208,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 인터벌 설정
     setInterval(updateDateTime, 1000);
     setInterval(triggerRandomGlitch, 5000);
     
+    // 페이지 네비게이션
     const infoCards = document.querySelectorAll('.info-card');
     
     infoCards.forEach((card) => {
         card.addEventListener('click', (e) => {
             const page = card.getAttribute('data-page');
-            
-            // Ensure page attribute exists
             if (page) {
                 document.body.style.transition = 'opacity 0.5s ease';
                 document.body.style.opacity = '0';
-
                 setTimeout(() => {
                     window.location.href = `${page}.html`;
                 }, 500);
@@ -195,11 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initial calls
-    animateMessage();
-    updateDateTime();
-
-    // Page restoration
+    // 페이지 복원
     window.addEventListener('pageshow', (event) => {
         document.body.style.opacity = '1';
     });
