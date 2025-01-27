@@ -544,16 +544,18 @@ body, .status-text, #progress-text {
 .status-image-overlay {
     position: absolute;
     left: 50%;
-    /* bottom 위치를 조정하여 프로그레스 바 바로 위에 오도록 설정 */
-    top: -100px; /* 프로그레스 바 위로 올리기 */
+    top: -100px;
     transform: translateX(-50%);
     width: 80px;
     height: 80px;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease;
-    z-index: 10;
-    object-fit: contain;
+    transition: all 0.3s ease;  /* transition 속성 추가 */
+    z-index: 1000;  /* z-index 증가 */
+    pointer-events: none;  /* 이미지가 다른 요소와 상호작용하지 않도록 */
+}
+.status-image-overlay[style*="visibility: visible"] {
+    display: block;
 }
 
 .bounce-active {
@@ -573,6 +575,7 @@ body, .status-text, #progress-text {
         transform: translateX(-50%) translateY(0);
     }
 }
+
 @media screen and (max-width: 768px) {
   .container::before,
   .container::after {
