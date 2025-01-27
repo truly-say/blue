@@ -41,16 +41,19 @@
       const snowflake = document.createElement("div");
       snowflake.classList.add("winter-snowflake");
 
-      // 랜덤 x위치 및 시작 지점 설정
-      snowflake.style.left = `${Math.random() * 100}vw`; // 랜덤 x좌표
-      snowflake.style.top = `${Math.random() * -10}%`; // 화면 위에서 시작 (-10%는 화면 밖)
-      snowflake.style.animationDuration = `${12 + Math.random() * 6}s`; // 12~18초 애니메이션
-      snowflake.style.animationDelay = `${-Math.random() * 10}s`; // 랜덤 딜레이
-      
+      // 랜덤 위치와 딜레이 값 생성
+      const randomX = Math.random(); // x축 랜덤 위치 (0 ~ 1)
+      const randomDelay = Math.random(); // 딜레이 랜덤 값 (0 ~ 1)
+
+      // CSS 변수를 통해 랜덤 속성 적용
+      snowflake.style.setProperty("--random-x", randomX);
+      snowflake.style.setProperty("--random-delay", randomDelay);
+
       snowContainer.appendChild(snowflake);
     }
   });
 </script>
+
 
   <script src="script.js"></script>
 </body>
