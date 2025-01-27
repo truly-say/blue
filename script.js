@@ -66,31 +66,34 @@ document.addEventListener('DOMContentLoaded', () => {
         return randomMessage;
     }
 
-    async function showImage(message) {
+    // 이미지 표시 함수
+    function showImage(message) {
     console.log(`Showing image for: ${message}`);
     
-    // 이전 이미지 정리
+    // Remove previous image animation
     if (currentlyVisibleImage) {
         currentlyVisibleImage.style.opacity = '0';
         currentlyVisibleImage.classList.remove('bounce-active');
-        await new Promise(resolve => setTimeout(resolve, 500));
-        currentlyVisibleImage.style.visibility = 'hidden';
+        setTimeout(() => {
+            currentlyVisibleImage.style.visibility = 'hidden';
+        }, 500);
     }
 
     const newImage = imageElements[message];
     if (newImage) {
-        // 새 이미지 표시 준비
+        // Reset animation state
         newImage.style.visibility = 'visible';
         newImage.style.opacity = '0';
         newImage.classList.remove('bounce-active');
         
-        // 강제 리플로우
+        // Force reflow to ensure animation restart
         void newImage.offsetWidth;
         
-        // 새 이미지 표시 및 애니메이션 시작
-        await new Promise(resolve => setTimeout(resolve, 50));
-        newImage.style.opacity = '1';
-        newImage.classList.add('bounce-active');
+        // Start new animation
+        requestAnimationFrame(() => {
+            newImage.style.opacity = '1';
+            newImage.classList.add('bounce-active');
+        });
         
         currentlyVisibleImage = newImage;
     }
@@ -99,50 +102,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 프로그레스 바 애니메이션 함수
     function animateProgress(duration, targetProgress) {
-    const startTime = Date.now();
-    const startProgress = parseFloat(gaugeEl.style.width) || 0;
-    
-    if (progressAnimation) {
-        cancelAnimationFrame(progressAnimation);
-    }
-
-    function update() {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const currentProgress = startProgress + (targetProgress - startProgress) * progress;
+        const startTime = Date.now();
+        const startProgress = parseFloat(gaugeEl.style.width) || 0;
         
-        gaugeEl.style.width = `${currentProgress}%`;
-        
-        if (progress < 1 && !cycleInProgress) {
-            progressAnimation = requestAnimationFrame(update);
+        if (progressAnimation) {
+            cancelAnimationFrame(progressAnimation);
         }
+
+        function update() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const currentProgress = startProgress + (targetProgress - startProgress) * progress;
+            
+            gaugeEl.style.width = `${currentProgress}%`;
+            
+            if (progress < 1) {
+                progressAnimation = requestAnimationFrame(update);
+            }
+        }
+        
+        progressAnimation = requestAnimationFrame(update);
     }
-    
-    progressAnimation = requestAnimationFrame(update);
-}
 async function runMessageCycle(message) {
     if (!textEl || !gaugeEl) return;
     
     cycleInProgress = true;
     const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
     
-    // 프로그레스 바 초기화
+    // Reset progress bar and animation
     gaugeEl.style.width = '0%';
-    if (progressAnimation) {
-        cancelAnimationFrame(progressAnimation);
-    }
+    cancelAnimationFrame(progressAnimation);
     
-    // 메시지와 이미지 표시
+    // Show message and image
     textEl.textContent = message;
     if (messageConfig[message]) {
-        await showImage(message);
+        showImage(message);
     }
 
-    // 프로그레스 바 애니메이션 시작
+    // Start new progress animation
     animateProgress(3000, 100);
     
     // 메시지 진행
-    let dots = '';
+   let dots = '';
     for (let i = 0; i < 3; i++) {
         if (isRestrictedAccess && i === 1) {
             cancelAnimationFrame(progressAnimation);
@@ -157,15 +158,16 @@ async function runMessageCycle(message) {
         await new Promise(resolve => setTimeout(resolve, 1000));
     }
     
-    // 완료 대기
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Wait for progress bar completion
+    await new Promise(resolve => setTimeout(resolve, 3000));
     
-    // 이미지 정리
+    // Clean up
     if (currentlyVisibleImage) {
         currentlyVisibleImage.style.opacity = '0';
         currentlyVisibleImage.classList.remove('bounce-active');
-        await new Promise(resolve => setTimeout(resolve, 500));
-        currentlyVisibleImage.style.visibility = 'hidden';
+        setTimeout(() => {
+            currentlyVisibleImage.style.visibility = 'hidden';
+        }, 500);
     }
     
     cycleInProgress = false;
@@ -173,16 +175,14 @@ async function runMessageCycle(message) {
 
     // 메시지 루프 시작 함수
     async function startMessageLoop() {
-    while (true) {
-        if (!cycleInProgress) {
-            const message = getRandomUniqueMessage();
-            await runMessageCycle(message);
-            // 사이클 간 간격 추가
-            await new Promise(resolve => setTimeout(resolve, 1000));
+        while (true) {
+            if (!cycleInProgress) {
+                const message = getRandomUniqueMessage();
+                await runMessageCycle(message);
+            }
+            await new Promise(resolve => setTimeout(resolve, 100));
         }
-        await new Promise(resolve => setTimeout(resolve, 100));
     }
-}
 
     // 시간 업데이트 함수
     function updateDateTime() {
