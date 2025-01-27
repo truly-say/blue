@@ -542,35 +542,28 @@ body, .status-text, #progress-text {
 }
 .status-image-overlay {
     position: absolute;
-    top: 50%;  /* container의 중간 지점부터 시작 */
     left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 200px;
-    max-height: 200px; /* 이미지 최대 크기 제한 */
+    bottom: 120px; /* 프로그레스 바 위에 위치하도록 조정 */
+    transform: translateX(-50%);
+    width: 80px; /* 이미지 크기 축소 */
+    height: 80px;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
     z-index: 10;
-    /* padding-top을 고려하여 위치 조정 */
-    margin-top: -40px; /* padding-top의 절반 정도를 negative margin으로 상쇄 */
+    object-fit: contain; /* 이미지 비율 유지 */
 }
 
 .bounce-active {
-    animation: overlay-bounce 0.5s ease;
+    animation: overlay-bounce 1s ease infinite; /* 무한 반복 애니메이션 */
 }
 
 @keyframes overlay-bounce {
-    0% { 
-        transform: translate(-50%, -50%) scale(0.8);
-        opacity: 0;
+    0%, 100% { 
+        transform: translateX(-50%) translateY(0);
     }
     50% { 
-        transform: translate(-50%, -50%) scale(1.1);
-        opacity: 1;
-    }
-    100% { 
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
+        transform: translateX(-50%) translateY(-10px);
     }
 }
 @media screen and (max-width: 768px) {
