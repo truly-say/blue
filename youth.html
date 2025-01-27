@@ -31,7 +31,7 @@
   </div>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // 눈송이를 담을 컨테이너 생성
+    // 눈송이 컨테이너 생성
     const snowContainer = document.createElement("div");
     snowContainer.classList.add("winter-snow");
     document.body.appendChild(snowContainer);
@@ -40,13 +40,18 @@
     for (let i = 0; i < 50; i++) { // 눈송이 개수
       const snowflake = document.createElement("div");
       snowflake.classList.add("winter-snowflake");
-      snowflake.style.left = `${Math.random() * 100}vw`; // 화면의 랜덤 위치
-      snowflake.style.animationDuration = `${12 + Math.random() * 6}s`; // 12~18초 속도
-      snowflake.style.animationDelay = `${-Math.random() * 10}s`; // 랜덤 시작 딜레이
+
+      // 랜덤 x위치 및 시작 지점 설정
+      snowflake.style.left = `${Math.random() * 100}vw`; // 랜덤 x좌표
+      snowflake.style.top = `${Math.random() * -10}%`; // 화면 위에서 시작 (-10%는 화면 밖)
+      snowflake.style.animationDuration = `${12 + Math.random() * 6}s`; // 12~18초 애니메이션
+      snowflake.style.animationDelay = `${-Math.random() * 10}s`; // 랜덤 딜레이
+      
       snowContainer.appendChild(snowflake);
     }
   });
 </script>
+
   <script src="script.js"></script>
 </body>
 </html>
