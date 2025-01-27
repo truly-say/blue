@@ -6,31 +6,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const glitchTarget = document.querySelector('.intermittent-glitch');
    
     const characters = [
-        "도이성이 집으로 돌아가고 있습니다",
-        "이도윤이 일어나서 기지개를 피고 있습니다",
-        "[11기 졸업생]이 업무 준비를 하고 있습니다",
-        "y_pred = model.predict(X_test)"
+       
+        "구해늘이 방에서 시계 초침 소리를 듣고 있습니다",
+        
+        "연해령이 책상에 엎드려 자고 있습니다",
+        
+        "y_pred = model.predict(X_test)",
+        "현진우가 슬기로운 감빵 생활 중입니다"
+        
     ];
-
+let usedMessages = [];
+    
     function getRandomUniqueMessage() {
-    // If all messages have been used, reset the used messages array
-    if (usedMessages.length === characters.length) {
-        usedMessages = [];
+        if (usedMessages.length === characters.length) {
+            usedMessages = [];
+        }
+
+        let randomMessage;
+        do {
+            randomMessage = characters[Math.floor(Math.random() * characters.length)];
+        } while (usedMessages.includes(randomMessage));
+
+        usedMessages.push(randomMessage);
+        return randomMessage;
     }
 
-    // Find a message that hasn't been used yet
-    let randomMessage;
-    do {
-        randomMessage = characters[Math.floor(Math.random() * characters.length)];
-    } while (usedMessages.includes(randomMessage));
-
-    // Add the selected message to used messages
-    usedMessages.push(randomMessage);
-
-    return randomMessage;
-}
-
-  function animateMessage() {
+    function animateMessage() {
         let stage = 0;
         let currentMessage = '';
         let isRestrictedAccess = false;
