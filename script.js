@@ -26,30 +26,41 @@ document.addEventListener('DOMContentLoaded', () => {
     let cycleInProgress = false;
     let progressAnimation = null;
     
-    // 이미지 초기화 함수
     function initializeImages() {
-        if (!container) {
-            console.error('Container element not found');
-            return;
+    if (!container) {
+        console.error('Container element not found');
+        return;
+    }
+    
+    Object.entries(messageConfig).forEach(([message, imagePath]) => {
+        console.log(`Creating image for: ${message}`);
+        const img = document.createElement('img');
+        img.src = imagePath;
+        img.alt = "Status Image";
+        img.className = 'status-image-overlay';
+        img.style.opacity = '0';
+        img.style.visibility = 'hidden';
+        
+        // 디버깅을 위한 로그 추가
+        img.onload = () => {
+            console.log(`Image loaded successfully: ${imagePath}`);
+            console.log('Image dimensions:', img.width, 'x', img.height);
+            console.log('Image position:', img.offsetTop, img.offsetLeft);
+        };
+        img.onerror = () => console.error(`Failed to load image: ${imagePath}`);
+        
+        // system-status 요소에 이미지 추가
+        const systemStatus = document.querySelector('.system-status');
+        if (systemStatus) {
+            systemStatus.appendChild(img);
+        } else {
+            console.error('system-status element not found');
+            container.appendChild(img);
         }
         
-        Object.entries(messageConfig).forEach(([message, imagePath]) => {
-            console.log(`Creating image for: ${message}`);
-            const img = document.createElement('img');
-            img.src = imagePath;
-            img.alt = "Status Image";
-            img.className = 'status-image-overlay';
-            img.style.opacity = '0';
-            img.style.visibility = 'hidden';
-            
-            img.onload = () => console.log(`Image loaded: ${imagePath}`);
-            img.onerror = () => console.error(`Image load failed: ${imagePath}`);
-            
-            container.appendChild(img);
-            imageElements[message] = img;
-        });
-    }
-
+        imageElements[message] = img;
+    });
+}
     // 랜덤 메시지 선택 함수
     function getRandomUniqueMessage() {
         if (usedMessages.length === characters.length) {
