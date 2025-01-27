@@ -19,22 +19,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageElements = {};
     let usedMessages = [];
     let currentlyVisibleImage = null;
-    let cycleInProgress = false;
-    let progressAnimation = null;
     
-    function initializeImages() {
-        const container = document.querySelector('.container');
+   function initializeImages() {
+        console.log('Initializing images...');
         
         Object.entries(messageConfig).forEach(([message, imagePath]) => {
+            console.log(`Creating image element for message: ${message}`);
+            console.log(`Image path: ${imagePath}`);
+            
             const img = document.createElement('img');
             img.src = imagePath;
             img.alt = "Status Image";
             img.className = 'status-image-overlay';
             img.style.opacity = '0';
             img.style.visibility = 'hidden';
+            
+            // 이미지 로드 이벤트 추가
+            img.onload = () => {
+                console.log(`Image loaded successfully: ${imagePath}`);
+            };
+            
+            img.onerror = () => {
+                console.error(`Failed to load image: ${imagePath}`);
+            };
+            
             container.appendChild(img);
             imageElements[message] = img;
         });
+        
+        console.log('Available image elements:', imageElements);
     }
 
     function getRandomUniqueMessage() {
@@ -52,7 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showImage(message) {
+        console.log(`Attempting to show image for message: ${message}`);
+        
         if (currentlyVisibleImage) {
+            console.log('Hiding current visible image');
             currentlyVisibleImage.style.opacity = '0';
             currentlyVisibleImage.classList.remove('bounce-active');
             setTimeout(() => {
@@ -62,12 +78,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const newImage = imageElements[message];
         if (newImage) {
+            console.log('Found matching image element');
             newImage.style.visibility = 'visible';
             setTimeout(() => {
                 newImage.style.opacity = '1';
                 newImage.classList.add('bounce-active');
             }, 50);
             currentlyVisibleImage = newImage;
+        } else {
+            console.log('No matching image found for message');
         }
     }
 
@@ -94,40 +113,28 @@ document.addEventListener('DOMContentLoaded', () => {
         progressAnimation = requestAnimationFrame(update);
     }
 
+    
     async function runMessageCycle(message) {
-        cycleInProgress = true;
-        const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
-        
-        // 프로그래스 바 리셋
-        gaugeEl.style.width = '0%';
+        console.log(`Starting message cycle for: ${message}`);
         
         // 기본 메시지 표시
         textEl.textContent = message;
+        
+        // 이미지가 있는 메시지인 경우 이미지 표시
         if (messageConfig[message]) {
+            console.log(`Message has associated image: ${messageConfig[message]}`);
             showImage(message);
+        } else {
+            console.log('No image associated with this message');
         }
 
-        // 프로그래스 바 애니메이션 시작
-        animateProgress(3000, 100);
-        
-        // 일반적인 메시지 진행
+        // 메시지 진행 로직...
         let dots = '';
-        for (let i = 0; i < 4; i++) {
-            if (isRestrictedAccess && i === 1) {
-                // 특수 메시지일 경우 두 번째 단계에서 중단
-                cancelAnimationFrame(progressAnimation);
-                textEl.textContent = "[접근 권한 없음]";
-                textEl.classList.add('restricted-access');
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                break;
-            }
-            
+        for (let i = 0; i < 3; i++) {
             dots += '.';
             textEl.textContent = `${message}${dots}`;
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
-        
-        cycleInProgress = false;
     }
 
     async function startMessageLoop() {
