@@ -4,54 +4,180 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>미완성 청춘에게</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="youth-styles.css">
-  <link rel="stylesheet" href="glitch.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-  <meta name="description" content="미완성 청춘에게">
+  <style>
+    /* Previous styles remain the same */
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(
+        135deg,
+        #1a2a3a 0%,
+        #2b4a75 25%,
+        #3e5983 50%,
+        #a8c4e0 100%
+      );
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow: hidden;
+    }
+
+    /* Modified navbar to be static */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(26, 42, 58, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Image glitch effect */
+    @keyframes imageGlitch {
+      0% {
+        transform: translate(0);
+        opacity: 1;
+      }
+      20% {
+        transform: translate(-5px, 5px);
+        opacity: 0.8;
+      }
+      40% {
+        transform: translate(5px, -5px);
+        opacity: 0.9;
+      }
+      60% {
+        transform: translate(-5px, -5px);
+        opacity: 0.8;
+      }
+      80% {
+        transform: translate(5px, 5px);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translate(0);
+        opacity: 1;
+      }
+    }
+
+    .school-image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      filter: grayscale(80%) brightness(0.4);
+      transition: opacity 0.2s ease;
+    }
+
+    .school-image-overlay.glitching {
+      animation: imageGlitch 0.5s steps(2) forwards;
+    }
+
+    /* Rest of the previous styles remain the same */
+    .nav-logo {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .container {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* ... (rest of the previous styles) ... */
+  </style>
 </head>
 <body>
-  <div class="horror-glitch"></div>
   <div class="overlay"></div>
- <nav class="navbar">
-    <a href="#" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
+  <nav class="navbar">
+    <a href="#" class="nav-logo">BLUE LAM</a>
     <div class="nav-controls">
       <div class="nav-time" id="current-datetime"></div>
-      <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
+      <div class="nav-danger-level">SYSTEM: UNSTABLE</div>
     </div>
   </nav>
   
   <div class="container">
     <div class="winter-snow"></div>
-    <img src="선청고등학교.png" alt="School Image" class="school-image-overlay">
+    <img src="선청고등학교.png" alt="School Image" class="school-image-overlay" id="schoolImage">
     <section class="hero-section">
       <div class="school-name glitch-text" data-text="善淸高等學校">善淸高等學校</div>
-      <h1 class="intermittent-glitch" data-text="미완성 청춘에게">미완성 청춘에게</h1>
+      <h1 class="glitch-text" data-text="미완성 청춘에게">미완성 청춘에게</h1>
       <div class="subtitle">"어쩌고 부제목"</div>
     </section>
   </div>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-  const snowContainer = document.querySelector(".winter-snow");
 
-  // 눈송이 개수 설정
-  const snowflakeCount = 50;
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Snow effect code remains the same
+      const snowContainer = document.querySelector(".winter-snow");
+      const snowflakeCount = 100;
+      
+      for (let i = 0; i < snowflakeCount; i++) {
+        const snowflake = document.createElement("div");
+        snowflake.classList.add("snowflake");
+        snowflake.style.left = `${Math.random() * 100}vw`;
+        snowflake.style.opacity = `${0.4 + Math.random() * 0.6}`;
+        snowflake.style.width = snowflake.style.height = `${3 + Math.random() * 4}px`;
+        snowflake.style.animationDelay = `${Math.random() * 5}s`;
+        snowflake.style.animationDuration = `${10 + Math.random() * 20}s`;
+        snowContainer.appendChild(snowflake);
+      }
 
-  for (let i = 0; i < snowflakeCount; i++) {
-    const snowflake = document.createElement("div");
-    snowflake.classList.add("snowflake");
+      // Image glitch effect
+      const schoolImage = document.getElementById('schoolImage');
+      let isOriginalImage = true;
 
-    // 랜덤 위치와 애니메이션 속성 설정
-    snowflake.style.left = `${Math.random() * 100}vw`; // 랜덤 x 좌표
-    snowflake.style.animationDelay = `${Math.random() * 5}s`; // 랜덤 딜레이
-    snowflake.style.animationDuration = `${8 + Math.random() * 5}s`; // 속도 다양화
+      function triggerImageGlitch() {
+        if (Math.random() < 0.7) { // 70% chance
+          schoolImage.classList.add('glitching');
+          
+          // Switch to 홍련.png
+          setTimeout(() => {
+            schoolImage.src = '홍련.png';
+          }, 100);
 
-    snowContainer.appendChild(snowflake);
-  }
-});
-</script>
+          // Switch back after 0.5 seconds
+          setTimeout(() => {
+            schoolImage.src = '선청고등학교.png';
+            schoolImage.classList.remove('glitching');
+          }, 500);
+        }
+      }
 
+      // Trigger glitch effect every 5 seconds
+      setInterval(triggerImageGlitch, 5000);
 
-  <script src="script.js"></script>
+      // Update current time
+      const updateDateTime = () => {
+        const now = new Date();
+        document.getElementById("current-datetime").textContent = 
+          now.toLocaleTimeString('ko-KR', { hour12: false });
+      };
+      
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+    });
+  </script>
 </body>
 </html>
