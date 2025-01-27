@@ -1,38 +1,38 @@
 /* 차갑고 쓸쓸한 겨울 느낌 눈송이 */
 @keyframes winterSnowfall {
   0% {
-    transform: translateY(-10%);
+    transform: translateY(-10%); /* 화면 위에서 시작 */
     opacity: 1;
   }
   100% {
-    transform: translateY(110%);
+    transform: translateY(110%); /* 화면 아래로 사라짐 */
     opacity: 0.3;
   }
 }
 
 .winter-snow {
-  position: fixed;
+  position: fixed; /* 화면 고정 */
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; /* 화면 크기로 고정 */
+  height: 100%; /* 전체 화면 */
   pointer-events: none;
-  overflow: hidden; /* 눈송이가 화면 밖으로 나가지 않도록 */
+  overflow: hidden;
   z-index: 9999;
 }
 
 .winter-snowflake {
   position: absolute;
-  top: -10%; /* 화면 위에서 시작 */
+  top: -10%; /* 화면 상단 위에서 시작 */
   width: 8px;
   height: 8px;
-  background: rgba(200, 225, 255, 0.7);
+  background: rgba(200, 225, 255, 0.7); /* 밝은 차가운 느낌 */
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(200, 225, 255, 0.6); /* 희미한 빛 */
+  box-shadow: 0 0 12px rgba(200, 225, 255, 0.6); /* 희미한 빛 효과 */
   animation: winterSnowfall linear infinite;
 }
 
-/* 다양한 크기와 속도 설정 */
+/* 다양한 크기와 속도 */
 .winter-snowflake:nth-child(odd) {
   width: 6px;
   height: 6px;
@@ -42,10 +42,11 @@
 .winter-snowflake:nth-child(even) {
   width: 10px;
   height: 10px;
-  animation-duration: 15s;
+  animation-duration: 18s;
 }
 
+/* 랜덤 x 위치 */
 .winter-snowflake {
-  left: calc(100% * random());
-  animation-delay: calc(-10s * random());
+  left: calc(100% * var(--random-x)); /* x축 위치 랜덤 */
+  animation-delay: calc(-10s * var(--random-delay)); /* 애니메이션 딜레이 랜덤 */
 }
