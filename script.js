@@ -112,13 +112,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 일반적인 메시지 진행
         let dots = '';
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             if (isRestrictedAccess && i === 1) {
                 // 특수 메시지일 경우 두 번째 단계에서 중단
                 cancelAnimationFrame(progressAnimation);
                 textEl.textContent = "[접근 권한 없음]";
                 textEl.classList.add('restricted-access');
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 break;
             }
             
