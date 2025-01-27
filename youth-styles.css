@@ -1,52 +1,53 @@
-/* 차갑고 쓸쓸한 겨울 느낌 눈송이 */
-@keyframes winterSnowfall {
+/* 차분하고 차가운 겨울 느낌 */
+@keyframes snowfall {
   0% {
     transform: translateY(-10%); /* 화면 위에서 시작 */
     opacity: 1;
   }
   100% {
-    transform: translateY(110%); /* 화면 아래로 사라짐 */
-    opacity: 0.3;
+    transform: translateY(100vh); /* 화면 아래로 이동 */
+    opacity: 0.5;
   }
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden; /* 스크롤 방지 */
+  background: linear-gradient(to bottom, #2b4a75, #3e5983, #a8c4e0); /* 차가운 겨울 배경색 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
 .winter-snow {
-  position: fixed; /* 화면 고정 */
+  position: fixed; /* 화면에 고정 */
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; /* 전체 화면 */
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 9999;
+  height: 100%;
+  pointer-events: none; /* 인터랙션 차단 */
+  z-index: 999;
 }
 
-.winter-snowflake {
+.snowflake {
   position: absolute;
-  top: -10%; /* 화면 상단 위에서 시작 */
+  top: -10%; /* 화면 위에서 시작 */
   width: 8px;
   height: 8px;
-  background: rgba(200, 225, 255, 0.7); /* 밝은 차가운 느낌 */
+  background: rgba(255, 255, 255, 0.8); /* 밝은 흰색 눈송이 */
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(200, 225, 255, 0.6); /* 희미한 빛 효과 */
-  animation: winterSnowfall linear infinite;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* 부드러운 빛남 */
+  animation: snowfall linear infinite;
 }
 
-/* 다양한 크기와 속도 */
-.winter-snowflake:nth-child(odd) {
-  width: 6px;
-  height: 6px;
+/* 각 눈송이의 랜덤 속성 설정 */
+.snowflake:nth-child(odd) {
+  animation-duration: 8s;
+}
+
+.snowflake:nth-child(even) {
   animation-duration: 12s;
-}
-
-.winter-snowflake:nth-child(even) {
-  width: 10px;
-  height: 10px;
-  animation-duration: 18s;
-}
-
-/* 랜덤 x 위치 */
-.winter-snowflake {
-  left: calc(100% * var(--random-x)); /* x축 위치 랜덤 */
-  animation-delay: calc(-10s * var(--random-delay)); /* 애니메이션 딜레이 랜덤 */
 }
