@@ -133,7 +133,7 @@ body {
 
     .container {
   position: relative;
-  padding-top: 60px; /* Space for fixed navbar */
+  padding-top: 40px; /* Space for fixed navbar */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -141,8 +141,8 @@ body {
 }
 .hero-section {
   width: 100%;
-  padding: 2rem;
-  margin-top: 3rem;
+  padding: 1rem;
+  margin-top: 1rem;
   position: relative;
   z-index: 2;
 }
