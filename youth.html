@@ -92,6 +92,16 @@
 
       // Trigger glitch effect every 5 seconds
       setInterval(triggerImageGlitch, 5000);
+
+      // Update current time
+      const updateDateTime = () => {
+        const now = new Date();
+        document.getElementById("current-datetime").textContent = 
+          now.toLocaleTimeString('ko-KR', { hour12: false });
+      };
+      
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
     });
   </script>
 </body>
