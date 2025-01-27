@@ -16,8 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 표시할 메시지 목록
     const characters = [
         "y_pred = model.predict(X_test)",
-        "현진우가 침대에서 뒤척거리고 있습니다",
-        "현진우가 슬기로운 감빵 생활 중입니다"
+        "현진우가 침대에서 뒤척거리고 있습니다"
     ];
 
     // 상태 변수
