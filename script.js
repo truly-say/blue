@@ -25,21 +25,6 @@ const messageConfig = {
     let cycleInProgress = false;
     let progressAnimation = null;
     
-    function initializeImages() {
-        const container = document.querySelector('.container');
-        
-        Object.entries(messageConfig).forEach(([message, imagePath]) => {
-            const img = document.createElement('img');
-            img.src = imagePath;
-            img.alt = "Status Image";
-            img.className = 'status-image-overlay';
-            img.style.opacity = '0';
-            img.style.visibility = 'hidden';
-            container.appendChild(img);
-            imageElements[message] = img;
-        });
-    }
-
     function getRandomUniqueMessage() {
         if (usedMessages.length === characters.length) {
             usedMessages = [];
