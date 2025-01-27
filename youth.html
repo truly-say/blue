@@ -9,52 +9,6 @@
   <link rel="stylesheet" href="glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
   <meta name="description" content="미완성 청춘에게">
-  <style>
-    /* 눈송이가 부드럽게 떨어지는 애니메이션 */
-    @keyframes snow {
-      0% {
-        transform: translateY(-10%);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-
-    .snowflake {
-      position: absolute;
-      top: -10%; /* 화면 위에서 시작 */
-      width: 8px;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 50%;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      opacity: 0.9;
-      pointer-events: none;
-      animation: snow linear infinite;
-    }
-
-    /* 랜덤 애니메이션 */
-    .snowflake {
-      animation-duration: calc(8s + 4s * random()); /* 느린 속도 */
-      animation-delay: calc(-10s + random() * 5s);
-      left: calc(100% * random()); /* 랜덤 위치 */
-    }
-
-    /* 다양한 크기와 효과 추가 */
-    .snowflake:nth-child(odd) {
-      width: 10px;
-      height: 10px;
-      animation-duration: 12s;
-    }
-
-    .snowflake:nth-child(even) {
-      width: 6px;
-      height: 6px;
-      animation-duration: 10s;
-    }
-  </style>
 </head>
 <body>
   <div class="horror-glitch"></div>
@@ -75,23 +29,27 @@
       <div class="subtitle">"어쩌고 부제목"</div>
     </section>
   </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const snowContainer = document.createElement("div");
+    snowContainer.classList.add("winter-snow");
+    document.body.appendChild(snowContainer);
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const snowContainer = document.createElement('div');
-      snowContainer.classList.add('snow');
-      document.body.appendChild(snowContainer);
-      
-      for (let i = 0; i < 50; i++) { // 눈송이 50개 (조금만)
-        const snowflake = document.createElement('div');
-        snowflake.classList.add('snowflake');
-        snowflake.style.left = `${Math.random() * 100}vw`; // 랜덤한 x 위치
-        snowflake.style.animationDuration = `${8 + Math.random() * 4}s`; // 느리게 떨어짐
-        snowflake.style.animationDelay = `${-Math.random() * 5}s`; // 시간 차이 추가
-        snowContainer.appendChild(snowflake);
-      }
-    });
-  </script>
+    // 차갑고 쓸쓸한 겨울 눈송이 생성
+    for (let i = 0; i < 50; i++) { // 눈송이 50개
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("winter-snowflake");
+      snowflake.style.left = `${Math.random() * 100}vw`; // 화면의 랜덤 x 위치
+      snowflake.style.animationDuration = `${10 + Math.random() * 5}s`; // 10~15초 간격
+      snowflake.style.animationDelay = `${-Math.random() * 10}s`; // 랜덤 딜레이
+      snowContainer.appendChild(snowflake);
+    }
+
+    // 차가운 겨울 배경 클래스 추가
+    document.body.classList.add("winter-background");
+  });
+</script>
+
   <script src="script.js"></script>
 </body>
 </html>
