@@ -11,12 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 상태 메시지 설정
     const STATUS_CONFIG = {
         messages: {
-            // 이미지가 있는 메시지
             "현진우가 슬기로운 감빵 생활 중입니다": "선청고등학교.png",
-            // 이미지가 없는 기본 메시지들은 기본 이미지 사용
             "y_pred = model.predict(X_test)": "찌글.png",
-            "현진우가 침대에서 뒤척거리고 있습니다": "홍련.png"
-            // 여기에 새로운 메시지와 이미지를 추가할 수 있습니다
+            "[11기 졸업생]이 경영 지식을 배우고 있습니다":"포도.png"
         },
         defaultImage: "홍련.png",
         cycleInterval: 3000, // 메시지 순환 간격 (ms)
