@@ -541,36 +541,31 @@ body, .status-text, #progress-text {
   transform: translateY(-5px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
-
-@keyframes bounce {
-    0%, 100% {
-        transform: translate(-50%, -50%);
-    }
-    50% {
-        transform: translate(-50%, -60%);
-    }
-}
-
-.status-image-overlay {
+/* status-overlay-styles.css */
+.status-message-image {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-    z-index: 100;
+    transform: translate(-50%, -200%);
+    max-width: 200px;
+    transition: opacity 0.5s ease;
+    z-index: 10;
+    pointer-events: none;
 }
 
-.status-image-overlay.bounce-active {
-    animation: bounce 1s ease-in-out infinite;
+.message-bounce {
+    animation: message-bounce 0.5s ease;
 }
 
-.status-text {
-    transition: color 0.3s ease;
+@keyframes message-bounce {
+    0% { transform: translate(-50%, -200%); }
+    50% { transform: translate(-50%, -220%); }
+    100% { transform: translate(-50%, -200%); }
+}
+
+.access-denied {
+    color: #ff0000;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 768px) {
