@@ -573,10 +573,6 @@ body, .status-text, #progress-text {
     transition: color 0.3s ease;
 }
 
-.restricted-access {
-    color: #ff0000;
-    font-weight: bold;
-}
 @media screen and (max-width: 768px) {
   .container::before,
   .container::after {
