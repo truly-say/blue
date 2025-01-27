@@ -1,34 +1,64 @@
-/* Snow falling animation */
-@keyframes snow {
+/* 차갑고 쓸쓸한 겨울 느낌의 눈송이 */
+@keyframes winterSnowfall {
   0% {
-    transform: translateY(-100px);
+    transform: translateY(-10%);
+    opacity: 1;
   }
   100% {
-    transform: translateY(100vh);
+    transform: translateY(110vh);
+    opacity: 0.3;
   }
 }
 
-.snow {
+.winter-snowflake {
   position: absolute;
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.8);
-  opacity: 0.9;
+  top: -10%;
+  width: 8px;
+  height: 8px;
+  background: rgba(200, 225, 255, 0.7); /* 차갑고 희미한 색 */
   border-radius: 50%;
+  box-shadow: 0 0 12px rgba(200, 225, 255, 0.6); /* 부드럽게 빛남 */
+  animation: winterSnowfall linear infinite;
   pointer-events: none;
-  z-index: 99999;
-  animation: snow linear infinite;
+  opacity: 0.9;
+  z-index: 9999; /* 다른 요소 위로 */
 }
 
-.snow:nth-child(odd) {
-  animation-duration: 4s;
+/* 다양한 크기 및 속도 */
+.winter-snowflake:nth-child(odd) {
+  width: 6px;
+  height: 6px;
+  animation-duration: 10s; /* 느리게 떨어짐 */
 }
 
-.snow:nth-child(even) {
-  animation-duration: 6s;
+.winter-snowflake:nth-child(even) {
+  width: 9px;
+  height: 9px;
+  animation-duration: 12s;
 }
 
-.snow {
-  left: calc(100% * random());
-  animation-delay: calc(-6s + 8s * random());
+.winter-snowflake:nth-child(4n) {
+  width: 12px;
+  height: 12px;
+  animation-duration: 15s;
+}
+
+/* 랜덤 배치 */
+.winter-snowflake {
+  left: calc(100% * random()); /* 화면 랜덤 위치 */
+  animation-delay: calc(-10s * random()); /* 애니메이션 시작 시간 랜덤 */
+}
+
+/* 배경: 쓸쓸한 겨울 하늘 */
+body.winter-background {
+  background: linear-gradient(to bottom, #1a1d27, #3a405a); /* 차가운 겨울 하늘 */
+  color: #e8eff6; /* 희미한 텍스트 */
+  overflow: hidden; /* 스크롤 숨김 */
+}
+
+.container {
+  background: rgba(10, 20, 30, 0.7); /* 겨울 느낌의 어두운 반투명 박스 */
+  border: 1px solid rgba(200, 225, 255, 0.4); /* 차갑고 부드러운 테두리 */
+  padding: 20px;
+  border-radius: 10px;
 }
