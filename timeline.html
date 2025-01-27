@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Lam Graduation Cruise - Timeline</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="glitch.css">
   <style>
     :root {
       --deep-sea: #001a33;
@@ -11,65 +13,7 @@
       --danger-red: #ff3b3b;
       --frost-white: #e8f4ff;
     }
-    
-    body {
-      margin: 0;
-      font-family: 'Pretendard', sans-serif;
-      background: var(--deep-sea);
-      color: var(--frost-white);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(0,26,51,0.9);
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      z-index: 100;
-      backdrop-filter: blur(5px);
-      border-bottom: 1px solid rgba(168,216,255,0.2);
-    }
-
-    .nav-logo {
-      color: var(--ice-blue);
-      font-size: 1.5rem;
-      text-decoration: none;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba(168,216,255,0.5);
-    }
-
-    .nav-controls {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .nav-danger-level {
-      color: var(--danger-red);
-      font-weight: bold;
-      animation: pulse 2s infinite;
-    }
-
-    .container {
-      padding-top: 80px;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .hero-section {
-      text-align: center;
-      padding: 4rem 0;
-      background: linear-gradient(rgba(0,26,51,0.8), rgba(0,26,51,0.4)),
-                  url('/api/placeholder/1200/400') center/cover;
-      border-radius: 15px;
-      margin: 2rem;
-    }
-
+   
     .timeline-section {
       margin: 4rem 2rem;
       padding: 2rem;
