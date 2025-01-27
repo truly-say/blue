@@ -200,8 +200,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
     window.addEventListener('pageshow', (event) => {
         document.body.style.opacity = '1';
     });
+
+
+
+    // 임시 코드
+    let userInput = ""; // 사용자가 입력한 키를 저장하는 변수
+
+document.addEventListener("keydown", (event) => {
+  userInput += event.key.toLowerCase(); // 입력된 키를 소문자로 추가
+
+  // "lam" 입력 확인
+  if (userInput.endsWith("lam")) {
+    // youth.html로 이동
+    window.location.href = "youth.html";
+  }
+
+  // 입력 값이 너무 길어지지 않도록 최대 10자만 저장
+  if (userInput.length > 10) {
+    userInput = userInput.slice(-10);
+  }
+});
 });
