@@ -8,185 +8,243 @@ document.addEventListener('DOMContentLoaded', () => {
     const glitchTarget = document.querySelector('.intermittent-glitch');
     const container = document.querySelector('.container');
 
-    // 기본 이미지 설정
-    const DEFAULT_IMAGE = 'hongryeon.png';
-
-    // 통합된 상태 메시지 설정
-    const statusMessages = [
-        {
-            text: "y_pred = model.predict(X_test)",
-            image: "홍련.png",
-            isRestricted: true  // 접근 제한 메시지 여부
+    // 상태 메시지 설정
+    const STATUS_CONFIG = {
+        messages: {
+            // 이미지가 있는 메시지
+            "현진우가 슬기로운 감빵 생활 중입니다": "선청고등학교.png",
+            // 이미지가 없는 기본 메시지들은 기본 이미지 사용
+            "y_pred = model.predict(X_test)": "홍련.png",
+            "현진우가 침대에서 뒤척거리고 있습니다": "홍련.png"
+            // 여기에 새로운 메시지와 이미지를 추가할 수 있습니다
         },
-        {
-            text: "현진우가 침대에서 뒤척거리고 있습니다",
-            image: "홍련.png",
-            isRestricted: false
-        },
-        {
-            text: "현진우가 슬기로운 감빵 생활 중입니다",
-            image: "선청.png",
-            isRestricted: false
-        }
-        // 추가 메시지는 같은 형식으로 여기에 추가
-    ];
+        defaultImage: "홍련.png",
+        cycleInterval: 3000, // 메시지 순환 간격 (ms)
+        animationDuration: 300, // 이미지 전환 애니메이션 시간 (ms)
+    };
 
-    // 상태 변수
-    const imageElements = new Map();
-    let usedMessages = [];
-    let currentlyVisibleImage = null;
-    let cycleInProgress = false;
-    let progressAnimation = null;
-
-    // 이미지 프리로딩 함수
-    function preloadImage(src) {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = () => resolve(img);
-            img.onerror = reject;
-            img.src = src;
-        });
-    }
-
-    // 이미지 초기화 함수
-    async function initializeImages() {
-        if (!container) {
-            console.error('Container element not found');
-            return;
+    // 상태 관리 클래스
+    class StatusManager {
+        constructor(config) {
+            this.config = config;
+            this.imageElements = {};
+            this.usedMessages = [];
+            this.currentlyVisibleImage = null;
+            this.cycleInProgress = false;
+            this.progressAnimation = null;
+            
+            this.initializeImages();
         }
 
-        const systemStatus = document.querySelector('.system-status') || container;
-
-        // 모든 상태 메시지에 대한 이미지 초기화
-        for (const message of statusMessages) {
-            try {
-                const img = document.createElement('img');
-                img.src = message.image;
-                img.alt = "Status Image";
-                img.className = 'status-image-overlay';
-                img.style.opacity = '0';
-                img.style.visibility = 'hidden';
-
-                systemStatus.appendChild(img);
-                imageElements.set(message.text, img);
-                
-                await preloadImage(message.image);
-                console.log(`Image loaded successfully: ${message.image}`);
-            } catch (error) {
-                console.error(`Failed to initialize image for message: ${message.text}`);
-                // 실패 시 기본 이미지로 대체
-                const defaultImg = document.createElement('img');
-                defaultImg.src = DEFAULT_IMAGE;
-                defaultImg.alt = "Default Status Image";
-                defaultImg.className = 'status-image-overlay';
-                defaultImg.style.opacity = '0';
-                defaultImg.style.visibility = 'hidden';
-                
-                systemStatus.appendChild(defaultImg);
-                imageElements.set(message.text, defaultImg);
+        initializeImages() {
+            if (!container) {
+                console.error('Container element not found');
+                return;
             }
-        }
-    }
 
-    // 이미지 표시 함수
-    async function showImage(messageText) {
-        console.log(`Showing image for: ${messageText}`);
+            const systemStatus = document.querySelector('.system-status') || container;
 
-        if (currentlyVisibleImage) {
-            currentlyVisibleImage.style.opacity = '0';
-            currentlyVisibleImage.classList.remove('bounce-active');
-            await new Promise(resolve => setTimeout(resolve, 300));
-            currentlyVisibleImage.style.visibility = 'hidden';
+            // 이미지 요소 생성 및 초기화
+            Object.entries(this.config.messages).forEach(([message, imagePath]) => {
+                const img = this.createImageElement(imagePath);
+                systemStatus.appendChild(img);
+                this.imageElements[message] = img;
+            });
         }
 
-        const newImage = imageElements.get(messageText);
-        if (newImage) {
-            newImage.style.visibility = 'visible';
-            void newImage.offsetWidth;
+        createImageElement(imagePath) {
+            const img = document.createElement('img');
+            img.src = imagePath || this.config.defaultImage;
+            img.alt = "Status Image";
+            img.className = 'status-image-overlay';
+            img.style.opacity = '0';
+            img.style.visibility = 'hidden';
+            
+            // 이미지 로드 이벤트 처리
+            img.onload = () => {
+                console.log(`Image loaded: ${imagePath}`);
+                img.dataset.loaded = 'true';
+            };
+            img.onerror = () => {
+                console.error(`Failed to load image: ${imagePath}`);
+                img.src = this.config.defaultImage;
+            };
+
+            return img;
+        }
+
+        getRandomMessage() {
+            const messages = Object.keys(this.config.messages);
+            if (this.usedMessages.length === messages.length) {
+                this.usedMessages = [];
+            }
+
+            let availableMessages = messages.filter(msg => !this.usedMessages.includes(msg));
+            const randomMessage = availableMessages[Math.floor(Math.random() * availableMessages.length)];
+            this.usedMessages.push(randomMessage);
+            return randomMessage;
+        }
+
+        async showImage(message) {
+            const newImage = this.imageElements[message];
+            if (!newImage) return;
+
+            // 이전 이미지 페이드 아웃
+            if (this.currentlyVisibleImage) {
+                await this.fadeOutImage(this.currentlyVisibleImage);
+            }
+
+            // 새 이미지 페이드 인
+            await this.fadeInImage(newImage);
+            this.currentlyVisibleImage = newImage;
+        }
+
+        async fadeOutImage(image) {
+            image.style.opacity = '0';
+            image.classList.remove('bounce-active');
+            await new Promise(resolve => setTimeout(resolve, this.config.animationDuration));
+            image.style.visibility = 'hidden';
+        }
+
+        async fadeInImage(image) {
+            image.style.visibility = 'visible';
             await new Promise(resolve => setTimeout(resolve, 50));
-            newImage.style.opacity = '1';
-            newImage.classList.add('bounce-active');
-            currentlyVisibleImage = newImage;
-        }
-    }
-
-    // 랜덤 메시지 선택 함수
-    function getRandomUniqueMessage() {
-        if (usedMessages.length === statusMessages.length) {
-            usedMessages = [];
+            image.style.opacity = '1';
+            image.classList.add('bounce-active');
         }
 
-        let randomMessage;
-        do {
-            randomMessage = statusMessages[Math.floor(Math.random() * statusMessages.length)];
-        } while (usedMessages.includes(randomMessage));
+        animateProgress(duration, targetProgress) {
+            if (this.progressAnimation) {
+                cancelAnimationFrame(this.progressAnimation);
+            }
 
-        usedMessages.push(randomMessage);
-        return randomMessage;
-    }
+            const startTime = Date.now();
+            const startProgress = parseFloat(gaugeEl.style.width) || 0;
 
-    // 메시지 사이클 실행 함수
-    async function runMessageCycle(messageObj) {
-        if (!textEl || !gaugeEl) return;
-        
-        cycleInProgress = true;
-        
-        // Reset progress bar and animation
-        gaugeEl.style.width = '0%';
-        cancelAnimationFrame(progressAnimation);
-        
-        // Show message and image
-        textEl.textContent = messageObj.text;
-        showImage(messageObj.text);
+            const update = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentProgress = startProgress + (targetProgress - startProgress) * progress;
+                
+                gaugeEl.style.width = `${currentProgress}%`;
+                
+                if (progress < 1) {
+                    this.progressAnimation = requestAnimationFrame(update);
+                }
+            };
+            
+            this.progressAnimation = requestAnimationFrame(update);
+        }
 
-        // Start new progress animation
-        animateProgress(3000, 100);
-        
-        // 메시지 진행
-        let dots = '';
-        for (let i = 0; i < 3; i++) {
-            if (messageObj.isRestricted && i === 1) {
-                cancelAnimationFrame(progressAnimation);
-                textEl.textContent = "[접근 권한 없음]";
-                textEl.classList.add('restricted-access');
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                break;
+        async runMessageCycle(message) {
+            if (!textEl || !gaugeEl) return;
+            
+            this.cycleInProgress = true;
+            const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
+            
+            // 프로그레스 바 리셋
+            gaugeEl.style.width = '0%';
+            this.animateProgress(3000, 100);
+            
+            // 메시지와 이미지 표시
+            textEl.textContent = message;
+            await this.showImage(message);
+
+            // 메시지 진행
+            let dots = '';
+            for (let i = 0; i < 3; i++) {
+                if (isRestrictedAccess && i === 1) {
+                    cancelAnimationFrame(this.progressAnimation);
+                    textEl.textContent = "[접근 권한 없음]";
+                    textEl.classList.add('restricted-access');
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    break;
+                }
+                
+                dots += '.';
+                textEl.textContent = `${message}${dots}`;
+                await new Promise(resolve => setTimeout(resolve, 1000));
             }
             
-            dots += '.';
-            textEl.textContent = `${messageObj.text}${dots}`;
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            
+            if (this.currentlyVisibleImage) {
+                await this.fadeOutImage(this.currentlyVisibleImage);
+            }
+            
+            this.cycleInProgress = false;
         }
+
+        async startMessageLoop() {
+            while (true) {
+                if (!this.cycleInProgress) {
+                    const message = this.getRandomMessage();
+                    await this.runMessageCycle(message);
+                }
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+        }
+    }
+
+    // StatusManager 인스턴스 생성 및 시작
+    const statusManager = new StatusManager(STATUS_CONFIG);
+    statusManager.startMessageLoop();
+
+    // 기존의 시간 업데이트 및 글리치 효과 함수들...
+    function updateDateTime() {
+        const now = new Date();
+        const departureDate = new Date('2025-02-28T00:00:00');
+        const diff = departureDate - now;
         
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        
-        if (currentlyVisibleImage) {
-            currentlyVisibleImage.style.opacity = '0';
-            currentlyVisibleImage.classList.remove('bounce-active');
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        if (timeDisplay) {
+            timeDisplay.textContent = new Intl.DateTimeFormat('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(now);
+        }
+
+        if (countdownDisplay) {
+            countdownDisplay.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+    }
+
+    function triggerRandomGlitch() {
+        if (glitchTarget && Math.random() < 0.2) {
+            glitchTarget.classList.add('glitch-active');
+            if (Math.random() < 0.3) {
+                glitchTarget.classList.add('text-morph');
+            }
             setTimeout(() => {
-                currentlyVisibleImage.style.visibility = 'hidden';
+                glitchTarget.classList.remove('glitch-active', 'text-morph');
             }, 500);
         }
-        
-        cycleInProgress = false;
     }
 
-    // 메시지 루프 시작 함수
-    async function startMessageLoop() {
-        while (true) {
-            if (!cycleInProgress) {
-                const messageObj = getRandomUniqueMessage();
-                await runMessageCycle(messageObj);
-            }
-            await new Promise(resolve => setTimeout(resolve, 100));
-        }
-    }
-
-    // 나머지 함수들은 그대로 유지...
+    // 페이지 전환 효과 및 키보드 입력 처리
+    let userInput = "";
     
-    // 초기화 및 인터벌 설정
-    initializeImages();
-    startMessageLoop();
+    document.addEventListener("keydown", (event) => {
+        userInput += event.key.toLowerCase();
+        
+        if (userInput.endsWith("lam")) {
+            window.location.href = "youth.html";
+        }
+        
+        if (userInput.length > 10) {
+            userInput = userInput.slice(-10);
+        }
+    });
+
+    // 인터벌 설정
     setInterval(updateDateTime, 1000);
     setInterval(triggerRandomGlitch, 5000);
 });
