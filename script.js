@@ -144,6 +144,21 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeImages();
     startMessageLoop();
     
+    function displayImage(message) {
+    if (activeImage) {
+        console.log('Previous image:', activeImage); // 이전 이미지 상태 확인
+    }
+
+    const newImage = messageImages[message];
+    if (newImage) {
+        console.log('New image:', newImage); // 새 이미지 상태 확인
+        newImage.style.visibility = 'visible';
+        newImage.style.opacity = '1'; // 즉시 표시 테스트
+        console.log('Image displayed:', newImage.style.opacity, newImage.style.visibility);
+    } else {
+        console.log('No image found for message:', message);
+    }
+}
     // 시간 업데이트 함수
     function updateDateTime() {
         const now = new Date();
