@@ -10,7 +10,7 @@
 <body>
   <div class="overlay"></div>
   <nav class="navbar">
-    <a href="#" class="nav-logo">미완성</a>
+    <a href="#" class="nav-logo">BLUE LAM</a>
     <div class="nav-controls">
       <div class="nav-time" id="current-datetime"></div>
       <div class="nav-danger-level">SYSTEM: UNSTABLE</div>
@@ -23,7 +23,7 @@
     <section class="hero-section">
       <div class="school-name glitch-text" data-text="善淸高等學校">善淸高等學校</div>
       <h1 class="glitch-text" data-text="미완성 청춘에게">미완성 청춘에게</h1>
-      <div class="subtitle">"부디 이번 봄은 시렵지 않기를 바라며"</div>
+      <div class="subtitle">"어쩌고 부제목"</div>
     </section>
   </div>
 </section>
@@ -40,14 +40,14 @@
       <div class="info-card glitch-hover" data-page="index">
         <div class="info-card-inner">
           <h3>회상하기</h3>
-          <p>블루 램으로 향합니다</p>
+          <p>2025.01.02 ~ 2025.02.02</p>
           <div class="card-overlay"></div>
         </div>
       </div>
       <div class="info-card glitch-hover" data-page="reboot">
         <div class="info-card-inner">
           <h3>나아가기</h3>
-          <p id="status-message">학교에서 빠져나갑니다</p>
+          <p id="status-message">SYSTEM DEGRADATION IMMINENT</p>
           <div class="card-overlay"></div>
         </div>
       </div>
@@ -92,16 +92,6 @@
 
       // Trigger glitch effect every 5 seconds
       setInterval(triggerImageGlitch, 5000);
-
-      // Update current time
-      const updateDateTime = () => {
-        const now = new Date();
-        document.getElementById("current-datetime").textContent = 
-          now.toLocaleTimeString('ko-KR', { hour12: false });
-      };
-      
-      updateDateTime();
-      setInterval(updateDateTime, 1000);
     });
   </script>
 </body>
