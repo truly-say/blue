@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showImage(message) {
     console.log(`Showing image for: ${message}`);
     
+    // Remove previous image animation
     if (currentlyVisibleImage) {
         currentlyVisibleImage.style.opacity = '0';
         currentlyVisibleImage.classList.remove('bounce-active');
@@ -80,14 +81,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const newImage = imageElements[message];
     if (newImage) {
+        // Reset animation state
         newImage.style.visibility = 'visible';
-        setTimeout(() => {
+        newImage.style.opacity = '0';
+        newImage.classList.remove('bounce-active');
+        
+        // Force reflow to ensure animation restart
+        void newImage.offsetWidth;
+        
+        // Start new animation
+        requestAnimationFrame(() => {
             newImage.style.opacity = '1';
             newImage.classList.add('bounce-active');
-        }, 50);
+        });
+        
         currentlyVisibleImage = newImage;
     }
 }
+
 
     // 프로그레스 바 애니메이션 함수
     function animateProgress(duration, targetProgress) {
@@ -118,16 +129,17 @@ async function runMessageCycle(message) {
     cycleInProgress = true;
     const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
     
-    // 프로그레스 바 리셋
+    // Reset progress bar and animation
     gaugeEl.style.width = '0%';
+    cancelAnimationFrame(progressAnimation);
     
-    // 메시지 표시
+    // Show message and image
     textEl.textContent = message;
     if (messageConfig[message]) {
         showImage(message);
     }
 
-    // 프로그레스 바 애니메이션
+    // Start new progress animation
     animateProgress(3000, 100);
     
     // 메시지 진행
