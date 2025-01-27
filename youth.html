@@ -74,25 +74,25 @@
       const schoolImage = document.getElementById('schoolImage');
       let isOriginalImage = true;
 
-      function triggerImageGlitch() {
-        if (Math.random() < 0.7) { // 70% chance
-          schoolImage.classList.add('glitching');
-          
-          // Switch to 홍련.png
-          setTimeout(() => {
-            schoolImage.src = '홍련.png';
-          }, 100);
+     function triggerImageGlitch() {
+  if (Math.random() < 0.3) { // 30% 확률로 변경
+    schoolImage.classList.add('glitching');
+    
+    // 랜덤한 시간 후에 이미지 전환
+    setTimeout(() => {
+      schoolImage.src = '홍련.png';
+    }, Math.random() * 100); // 0-100ms 사이의 랜덤한 시간
+    
+    // 랜덤한 지속 시간 후에 원래 이미지로 복귀
+    setTimeout(() => {
+      schoolImage.src = '선청고등학교.png';
+      schoolImage.classList.remove('glitching');
+    }, 300 + Math.random() * 200); // 300-500ms 사이의 랜덤한 시간
+  }
+}
 
-          // Switch back after 0.5 seconds
-          setTimeout(() => {
-            schoolImage.src = '선청고등학교.png';
-            schoolImage.classList.remove('glitching');
-          }, 500);
-        }
-      }
-
-      // Trigger glitch effect every 5 seconds
-      setInterval(triggerImageGlitch, 5000);
+// 3-7초 사이의 랜덤한 간격으로 글리치 효과 발생
+setInterval(triggerImageGlitch, 3000 + Math.random() * 4000);
 
       // Update current time
       const updateDateTime = () => {
