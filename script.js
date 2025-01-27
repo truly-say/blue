@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const glitchTarget = document.querySelector('.intermittent-glitch');
     const container = document.querySelector('.container');
 
+    
     // 상태 메시지 설정
     const STATUS_CONFIG = {
         messages: {
