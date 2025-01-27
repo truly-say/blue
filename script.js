@@ -132,7 +132,109 @@ const messageConfig = {
         
         cycleInProgress = false;
     }
+import React, { useState, useEffect, useCallback } from 'react';
 
+const StatusMessage = () => {
+  const [currentMessage, setCurrentMessage] = useState('');
+  const [currentImage, setCurrentImage] = useState(null);
+  const [isBouncing, setIsBouncing] = useState(false);
+
+  const messageConfig = {
+    "현진우가 슬기로운 감빵 생활 중입니다": "선청고등학교.png",
+  };
+
+  const characters = [
+    "y_pred = model.predict(X_test)",
+    "현진우가 침대에서 뒤척거리고 있습니다",
+    "현진우가 슬기로운 감빵 생활 중입니다"
+  ];
+
+  const showMessage = useCallback((message) => {
+    setCurrentMessage(message);
+    
+    // 이미지가 있는 메시지인 경우에만 이미지 표시 및 애니메이션 실행
+    if (messageConfig[message]) {
+      setCurrentImage(messageConfig[message]);
+      setIsBouncing(true);
+      
+      // 애니메이션 종료 후 바운스 상태 리셋
+      setTimeout(() => {
+        setIsBouncing(false);
+      }, 1000); // 전체 애니메이션 주기
+    } else {
+      setCurrentImage(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    let messageInterval;
+    let usedMessages = [];
+
+    const getRandomMessage = () => {
+      if (usedMessages.length === characters.length) {
+        usedMessages = [];
+      }
+
+      let message;
+      do {
+        message = characters[Math.floor(Math.random() * characters.length)];
+      } while (usedMessages.includes(message));
+
+      usedMessages.push(message);
+      return message;
+    };
+
+    const cycleMessage = () => {
+      const message = getRandomMessage();
+      showMessage(message);
+    };
+
+    messageInterval = setInterval(cycleMessage, 4000);
+    return () => clearInterval(messageInterval);
+  }, [showMessage]);
+
+  return (
+    <div className="relative w-full max-w-xl mx-auto p-4">
+      <div className="text-center">
+        <p className="text-xl font-semibold mb-4">{currentMessage}</p>
+        {currentImage && (
+          <div className="relative h-48 w-48 mx-auto">
+            <img 
+              src={currentImage}
+              alt="Status"
+              className={`w-full h-full object-contain transition-opacity duration-300 ${
+                isBouncing ? 'animate-image-bounce opacity-100' : 'opacity-100'
+              }`}
+            />
+          </div>
+        )}
+      </div>
+
+      <style jsx>{`
+        @keyframes imageBounce {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+
+        .animate-image-bounce {
+          animation: imageBounce 1s cubic-bezier(0.36, 0, 0.66, -0.56) infinite;
+        }
+
+        img {
+          backface-visibility: hidden;
+          transform-style: preserve-3d;
+          will-change: transform;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default StatusMessage;
     async function startMessageLoop() {
         while (true) {
             if (!cycleInProgress) {
