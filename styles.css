@@ -543,27 +543,38 @@ body, .status-text, #progress-text {
 .status-image-overlay {
     position: absolute;
     left: 50%;
-    bottom: 120px; /* 프로그레스 바 위에 위치하도록 조정 */
+    bottom: 120px;
     transform: translateX(-50%);
-    width: 80px; /* 이미지 크기 축소 */
+    width: 80px;
     height: 80px;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease;
     z-index: 10;
-    object-fit: contain; /* 이미지 비율 유지 */
+    object-fit: contain;
 }
 
 .bounce-active {
-    animation: overlay-bounce 1s ease infinite; /* 무한 반복 애니메이션 */
+    animation: overlay-bounce 1.2s cubic-bezier(0.36, 0, 0.66, -0.56) infinite;
+    /* 
+    cubic-bezier(0.36, 0, 0.66, -0.56)는 포물선과 비슷한 곡선을 만듭니다:
+    - 시작할 때 천천히 올라가다가
+    - 정점에서 잠시 머물고
+    - 떨어질 때는 더 빠르게 떨어지는 효과
+    */
 }
 
 @keyframes overlay-bounce {
-    0%, 100% { 
+    0% { 
         transform: translateX(-50%) translateY(0);
+        animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0.33);
     }
     50% { 
-        transform: translateX(-50%) translateY(-10px);
+        transform: translateX(-50%) translateY(-15px);
+        animation-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+    }
+    100% { 
+        transform: translateX(-50%) translateY(0);
     }
 }
 @media screen and (max-width: 768px) {
