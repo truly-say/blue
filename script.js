@@ -1,17 +1,42 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
     const timeDisplay = document.querySelector('#current-datetime');
     const countdownDisplay = document.querySelector('#countdown');
     const glitchTarget = document.querySelector('.intermittent-glitch');
-   
-    const characters = [
-        "이지훈이 상황 파악을 하고 있습니다",
-        "y_pred = model.predict(X_test)",
-        "현진우가 슬기로운 감빵 생활 중입니다"
-    ];
+    
+    // 메시지와 이미지 매핑을 객체로 관리
+    const messageConfig = {
+        "현진우가 슬기로운 감빵 생활 중입니다": "선청고등학교.png",
+        "이지훈이 상황 파악을 하고 있습니다": "선청고등학교.png",
+        "y_pred = model.predict(X_test)": "선청고등학교.png",
+        // "메시지": "이미지경로.png" 형식으로 추가
+    };
+
+    const characters = Object.keys(messageConfig);
+    
+    // 이미지 요소들을 보관할 객체
+    const imageElements = {};
+    
+    // 이미지 요소들을 미리 생성하고 설정
+    function initializeImages() {
+        const container = document.querySelector('.container');
+        
+        Object.entries(messageConfig).forEach(([message, imagePath]) => {
+            const img = document.createElement('img');
+            img.src = imagePath;
+            img.alt = "Status Image";
+            img.className = 'status-image-overlay';
+            img.style.opacity = '0';
+            img.style.visibility = 'hidden';
+            container.appendChild(img);
+            imageElements[message] = img;
+        });
+    }
 
     let usedMessages = [];
+    let currentlyVisibleImage = null;
     
     function getRandomUniqueMessage() {
         if (usedMessages.length === characters.length) {
@@ -27,27 +52,48 @@ document.addEventListener('DOMContentLoaded', () => {
         return randomMessage;
     }
 
+    function showImage(message) {
+        // 이전 이미지 숨기기
+        if (currentlyVisibleImage) {
+            currentlyVisibleImage.style.opacity = '0';
+            currentlyVisibleImage.classList.remove('bounce-active');
+            setTimeout(() => {
+                currentlyVisibleImage.style.visibility = 'hidden';
+            }, 500);
+        }
+
+        // 새 이미지 표시
+        const newImage = imageElements[message];
+        if (newImage) {
+            newImage.style.visibility = 'visible';
+            newImage.style.opacity = '1';
+            newImage.classList.add('bounce-active');
+            currentlyVisibleImage = newImage;
+        }
+    }
+
     function animateMessage() {
         let stage = 0;
         let currentMessage = '';
         let isRestrictedAccess = false;
         
         function updateMessage() {
-            // Update currentMessage at the start of each cycle
             if (stage === 0) {
                 currentMessage = getRandomUniqueMessage();
                 isRestrictedAccess = currentMessage === "y_pred = model.predict(X_test)";
                 
-                // Reset styles
                 textEl.classList.remove('restricted-access');
                 textEl.style.color = '';
+
+                if (messageConfig[currentMessage]) {
+                    showImage(currentMessage);
+                }
             }
             
-            // For restricted access message, show for 2 seconds then change
             if (isRestrictedAccess && stage === 2) {
                 textEl.textContent = "[접근 권한 없음]";
                 textEl.classList.add('restricted-access');
-                stage = 4; // Skip to end of cycle
+                stage = 4;
                 return;
             }
             
@@ -81,14 +127,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             stage++;
         }
-        
-        function immediateNextMessage() {
-            updateMessage();
-            setInterval(updateMessage, 1000);
-        }
 
-        immediateNextMessage();
+        setInterval(updateMessage, 1000);
+        updateMessage();
     }
+
+    // 초기화 및 시작
+    initializeImages();
+    animateMessage();
 
     function triggerRandomGlitch() {
         if (Math.random() < 0.2) {  // 20% chance every 5 seconds
