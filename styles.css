@@ -555,9 +555,9 @@ body, .status-text, #progress-text {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 150px; /* 고정 너비 */
-    height: 150px; /* 고정 높이 */
-    object-fit: cover; /* 이미지 비율 유지 */
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease;
@@ -566,6 +566,15 @@ body, .status-text, #progress-text {
 
 .status-image-overlay.bounce-active {
     animation: bounce 1s ease-in-out infinite;
+}
+
+.status-text {
+    transition: color 0.3s ease;
+}
+
+.restricted-access {
+    color: #ff0000;
+    font-weight: bold;
 }
 @media screen and (max-width: 768px) {
   .container::before,
