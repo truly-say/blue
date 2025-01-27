@@ -256,11 +256,10 @@ body, .status-text, #progress-text {
     text-align: center;
   }
 .status-gauge {
-    position: relative;
-    width: 100%;
-    max-width: 300px;
-    height: 5px;
-    background-color: rgba(255,255,255,0.2);
+  width: 100%;
+  max-width: 300px;
+  height: 5px;
+  background-color: rgba(255,255,255,0.2);
 }
 
 .status-progress {
@@ -544,8 +543,7 @@ body, .status-text, #progress-text {
 .status-image-overlay {
     position: absolute;
     left: 50%;
-    /* 프로그레스 바 위에 위치하도록 설정 */
-    bottom: calc(100% + 20px);
+    bottom: 120px;
     transform: translateX(-50%);
     width: 80px;
     height: 80px;
@@ -558,6 +556,12 @@ body, .status-text, #progress-text {
 
 .bounce-active {
     animation: overlay-bounce 1.2s cubic-bezier(0.36, 0, 0.66, -0.56) infinite;
+    /* 
+    cubic-bezier(0.36, 0, 0.66, -0.56)는 포물선과 비슷한 곡선을 만듭니다:
+    - 시작할 때 천천히 올라가다가
+    - 정점에서 잠시 머물고
+    - 떨어질 때는 더 빠르게 떨어지는 효과
+    */
 }
 
 @keyframes overlay-bounce {
