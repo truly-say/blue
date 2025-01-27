@@ -541,7 +541,31 @@ body, .status-text, #progress-text {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
+@keyframes bounce {
+    0%, 100% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(-50%, -60%);
+    }
+}
 
+.status-image-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    height: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    z-index: 100;
+}
+
+.status-image-overlay.bounce-active {
+    animation: bounce 1s ease-in-out infinite;
+}
 @media screen and (max-width: 768px) {
   .container::before,
   .container::after {
