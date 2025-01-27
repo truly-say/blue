@@ -77,39 +77,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 이미지 표시 함수
-    function showImage(message) {
+    async function showImage(message) {
     console.log(`Showing image for: ${message}`);
     
-    // Remove previous image animation
+    // 이전 이미지 처리
     if (currentlyVisibleImage) {
         currentlyVisibleImage.style.opacity = '0';
         currentlyVisibleImage.classList.remove('bounce-active');
-        setTimeout(() => {
-            currentlyVisibleImage.style.visibility = 'hidden';
-        }, 500);
+        await new Promise(resolve => setTimeout(resolve, 300));
+        currentlyVisibleImage.style.visibility = 'hidden';
     }
 
     const newImage = imageElements[message];
     if (newImage) {
-        // Reset animation state
-        newImage.style.visibility = 'visible';
-        newImage.style.opacity = '0';
-        newImage.classList.remove('bounce-active');
+        // 디버깅용 로그
+        console.log('New image found:', newImage);
+        console.log('Initial visibility:', newImage.style.visibility);
+        console.log('Initial opacity:', newImage.style.opacity);
         
-        // Force reflow to ensure animation restart
+        // 먼저 visibility를 visible로 설정
+        newImage.style.visibility = 'visible';
+        
+        // 강제 리플로우
         void newImage.offsetWidth;
         
-        // Start new animation
-        requestAnimationFrame(() => {
-            newImage.style.opacity = '1';
-            newImage.classList.add('bounce-active');
-        });
+        // 약간의 지연 후 opacity 변경
+        await new Promise(resolve => setTimeout(resolve, 50));
+        
+        // opacity를 1로 설정하고 바운스 애니메이션 추가
+        newImage.style.opacity = '1';
+        newImage.classList.add('bounce-active');
+        
+        // 상태 확인용 로그
+        console.log('After changes:');
+        console.log('Visibility:', newImage.style.visibility);
+        console.log('Opacity:', newImage.style.opacity);
+        console.log('Has bounce class:', newImage.classList.contains('bounce-active'));
         
         currentlyVisibleImage = newImage;
     }
 }
-
-
     // 프로그레스 바 애니메이션 함수
     function animateProgress(duration, targetProgress) {
         const startTime = Date.now();
