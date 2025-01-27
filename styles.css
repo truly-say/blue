@@ -240,33 +240,42 @@ body, .status-text, #progress-text {
   text-align: center;
 }
 .system-status {
+    position: relative;  /* 자식 요소의 절대 위치 기준점 */
     display: flex;
-     flex-direction: column;
-      align-items: center;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     margin: 2rem 0;
- `  margin-top: -10px;
+    margin-top: -10px;
+    min-height: 200px;  /* 이미지를 위한 공간 확보 */
     font-family: 'Roboto Mono', monospace;
-  }
+}
 
   .status-text {
     color: var(--ghostly-white, #fff);
     font-size: 1.5rem;
     letter-spacing: 0.5rem;
     text-align: center;
-  }
+    margin-bottom: 1rem;  /* 이미지와의 간격 */
+}
+
 .status-gauge {
-    position: relative;
     width: 100%;
     max-width: 300px;
     height: 5px;
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2.5px;
+    overflow: hidden;  /* 프로그레스 바 모서리 둥글게 */
+    margin-top: 1rem;
 }
 
 .status-progress {
-  height: 100%;
-  background-color: #4affff;
+    height: 100%;
+    background-color: #4affff;
+    transition: width 0.1s linear;  /* 더 부드러운 진행바 애니메이션 */
+    border-radius: 2.5px;
 }
+
 /* status-page-custom.css */
 .status-section {
   min-height: 100vh;
@@ -544,18 +553,20 @@ body, .status-text, #progress-text {
 .status-image-overlay {
     position: absolute;
     left: 50%;
-    top: -100px;
-    transform: translateX(-50%);
+    bottom: 50%;  /* 중앙 정렬을 위해 수정 */
+    transform: translate(-50%, 50%);  /* 중앙 정렬 */
     width: 80px;
     height: 80px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;  /* transition 속성 추가 */
-    z-index: 1000;  /* z-index 증가 */
+    transition: all 0.3s ease;  /* 모든 속성에 대한 전환 효과 */
+    z-index: 10;
+    object-fit: contain;
     pointer-events: none;  /* 이미지가 다른 요소와 상호작용하지 않도록 */
+    will-change: transform, opacity;  /* 성능 최적화 */
 }
-.status-image-overlay[style*="visibility: visible"] {
-    display: block;
+.status-image-overlay[data-loaded="true"] {
+    visibility: visible;
 }
 
 .bounce-active {
@@ -563,16 +574,11 @@ body, .status-text, #progress-text {
 }
 
 @keyframes overlay-bounce {
-    0% { 
-        transform: translateX(-50%) translateY(0);
-        animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0.33);
+    0%, 100% { 
+        transform: translate(-50%, 50%) translateY(0);
     }
     50% { 
-        transform: translateX(-50%) translateY(-15px);
-        animation-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
-    }
-    100% { 
-        transform: translateX(-50%) translateY(0);
+        transform: translate(-50%, 50%) translateY(-15px);
     }
 }
 
