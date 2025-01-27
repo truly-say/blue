@@ -546,7 +546,7 @@ body, .status-text, #progress-text {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -200%);
+    transform: translate(-50%, -50%); /* 화면 중앙에 위치하도록 수정 */
     max-width: 200px;
     transition: opacity 0.5s ease;
     z-index: 10;
@@ -558,14 +558,26 @@ body, .status-text, #progress-text {
 }
 
 @keyframes message-bounce {
-    0% { transform: translate(-50%, -200%); }
-    50% { transform: translate(-50%, -220%); }
-    100% { transform: translate(-50%, -200%); }
+    0% { transform: translate(-50%, -50%); }
+    50% { transform: translate(-50%, -60%); } /* 더 자연스러운 바운스 효과 */
+    100% { transform: translate(-50%, -50%); }
 }
 
-.access-denied {
-    color: #ff0000;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+/* 추가: 이미지 표시/숨김을 위한 유틸리티 클래스 */
+.status-image-overlay {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+}
+
+.bounce-active {
+    animation: overlay-bounce 0.5s ease;
+}
+
+@keyframes overlay-bounce {
+    0% { transform: translate(-50%, -50%) scale(0.8); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+    100% { transform: translate(-50%, -50%) scale(1); }
 }
 
 @media screen and (max-width: 768px) {
