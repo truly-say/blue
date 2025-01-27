@@ -6,16 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const glitchTarget = document.querySelector('.intermittent-glitch');
    
     const characters = [
-       
-        "구해늘이 방에서 시계 초침 소리를 듣고 있습니다",
-        
-        "연해령이 책상에 엎드려 자고 있습니다",
-        
+        "이지훈이 상황 파악을 하고 있습니다",
         "y_pred = model.predict(X_test)",
         "현진우가 슬기로운 감빵 생활 중입니다"
-        
     ];
-let usedMessages = [];
+
+    let usedMessages = [];
     
     function getRandomUniqueMessage() {
         if (usedMessages.length === characters.length) {
@@ -93,20 +89,21 @@ let usedMessages = [];
 
         immediateNextMessage();
     }
-   function triggerRandomGlitch() {
-  if (Math.random() < 0.2) {  // 20% chance every 5 seconds
-    glitchTarget.classList.add('glitch-active');
-    
-    // Rare chance of text morphing
-    if (Math.random() < 0.3) {
-      glitchTarget.classList.add('text-morph');
+
+    function triggerRandomGlitch() {
+        if (Math.random() < 0.2) {  // 20% chance every 5 seconds
+            glitchTarget.classList.add('glitch-active');
+            
+            // Rare chance of text morphing
+            if (Math.random() < 0.3) {
+                glitchTarget.classList.add('text-morph');
+            }
+            
+            setTimeout(() => {
+                glitchTarget.classList.remove('glitch-active', 'text-morph');
+            }, 500);
+        }
     }
-    
-    setTimeout(() => {
-      glitchTarget.classList.remove('glitch-active', 'text-morph');
-    }, 500);
-  }
-}
     
     function updateDateTime() {
         const now = new Date();
@@ -133,7 +130,7 @@ let usedMessages = [];
         }
     }
 
-   const infoCards = document.querySelectorAll('.info-card');
+    const infoCards = document.querySelectorAll('.info-card');
     
     infoCards.forEach((card) => {
         card.addEventListener('click', (e) => {
@@ -150,18 +147,6 @@ let usedMessages = [];
             }
         });
     });
-
-    infoCards.forEach((card) => {
-    card.addEventListener('click', (e) => {
-        const page = card.getAttribute('data-page');
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '0';
-
-        setTimeout(() => {
-            window.location.href = `${page}.html`;
-        }, 500); // fade-out 후 0.5초에 페이지 변경
-    });
-});
 
     // Initial calls
     animateMessage();
