@@ -1,0 +1,34 @@
+/* Snow falling animation */
+@keyframes snow {
+  0% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.snow {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.8);
+  opacity: 0.9;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  animation: snow linear infinite;
+}
+
+.snow:nth-child(odd) {
+  animation-duration: 4s;
+}
+
+.snow:nth-child(even) {
+  animation-duration: 6s;
+}
+
+.snow {
+  left: calc(100% * random());
+  animation-delay: calc(-6s + 8s * random());
+}
