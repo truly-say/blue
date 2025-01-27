@@ -4,60 +4,252 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Lam Graduation Cruise - Timeline</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="glitch.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <style>
+    :root {
+      --deep-sea: #001a33;
+      --ice-blue: #a8d8ff;
+      --danger-red: #ff3b3b;
+      --frost-white: #e8f4ff;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Pretendard', sans-serif;
+      background: var(--deep-sea);
+      color: var(--frost-white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0,26,51,0.9);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(168,216,255,0.2);
+    }
+
+    .nav-logo {
+      color: var(--ice-blue);
+      font-size: 1.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(168,216,255,0.5);
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-danger-level {
+      color: var(--danger-red);
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+
+    .container {
+      padding-top: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 4rem 0;
+      background: linear-gradient(rgba(0,26,51,0.8), rgba(0,26,51,0.4)),
+                  url('/api/placeholder/1200/400') center/cover;
+      border-radius: 15px;
+      margin: 2rem;
+    }
+
+    .timeline-section {
+      margin: 4rem 2rem;
+      padding: 2rem;
+      background: rgba(168,216,255,0.1);
+      border-radius: 15px;
+      border: 1px solid rgba(168,216,255,0.2);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .timeline-content {
+      position: relative;
+    }
+
+    .status-indicator {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .status-active {
+      background: rgba(0,255,0,0.2);
+      color: #00ff00;
+    }
+
+    .status-danger {
+      background: rgba(255,0,0,0.2);
+      color: #ff0000;
+    }
+
+    .status-locked {
+      background: rgba(255,255,255,0.2);
+      color: #ffffff;
+    }
+
+    .event-details {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(0,0,0,0.3);
+      border-radius: 10px;
+    }
+
+    .event-countdown {
+      font-family: monospace;
+      font-size: 1.2rem;
+      color: var(--ice-blue);
+      margin-top: 1rem;
+    }
+
+    .waves {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 200px;
+      z-index: -1;
+    }
+
+    .wave {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23a8d8ff' fill-opacity='0.2' d='M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") repeat-x;
+      animation: wave 20s linear infinite;
+      opacity: 0.3;
+    }
+
+    .wave:nth-child(2) {
+      bottom: 10px;
+      animation: wave 18s linear reverse infinite;
+      opacity: 0.2;
+    }
+
+    .wave:nth-child(3) {
+      bottom: 20px;
+      animation: wave 16s linear infinite;
+      opacity: 0.1;
+    }
+
+    @keyframes wave {
+      0% { background-position-x: 0; }
+      100% { background-position-x: 1440px; }
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .encrypted-message {
+      font-family: monospace;
+      color: var(--ice-blue);
+      background: rgba(0,0,0,0.5);
+      padding: 1rem;
+      border-radius: 5px;
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
-    <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
+    <a href="#" class="nav-logo">BLUE LAM</a>
     <div class="nav-controls">
       <div class="nav-time" id="current-datetime"></div>
-      <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
+      <div class="nav-danger-level">시스템 불안정: 생존자 n명</div>
     </div>
   </nav>
-  
-  <div class="side-nav">
-    <a href="#start" class="side-nav-item" data-section="start">프로젝트 시작</a>
-    <a href="#midpoint" class="side-nav-item" data-section="midpoint">중간 점검</a>
-    <a href="#finale" class="side-nav-item" data-section="finale">최종 종료</a>
-  </div>
 
   <div class="container">
     <section class="hero-section">
-      <h1 class="intermittent-glitch" data-text="타임라인">타임라인</h1>
-      <div class="subtitle">"시간의 흔적, 우리의 청춘"</div>
+      <h1>헤더1 헤더1 헤더1 헤더1 </h1>
+      <div class="subtitle">"서브타이틀 서브타이틀 서브타이틀"</div>
     </section>
 
-    <section id="start" class="timeline-section">
+    <section class="timeline-section">
+      <div class="status-indicator status-active">진행중</div>
       <h2>프로젝트 시작 - 2025.01.03</h2>
       <div class="timeline-content">
-        <p>프로젝트 시작에 대한 주요 가이드라인:</p>
-        <p>- 초기 시스템 구성에 대해 여기에 작성</p>
-        <p>- 프로젝트 주요 목표와 애들 상태</p>
-        <p>- 계획 구성 및 어쩌고 여튼 앞배경</p>
+        <p>[ 항해 로그 #1 ]</p>
+        <p>- 이곳에 입력하세요 이곳에 입력하세요 </p>
+        <p>- 이곳에 입력하세요 이곳에 입력하세요 </p>
+        <p>- 이곳에 입력하세요 이곳에 입력하세요 </p>
+        <div class="event-details">
+          <p>현재 상황: 이곳에 입력하세요 이곳에 입력하세요 </p>
+          <p>특이사항: 이곳에 입력하세요 이곳에 입력하세요 </p>
+        </div>
+        <div class="encrypted-message">
+          해독 필요: VX-7K89-ALPHA
+          "대충 힌트 주기"
+        </div>
       </div>
     </section>
 
-    <section id="midpoint" class="timeline-section">
+    <section class="timeline-section">
+      <div class="status-indicator status-danger">위험</div>
       <h2>중간 점검 - 2025.01.20</h2>
       <div class="timeline-content">
-        <p>중간 점검 단계에서 고려할 사항:</p>
-        <p>- 현재까지의 진행 상황 분석 내용</p>
-        <p>- 시스템 안정성 평가 결과</p>
-        <p>- 발견된 문제점 및 예측 결과</p>
+        <p>[ 항해 로그 #2 ]</p>
+        <p>- 이곳에 입력하세요 이곳에 입력하세요 </p>
+        <p>- 이곳에 입력하세요 이곳에 입력하세요 </p>
+        <p>- 이곳에 입력하세요 이곳에 입력하세요 </p>
+        <div class="event-details">
+          <p>경고: 이곳에 입력하세요 이곳에 입력하세요 </p>
+          <p>다음 공개까지: 02:45:30</p>
+        </div>
+        <div class="encrypted-message">
+          해독 필요: YZ-2M31-BETA
+          "대충 힌트 주기"
+        </div>
       </div>
     </section>
 
-    <section id="finale" class="timeline-section">
+    <section class="timeline-section">
+      <div class="status-indicator status-locked">미해금</div>
       <h2>최종 종료 - 2025.02.02</h2>
       <div class="timeline-content">
-        <p>프로젝트 최종 단계 준비 사항:</p>
-        <p>- 전체 프로젝트 결과 총괄</p>
-        <p>- 최종 성과 평가</p>
-        <p>- 이쯤에 해금 조건 힌트</p>
+        <p>[ 항해 로그 #3 - 암호화됨 ]</p>
+        <p>접근 권한 필요</p>
+        <p>이전 미션 클리어 필수</p>
+        <div class="event-details">
+          <p>최종 생존자 정보: [데이터 삭제됨]</p>
+          <p>이곳에 입력하세요 이곳에 입력하세요</p>
+        </div>
+        <div class="encrypted-message">
+          해독 필요: ZW-9P12-OMEGA
+          "대충 힌트 주기"
+        </div>
       </div>
     </section>
+  </div>
 
   <div class="waves">
     <div class="wave"></div>
@@ -66,98 +258,21 @@
   </div>
 
   <script>
-      document.addEventListener('DOMContentLoaded', () => {
-            const puzzleTriggers = document.querySelectorAll('.puzzle-trigger');
-            const progressBars = document.querySelectorAll('.progress-bar');
-
-            puzzleTriggers.forEach((trigger, index) => {
-                trigger.addEventListener('click', () => {
-                    const puzzles = [
-                        'BLUE_START_2025',
-                        'MIDPOINT_CIPHER',
-                        'FINAL_SEQUENCE'
-                    ];
-                    alert(`${puzzles[index]} - 퍼즐 힌트 활성화`);
-                });
-            });
-
-            progressBars.forEach((bar, index) => {
-                const progressPercentages = [33, 66, 100];
-                bar.style.width = `${progressPercentages[index]}%`;
-            });
+    function updateDateTime() {
+      const now = new Date();
+      document.getElementById('current-datetime').textContent = 
+        now.toLocaleString('ko-KR', { 
+          year: 'numeric', 
+          month: '2-digit', 
+          day: '2-digit',
+          hour: '2-digit', 
+          minute: '2-digit', 
+          second: '2-digit' 
         });
-    function updateActiveSection() {
-      const sections = document.querySelectorAll('.timeline-section');
-      const navItems = document.querySelectorAll('.side-nav-item');
-
-      sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-          navItems.forEach(item => item.classList.remove('active'));
-          navItems[index].classList.add('active');
-        }
-      });
     }
 
-    window.addEventListener('scroll', updateActiveSection);
-    
-    // Initial call to set first section as active
-    updateActiveSection();
-
-    // Smooth scrolling for side nav
-    document.querySelectorAll('.side-nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = item.getAttribute('href').substring(1);
-        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
-
-<script>
-    // Add hover detail sections to existing timeline sections
-    document.querySelectorAll('.timeline-section').forEach(section => {
-        const hoverDetail = document.createElement('div');
-        hoverDetail.classList.add('hover-detail');
-        
-        const progressContainer = document.createElement('div');
-        progressContainer.classList.add('progress-container');
-        
-        const progressBar = document.createElement('div');
-        progressBar.classList.add('progress-bar');
-        
-        progressContainer.appendChild(progressBar);
-        
-        const puzzleTrigger = document.createElement('div');
-        puzzleTrigger.classList.add('puzzle-trigger');
-        puzzleTrigger.textContent = '숨겨진 퍼즐 해제';
-        
-        const encryptedLog = document.createElement('div');
-        encryptedLog.classList.add('encrypted-log');
-        
-        const sectionId = section.id;
-        switch(sectionId) {
-            case 'start':
-                hoverDetail.innerHTML += '<p>프로젝트 초기 시스템 구성의 숨겨진 세부사항</p>';
-                encryptedLog.textContent = '[ENCRYPTED: XG9-K2F-Q7R]';
-                break;
-            case 'midpoint':
-                hoverDetail.innerHTML += '<p>중간 점검 단계의 비공개 분석 결과</p>';
-                encryptedLog.textContent = '[ENCRYPTED: LM5-P3X-T9N]';
-                break;
-            case 'finale':
-                hoverDetail.innerHTML += '<p>각자의 미공개 정보</p>';
-                encryptedLog.textContent = '[ENCRYPTED: ZK7-H1Y-W4B]';
-                break;
-        }
-        
-        hoverDetail.appendChild(progressContainer);
-        hoverDetail.appendChild(puzzleTrigger);
-        hoverDetail.appendChild(encryptedLog);
-        
-        section.appendChild(hoverDetail);
-    });
-</script>
