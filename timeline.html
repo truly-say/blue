@@ -7,21 +7,21 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glitch.css">
   <style>
-      html {
+    html {
       scroll-behavior: smooth;
     }
     
     .timeline-section {
-      padding-top: 100px;
-      max-width: 2800px;
+      padding-top: 80px; /* 상단 여백 감소 */
+      max-width: 1600px; /* 전체 너비 최적화 */
       margin: 0 auto;
       position: relative;
     }
 
     .timeline-container {
       position: relative;
-      padding: 2rem 0;
-      max-width: 1400px; 
+      padding: 1.5rem 0; /* 패딩 감소 */
+      max-width: 1200px; /* 컨테이너 너비 최적화 */
       margin: 0 auto;
     }
 
@@ -36,13 +36,12 @@
       z-index: 1;
     }
 
-    /* 타임라인 아이템 수정 */
     .timeline-item {
       background: rgba(0, 31, 63, 0.8);
-      padding: 2rem;
-      border-radius: 12px;
-      margin: 2rem;
-      width: calc(50% - 4rem); /* 여백 증가 */
+      padding: 1.5rem; /* 패딩 감소 */
+      border-radius: 8px; /* 모서리 둥글기 감소 */
+      margin: 1.5rem; /* 마진 감소 */
+      width: calc(50% - 3rem); /* 너비 조정 */
       position: relative;
       border: 1px solid rgba(74, 255, 255, 0.1);
       transition: all 0.3s ease;
@@ -53,170 +52,114 @@
     .timeline-item:nth-child(odd) {
       float: left;
       clear: both;
-      margin-right: 4rem; /* 오른쪽 여백 증가 */
+      margin-right: 3rem;
     }
 
     .timeline-item:nth-child(even) {
       float: right;
       clear: both;
-      margin-left: 4rem; /* 왼쪽 여백 증가 */
+      margin-left: 3rem;
     }
 
     .timeline-item::after {
       content: '';
       position: absolute;
       top: 50%;
-      width: 20px;
-      height: 20px;
+      width: 16px; /* 점 크기 감소 */
+      height: 16px;
       background: #4affff;
       border-radius: 50%;
-      box-shadow: 0 0 10px rgba(74, 255, 255, 0.5);
+      box-shadow: 0 0 8px rgba(74, 255, 255, 0.5);
     }
 
     .timeline-item:nth-child(odd)::after {
-      right: -60px; /* 점 위치 조정 */
+      right: -50px; /* 점 위치 조정 */
       transform: translate(50%, -50%);
     }
 
     .timeline-item:nth-child(even)::after {
-      left: -60px; /* 점 위치 조정 */
+      left: -50px;
       transform: translate(-50%, -50%);
     }
 
-    .timeline-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 20px rgba(74, 255, 255, 0.2);
-    }
-.secret-panel {
-      display: none;
-      background: rgba(0, 15, 31, 0.9);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-top: 1rem;
-      border: 1px solid rgba(74, 255, 255, 0.3);
-      max-width: 100%;
-      box-sizing: border-box;
-      word-wrap: break-word;
-    }
-
-    .encrypted-text {
-      font-family: monospace;
-      color: rgba(74, 255, 255, 0.5);
-      background: rgba(0, 0, 0, 0.3);
-      padding: 0.5rem;
-      border-radius: 4px;
-      margin-top: 0.5rem;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      white-space: pre-wrap;
-    }
-
     .timeline-date {
-      color: var(--glitch-blue);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.1rem; /* 날짜 텍스트 크기 감소 */
+      margin-bottom: 0.4rem;
     }
 
-    .timeline-content {
-      color: rgba(255, 255, 255, 0.9);
+    .timeline-content h3 {
+      font-size: 1.3rem; /* 제목 크기 조정 */
+      margin-bottom: 0.8rem;
     }
 
-    .hidden-message {
-      font-family: monospace;
-      color: rgba(74, 255, 255, 0.1);
-      font-size: 0.8rem;
-      margin-top: 1rem;
-      cursor: help;
-      transition: all 0.3s ease;
+    .timeline-content p {
+      font-size: 1rem; /* 본문 텍스트 크기 조정 */
+      line-height: 1.5;
     }
 
-    .hidden-message:hover {
-      color: rgba(74, 255, 255, 0.8);
-    }
-
-    .easter-egg {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: rgba(74, 255, 255, 0.2);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .easter-egg:hover {
-      transform: scale(1.5);
-      background: rgba(74, 255, 255, 0.8);
-    }
-
-    .side-nav {
-      position: fixed;
-      right: -180px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 15, 31, 0.9);
-      padding: 15px;
-      border-radius: 10px 0 0 10px;
-      z-index: 1000;
-      transition: right 0.3s ease;
-      width: 200px;
-    }
-
-    .side-nav:hover {
-      right: 0;
-    }
-
-    .side-nav::before {
-      content: '⋮';
-      position: absolute;
-      left: -30px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 15, 31, 0.9);
-      color: #4affff;
-      padding: 10px;
-      border-radius: 10px 0 0 10px;
-      font-size: 20px;
-    }
-
-    .side-nav-item {
-      padding: 12px 15px;
-      display: block;
-      margin: 5px 0;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-    }
-
-    .side-nav-item:hover, .side-nav-item.active {
-      color: #4affff;
-      background: rgba(74, 255, 255, 0.1);
-    }
-
-    .timeline-container::after {
-      content: '';
-      display: table;
-      clear: both;
-    }
-
-     @media (max-width: 768px) {
-      .timeline-item {
-        width: calc(100% - 4rem);
-        margin: 2rem auto;
+    /* 모바일 최적화 */
+    @media (max-width: 768px) {
+      .timeline-section {
+        padding-top: 60px;
       }
 
       .timeline-container::before {
-        left: 2rem;
+        left: 1rem; /* 중앙선 위치 조정 */
+      }
+
+      .timeline-item {
+        width: calc(100% - 2rem);
+        margin: 1rem;
+        float: none;
+      }
+
+      .timeline-item:nth-child(odd),
+      .timeline-item:nth-child(even) {
+        margin: 1rem;
       }
 
       .timeline-item::after {
-        left: -28px !important;
-        transform: translateY(-50%) !important;
+        left: -24px !important;
+        width: 12px;
+        height: 12px;
       }
 
-      .side-nav {
-        display: none;
+      .timeline-date {
+        font-size: 1rem;
       }
+
+      .timeline-content h3 {
+        font-size: 1.2rem;
+      }
+
+      .timeline-content p {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* 태블릿 최적화 */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .timeline-section {
+        padding-top: 70px;
+      }
+
+      .timeline-item {
+        width: calc(50% - 2.5rem);
+      }
+
+      .timeline-date {
+        font-size: 1rem;
+      }
+    }
+
+    .side-nav {
+      right: -160px; /* 초기 위치 조정 */
+      width: 180px; /* 너비 감소 */
+    }
+
+    .side-nav-item {
+      padding: 10px 12px; /* 패딩 감소 */
+      font-size: 0.9rem; /* 텍스트 크기 감소 */
     }
   </style>
 </head>
