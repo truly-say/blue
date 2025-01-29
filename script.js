@@ -67,7 +67,7 @@ infoCards.forEach(card => {
             "현진우가 슬기로운 감빵 생활 중입니다":"images/선청고등학교.png",
             "현진우가 교도관 옆에서 밥을 먹고 있습니다":"images/선청고등학교.png",
             "현진우가 침대에서 뒤척거리고 있습니다":"images/선청고등학교.png",
-            "y_pred = model.predict(X_test)": "살구.png"
+            "y_pred = model.predict(X_test)": "images/살구.png"
         },
         defaultImage: "images/선청고등학교.png",
         cycleInterval: 3000, // 메시지 순환 간격 (ms)
