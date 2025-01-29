@@ -5,7 +5,6 @@ const STATUS_CONFIG = {
         const imagePath = `../images/${imageName}`; 
         return imagePath;
     },
-
     get messages() {
         return {
             // 도이성 상태
