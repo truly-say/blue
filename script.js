@@ -8,15 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const glitchTarget = document.querySelector('.intermittent-glitch');
     const container = document.querySelector('.container');
 
-    const infoCards = document.querySelectorAll('.info-card');
-infoCards.forEach(card => {
-    card.addEventListener('click', () => {
-        const page = card.getAttribute('data-page');
-        if (page) {
-            window.location.href = `${page}.html`;
-        }
+    const infoCards = document.querySelectorAll(".info-card");
+
+    infoCards.forEach((card) => {
+        card.addEventListener("click", () => {
+            let page = card.getAttribute("data-page");
+
+            if (page) {
+                let targetUrl = `${page}/${page}.html`;
+                window.location.href = targetUrl;
+            }
+        });
     });
-});
     
     // 상태 메시지 설정
     const STATUS_CONFIG = {
@@ -287,7 +290,7 @@ infoCards.forEach(card => {
         userInput += event.key.toLowerCase();
         
         if (userInput.endsWith("lam")) {
-            window.location.href = "youth.html";
+            window.location.href = "youth/youth.html";
         }
         
         if (userInput.length > 10) {
