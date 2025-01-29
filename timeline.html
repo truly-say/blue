@@ -9,19 +9,20 @@
   <style>
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 2rem;
     }
     
     .timeline-section {
-      padding-top: 80px; /* 상단 여백 감소 */
-      max-width: 1600px; /* 전체 너비 최적화 */
+      padding: 2rem 1rem;
+      width: min(100%, 1200px);
       margin: 0 auto;
       position: relative;
     }
 
     .timeline-container {
       position: relative;
-      padding: 1.5rem 0; /* 패딩 감소 */
-      max-width: 1200px; /* 컨테이너 너비 최적화 */
+      padding: 2rem 0;
+      width: min(100%, 1000px);
       margin: 0 auto;
     }
 
@@ -38,148 +39,151 @@
 
     .timeline-item {
       background: rgba(0, 31, 63, 0.8);
-      padding: 1.5rem; /* 패딩 감소 */
-      border-radius: 8px; /* 모서리 둥글기 감소 */
-      margin: 1.5rem; /* 마진 감소 */
-      width: calc(50% - 3rem); /* 너비 조정 */
+      padding: clamp(1rem, 5vw, 2rem);
+      border-radius: 12px;
+      margin: clamp(1rem, 3vw, 2rem);
+      width: calc(50% - clamp(2rem, 5vw, 4rem));
       position: relative;
       border: 1px solid rgba(74, 255, 255, 0.1);
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       box-sizing: border-box;
       overflow: hidden;
+    }
+
+    .timeline-item:focus-within {
+      outline: 2px solid #4affff;
+      box-shadow: 0 0 20px rgba(74, 255, 255, 0.2);
     }
 
     .timeline-item:nth-child(odd) {
       float: left;
       clear: both;
-      margin-right: 3rem;
+      margin-right: clamp(2rem, 5vw, 4rem);
     }
 
     .timeline-item:nth-child(even) {
       float: right;
       clear: both;
-      margin-left: 3rem;
-    }
-
-    .timeline-item::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 16px; /* 점 크기 감소 */
-      height: 16px;
-      background: #4affff;
-      border-radius: 50%;
-      box-shadow: 0 0 8px rgba(74, 255, 255, 0.5);
-    }
-
-    .timeline-item:nth-child(odd)::after {
-      right: -50px; /* 점 위치 조정 */
-      transform: translate(50%, -50%);
-    }
-
-    .timeline-item:nth-child(even)::after {
-      left: -50px;
-      transform: translate(-50%, -50%);
+      margin-left: clamp(2rem, 5vw, 4rem);
     }
 
     .timeline-date {
-      font-size: 1.1rem; /* 날짜 텍스트 크기 감소 */
-      margin-bottom: 0.4rem;
+      color: var(--glitch-blue);
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-content {
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .timeline-content h3 {
-      font-size: 1.3rem; /* 제목 크기 조정 */
-      margin-bottom: 0.8rem;
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      margin: 0 0 1rem 0;
     }
 
-    .timeline-content p {
-      font-size: 1rem; /* 본문 텍스트 크기 조정 */
-      line-height: 1.5;
+    .easter-egg {
+      position: absolute;
+      width: clamp(8px, 2vw, 10px);
+      height: clamp(8px, 2vw, 10px);
+      background: rgba(74, 255, 255, 0.2);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    /* 모바일 최적화 */
-    @media (max-width: 768px) {
-      .timeline-section {
-        padding-top: 60px;
-      }
-
-      .timeline-container::before {
-        left: 1rem; /* 중앙선 위치 조정 */
-      }
-
-      .timeline-item {
-        width: calc(100% - 2rem);
-        margin: 1rem;
-        float: none;
-      }
-
-      .timeline-item:nth-child(odd),
-      .timeline-item:nth-child(even) {
-        margin: 1rem;
-      }
-
-      .timeline-item::after {
-        left: -24px !important;
-        width: 12px;
-        height: 12px;
-      }
-
-      .timeline-date {
-        font-size: 1rem;
-      }
-
-      .timeline-content h3 {
-        font-size: 1.2rem;
-      }
-
-      .timeline-content p {
-        font-size: 0.9rem;
-      }
-    }
-
-    /* 태블릿 최적화 */
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .timeline-section {
-        padding-top: 70px;
-      }
-
-      .timeline-item {
-        width: calc(50% - 2.5rem);
-      }
-
-      .timeline-date {
-        font-size: 1rem;
-      }
+    .easter-egg:focus-visible {
+      outline: 2px solid #4affff;
+      outline-offset: 2px;
     }
 
     .side-nav {
-      right: -160px; /* 초기 위치 조정 */
-      width: 180px; /* 너비 감소 */
+      position: fixed;
+      right: -180px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 15, 31, 0.95);
+      padding: 1rem;
+      border-radius: 10px 0 0 10px;
+      z-index: 1000;
+      transition: right 0.3s ease;
+      width: min(200px, 90vw);
+    }
+
+    .side-nav:hover,
+    .side-nav:focus-within {
+      right: 0;
     }
 
     .side-nav-item {
-      padding: 10px 12px; /* 패딩 감소 */
-      font-size: 0.9rem; /* 텍스트 크기 감소 */
+      padding: 0.75rem 1rem;
+      display: block;
+      margin: 0.5rem 0;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .side-nav-item:focus {
+      outline: 2px solid #4affff;
+      outline-offset: -2px;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-item {
+        width: calc(100% - 2rem);
+        margin: 1.5rem auto;
+      }
+
+      .timeline-container::before {
+        left: 1rem;
+      }
+
+      .timeline-item::after {
+        left: -1rem !important;
+        transform: translateY(-50%) !important;
+      }
+
+      .side-nav {
+        bottom: 0;
+        top: auto;
+        left: 0;
+        right: 0;
+        transform: none;
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        justify-content: space-around;
+        padding: 0.5rem;
+      }
+
+      .side-nav-item {
+        margin: 0;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
-  <nav class="navbar">
+   <nav class="navbar" role="navigation" aria-label="Main navigation">
     <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
     <div class="nav-controls">
-      <div class="nav-time" id="current-datetime"></div>
-      <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
+      <div class="nav-time" id="current-datetime" aria-live="polite"></div>
+      <div class="nav-danger-level" id="danger-level" aria-live="polite">SYSTEM: UNSTABLE</div>
     </div>
   </nav>
-
-  <div class="container">
+  
+  <main class="container">
     <section class="timeline-section">
-      <div class="hero-section">
+      <header class="hero-section">
         <h1 class="intermittent-glitch">TIMELINE</h1>
-        <div class="subtitle">2025.01.02 ~ 2025.02.02</div>
-      </div>
+        <div class="subtitle" role="doc-subtitle">2025.01.03 ~ 2025.02.02</div>
+      </header>
 
-      <div class="timeline-container">
+      <div class="timeline-container" role="list">
         <div class="timeline-item" data-secret="bl-01" id="start">
           <div class="timeline-date">2025.01.02</div>
           <div class="timeline-content">
@@ -266,11 +270,11 @@
     </section>
   </div>
 
-  <div class="side-nav">
+  <nav class="side-nav" role="navigation" aria-label="Timeline navigation">
     <a href="#start" class="side-nav-item" data-section="start">프로젝트 시작</a>
     <a href="#midpoint" class="side-nav-item" data-section="midpoint">시스템 불안정성 감지</a>
     <a href="#finale" class="side-nav-item" data-section="finale">최종 단계</a>
-  </div>
+  </nav>
 
   <div class="waves">
     <div class="wave"></div>
