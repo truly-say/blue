@@ -1,5 +1,5 @@
 // status-config.js
-export const STATUS_CONFIG = {
+const STATUS_CONFIG = {
     messages: {
         // 도이성 상태
         "도이성이 동네 편의점에서 과자를 고르고 있습니다": "images/공주.png",
@@ -16,7 +16,7 @@ export const STATUS_CONFIG = {
         "최예슬이 정보를 수집하고 있습니다": "images/커컥커.png",
         "최예슬이 책상 위 물건들을 정리하고 있습니다": "images/커컥커.png",
         
-        // 망자 상태
+        // 생명 신호 없음 상태
         "[신혜련의 생명 신호 감지되지 않음]": "images/선청고등학교.png",
         "[선지현의 생명 신호 감지되지 않음]": "images/선청고등학교.png",
         "[청검수의 생명 신호 감지되지 않음]": "images/선청고등학교.png",
@@ -41,17 +41,15 @@ export const STATUS_CONFIG = {
         "유민이 상대의 행동을 지적하고 있습니다": "images/선청고등학교.png",
         "유민이 가볍게 아침을 때우고 있습니다": "images/선청고등학교.png",
         
-        // 천여울 상태
+        // 11기 졸업생 상태
         "[11기 졸업생]이 잠에서 깼습니다": "images/토끼.png",
         "[11기 졸업생]이 토끼 인형을 안고 있습니다": "images/토끼.png",
         "[11기 졸업생]이 튜터링을 준비하고 있습니다": "images/토끼.png",
-
-        // 남현우
         "[11기 졸업생]이 업무 준비를 하고 있습니다": "images/포도.png",
         "[11기 졸업생]이 경영 지식을 배우고 있습니다": "images/포도.png",
         "[11기 졸업생]이 회의를 주도하고 있습니다": "images/포도.png",
         
-        // 이겨울 상태
+        // 신원 미상 상태
         "[신원 미상]이 소파에 늘어져 있습니다": "images/겨ㅇ비.png",
         "[신원 미상]이 전화를 받고 있습니다": "images/겨ㅇ비.png",
         "[신원 미상]이 업무 이메일을 읽고 있습니다": "images/겨ㅇ비.png",
@@ -76,11 +74,10 @@ export const STATUS_CONFIG = {
         "현진우가 교도관 옆에서 밥을 먹고 있습니다": "images/선청고등학교.png",
         "현진우가 침대에서 뒤척거리고 있습니다": "images/선청고등학교.png",
         
-        // 관리자 상태
+        // 기타 상태
         "y_pred = model.predict(X_test)": "images/살구.png"
     },
     defaultImage: "images/선청고등학교.png",
-    cycleInterval: 3000, // 메시지 순환 간격 (ms)
-    animationDuration: 300, // 이미지 전환 애니메이션 시간 (ms)
+    cycleInterval: 3000,
+    animationDuration: 300
 };
-window.STATUS_CONFIG = STATUS_CONFIG;
