@@ -44,6 +44,8 @@
       position: relative;
       border: 1px solid rgba(74, 255, 255, 0.1);
       transition: all 0.3s ease;
+      min-width: 300px;
+      overflow: hidden;
     }
 
     .timeline-item:nth-child(odd) {
@@ -128,8 +130,11 @@
       border-radius: 8px;
       margin-top: 1rem;
       border: 1px solid rgba(74, 255, 255, 0.3);
+      /* 패널이 부모 요소를 벗어나지 않도록 설정 */
+      max-width: 100%;
+      box-sizing: border-box;
+      word-wrap: break-word;
     }
-
     .terminal-text {
       font-family: monospace;
       color: #4affff;
@@ -144,6 +149,10 @@
       padding: 0.5rem;
       border-radius: 4px;
       margin-top: 0.5rem;
+      /* 긴 텍스트가 줄바꿈되도록 설정 */
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
     }
 
     .side-nav {
@@ -201,6 +210,7 @@
       .timeline-item {
         width: calc(100% - 4rem);
         margin: 2rem auto;
+        min-width: auto; /* 모바일에서는 최소 너비 제거 */
       }
 
       .timeline-container::before {
