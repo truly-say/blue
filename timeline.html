@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Timeline - Blue Lam Graduation Cruise</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="glitch.css">
   <style>
       html {
       scroll-behavior: smooth;
@@ -221,7 +222,11 @@
 </head>
 <body>
   <nav class="navbar">
-    <a href="index.html" class="nav-logo">BLUE LAM</a>
+    <a href="index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
+    <div class="nav-controls">
+      <div class="nav-time" id="current-datetime"></div>
+      <div class="nav-danger-level" id="danger-level">SYSTEM: UNSTABLE</div>
+    </div>
   </nav>
 
   <div class="container">
