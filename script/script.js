@@ -2,7 +2,7 @@
 import { STATUS_CONFIG } from './status-config.js';
 document.addEventListener('DOMContentLoaded', () => {
     // 기본 요소 선택
-    const textEl = document.querySelector('.status-text'); 
+    const textEl = document.querySelector('.status-text');
     const gaugeEl = document.querySelector('.status-progress');
     const timeDisplay = document.querySelector('#current-datetime');
     const countdownDisplay = document.querySelector('#countdown');
