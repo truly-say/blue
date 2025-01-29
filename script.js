@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
         userInput += event.key.toLowerCase();
         
         if (userInput.endsWith("lam")) {
-            window.location.href = "youth.html";
+            window.location.href = "youth/youth.html";
         }
         
         if (userInput.length > 10) {
