@@ -1,5 +1,4 @@
 // script.js
-import { STATUS_CONFIG } from './status-config.js';
 document.addEventListener('DOMContentLoaded', () => {
     // 기본 요소 선택
     const textEl = document.querySelector('.status-text');
