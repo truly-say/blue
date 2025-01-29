@@ -82,7 +82,7 @@
     
     // 랜덤한 시간 후에 이미지 전환
     setTimeout(() => {
-      schoolImage.src = '홍련.png';
+      schoolImage.src = '../images/홍련.png';
     }, Math.random() * 100); // 0-100ms 사이의 랜덤한 시간
     
     // 랜덤한 지속 시간 후에 원래 이미지로 복귀
@@ -106,7 +106,7 @@ setInterval(triggerImageGlitch, 3000 + Math.random() * 4000);
       updateDateTime();
       setInterval(updateDateTime, 1000);
 
-      const imagePath = this.getImagePath('선청고등학교.png');
+      const imagePath = this.getImagePath('../images/선청고등학교.png');
 console.log("Image Path: ", imagePath);
     });
   </script>
