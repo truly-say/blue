@@ -6,8 +6,8 @@
   <title>Timeline - Blue Lam Graduation Cruise</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-     html {
-      scroll-behavior: smooth; /* 스크롤 부드럽게 */
+      html {
+      scroll-behavior: smooth;
     }
     
     .timeline-section {
@@ -35,27 +35,30 @@
       z-index: 1;
     }
 
+    /* 타임라인 아이템 수정 */
     .timeline-item {
       background: rgba(0, 31, 63, 0.8);
       padding: 2rem;
       border-radius: 12px;
       margin: 2rem;
-      width: calc(50% - 3rem);
+      width: calc(50% - 4rem); /* 여백 증가 */
       position: relative;
       border: 1px solid rgba(74, 255, 255, 0.1);
       transition: all 0.3s ease;
-      min-width: 300px;
+      box-sizing: border-box;
       overflow: hidden;
     }
 
     .timeline-item:nth-child(odd) {
       float: left;
       clear: both;
+      margin-right: 4rem; /* 오른쪽 여백 증가 */
     }
 
     .timeline-item:nth-child(even) {
       float: right;
       clear: both;
+      margin-left: 4rem; /* 왼쪽 여백 증가 */
     }
 
     .timeline-item::after {
@@ -70,18 +73,41 @@
     }
 
     .timeline-item:nth-child(odd)::after {
-      right: -40px;
+      right: -60px; /* 점 위치 조정 */
       transform: translate(50%, -50%);
     }
 
     .timeline-item:nth-child(even)::after {
-      left: -40px;
+      left: -60px; /* 점 위치 조정 */
       transform: translate(-50%, -50%);
     }
 
     .timeline-item:hover {
       transform: translateY(-5px);
       box-shadow: 0 0 20px rgba(74, 255, 255, 0.2);
+    }
+.secret-panel {
+      display: none;
+      background: rgba(0, 15, 31, 0.9);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      border: 1px solid rgba(74, 255, 255, 0.3);
+      max-width: 100%;
+      box-sizing: border-box;
+      word-wrap: break-word;
+    }
+
+    .encrypted-text {
+      font-family: monospace;
+      color: rgba(74, 255, 255, 0.5);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.5rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
     }
 
     .timeline-date {
@@ -123,52 +149,19 @@
       background: rgba(74, 255, 255, 0.8);
     }
 
-    .secret-panel {
-      display: none;
-      background: rgba(0, 15, 31, 0.9);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-top: 1rem;
-      border: 1px solid rgba(74, 255, 255, 0.3);
-      /* 패널이 부모 요소를 벗어나지 않도록 설정 */
-      max-width: 100%;
-      box-sizing: border-box;
-      word-wrap: break-word;
-    }
-    .terminal-text {
-      font-family: monospace;
-      color: #4affff;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-
-    .encrypted-text {
-      font-family: monospace;
-      color: rgba(74, 255, 255, 0.5);
-      background: rgba(0, 0, 0, 0.3);
-      padding: 0.5rem;
-      border-radius: 4px;
-      margin-top: 0.5rem;
-      /* 긴 텍스트가 줄바꿈되도록 설정 */
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      white-space: pre-wrap;
-    }
-
     .side-nav {
       position: fixed;
-      right: -180px; /* 초기에는 숨겨진 상태 */
+      right: -180px;
       top: 50%;
       transform: translateY(-50%);
       background: rgba(0, 15, 31, 0.9);
       padding: 15px;
-      border-radius: 10px 0 0 10px; /* 왼쪽 모서리만 둥글게 */
+      border-radius: 10px 0 0 10px;
       z-index: 1000;
       transition: right 0.3s ease;
-      width: 200px; /* 고정된 너비 */
+      width: 200px;
     }
 
-    /* 호버 시 나타나는 효과 */
     .side-nav:hover {
       right: 0;
     }
@@ -187,7 +180,7 @@
     }
 
     .side-nav-item {
-      padding: 12px 15px; /* 패딩 증가 */
+      padding: 12px 15px;
       display: block;
       margin: 5px 0;
       border-radius: 5px;
@@ -199,18 +192,16 @@
       background: rgba(74, 255, 255, 0.1);
     }
 
-    /* Clear float fix */
     .timeline-container::after {
       content: '';
       display: table;
       clear: both;
     }
 
-    @media (max-width: 768px) {
+     @media (max-width: 768px) {
       .timeline-item {
         width: calc(100% - 4rem);
         margin: 2rem auto;
-        min-width: auto; /* 모바일에서는 최소 너비 제거 */
       }
 
       .timeline-container::before {
