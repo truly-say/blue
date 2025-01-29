@@ -6,6 +6,10 @@
   <title>Timeline - Blue Lam Graduation Cruise</title>
   <link rel="stylesheet" href="styles.css">
   <style>
+     html {
+      scroll-behavior: smooth; /* 스크롤 부드럽게 */
+    }
+    
     .timeline-section {
       padding-top: 100px;
       max-width: 1200px;
@@ -16,6 +20,8 @@
     .timeline-container {
       position: relative;
       padding: 2rem 0;
+      max-width: 1400px; 
+      margin: 0 auto;
     }
 
     .timeline-container::before {
@@ -142,25 +148,41 @@
 
     .side-nav {
       position: fixed;
-      right: 20px;
+      right: -180px; /* 초기에는 숨겨진 상태 */
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0, 15, 31, 0.7);
+      background: rgba(0, 15, 31, 0.9);
       padding: 15px;
-      border-radius: 10px;
+      border-radius: 10px 0 0 10px; /* 왼쪽 모서리만 둥글게 */
       z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      transition: right 0.3s ease;
+      width: 200px; /* 고정된 너비 */
+    }
+
+    /* 호버 시 나타나는 효과 */
+    .side-nav:hover {
+      right: 0;
+    }
+
+    .side-nav::before {
+      content: '⋮';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 15, 31, 0.9);
+      color: #4affff;
+      padding: 10px;
+      border-radius: 10px 0 0 10px;
+      font-size: 20px;
     }
 
     .side-nav-item {
-      color: rgba(255, 255, 255, 0.5);
-      text-decoration: none;
-      padding: 8px 12px;
+      padding: 12px 15px; /* 패딩 증가 */
+      display: block;
+      margin: 5px 0;
       border-radius: 5px;
       transition: all 0.3s ease;
-      font-size: 0.9rem;
     }
 
     .side-nav-item:hover, .side-nav-item.active {
@@ -178,7 +200,6 @@
     @media (max-width: 768px) {
       .timeline-item {
         width: calc(100% - 4rem);
-        float: none;
         margin: 2rem auto;
       }
 
@@ -322,25 +343,44 @@
     const sideNavItems = document.querySelectorAll('.side-nav-item');
     const sections = document.querySelectorAll('.timeline-item');
 
-    function highlightNavItem() {
-      let current = '';
+  document.querySelectorAll('.side-nav-item').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
       
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (window.pageYOffset >= sectionTop - 200) {
-          current = section.getAttribute('id');
+      const targetId = this.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }
+    });
+  });
+    
+    function highlightNavItem() {
+    const scrollPosition = window.scrollY;
+    
+    document.querySelectorAll('.timeline-item').forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      const sectionId = section.getAttribute('id');
+      
+      if (sectionId) {
+        const navItem = document.querySelector(`.side-nav-item[href="#${sectionId}"]`);
+        
+        if (scrollPosition >= sectionTop - 200 && 
+            scrollPosition < sectionTop + sectionHeight - 200) {
+          navItem?.classList.add('active');
+        } else {
+          navItem?.classList.remove('active');
         }
-      });
-
-      sideNavItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('href').slice(1) === current) {
-          item.classList.add('active');
-        }
-      });
-    }
-
+      }
+    });
+  }
     window.addEventListener('scroll', highlightNavItem);
+  highlightNavItem();
   </script>
 </body>
 </html>
