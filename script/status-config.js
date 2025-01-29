@@ -83,3 +83,4 @@ export const STATUS_CONFIG = {
     cycleInterval: 3000, // 메시지 순환 간격 (ms)
     animationDuration: 300, // 이미지 전환 애니메이션 시간 (ms)
 };
+window.STATUS_CONFIG = STATUS_CONFIG;
