@@ -90,42 +90,55 @@ document.addEventListener('DOMContentLoaded', () => {
             this.initializeImages();
         }
 
-        initializeImages() {
-            if (!container) {
-                console.error('Container element not found');
-                return;
-            }
+       initializeImages() {
+    if (!container) {
+        console.error('Container element not found');
+        return;
+    }
 
-            const systemStatus = document.querySelector('.system-status') || container;
+    const systemStatus = document.querySelector('.system-status') || container;
 
-            // 이미지 요소 생성 및 초기화
-            Object.entries(this.config.messages).forEach(([message, imagePath]) => {
-                const img = this.createImageElement(imagePath);
-                systemStatus.appendChild(img);
-                this.imageElements[message] = img;
-            });
-        }
+    Object.entries(this.config.messages).forEach(([message, imagePath]) => {
+        console.log('Message:', message, ' Image Path:', imagePath);  // 이미지 경로 확인
 
-        createImageElement(imagePath) {
-            const img = document.createElement('img');
-            img.src = imagePath || this.config.defaultImage;
-            img.alt = "Status Image";
-            img.className = 'status-image-overlay';
-            img.style.opacity = '0';
-            img.style.visibility = 'hidden';
-            
-            // 이미지 로드 이벤트 처리
-            img.onload = () => {
-                console.log(`Image loaded: ${imagePath}`);
-                img.dataset.loaded = 'true';
-            };
-            img.onerror = () => {
-                console.error(`Failed to load image: ${imagePath}`);
-                img.src = this.config.defaultImage;
-            };
+        const img = this.createImageElement(imagePath);
 
-            return img;
-        }
+        img.onload = () => {
+            console.log(`Image successfully loaded: ${imagePath}`);
+            systemStatus.appendChild(img);  // 정상적으로 이미지가 로드되면 append
+        };
+
+        img.onerror = () => {
+            console.error(`Failed to load image: ${imagePath}`);
+            img.src = this.config.defaultImage;  // 이미지 로드 실패 시 기본 이미지 로드
+            systemStatus.appendChild(img);  // 실패한 경우에도 이미지 추가
+        };
+    });
+}
+
+       createImageElement(imagePath) {
+    const img = document.createElement('img');
+
+    console.log("Trying to load image with path:", imagePath);  // 경로 확인용
+
+    img.src = imagePath || this.config.defaultImage;
+    img.alt = "Status Image";
+    img.className = 'status-image-overlay';
+    img.style.opacity = '0';
+    img.style.visibility = 'hidden';
+
+    img.onload = () => {
+        console.log(`Image loaded successfully: ${imagePath}`);
+        img.dataset.loaded = 'true';
+    };
+
+    img.onerror = () => {
+        console.error(`Failed to load image: ${imagePath}`);
+        img.src = this.config.defaultImage; // 기본 이미지로 대체
+    };
+
+    return img;
+}
 
         getRandomMessage() {
             const messages = Object.keys(this.config.messages);
