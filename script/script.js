@@ -11,15 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoCards = document.querySelectorAll(".info-card");
 
     infoCards.forEach((card) => {
-        card.addEventListener("click", () => {
-            let page = card.getAttribute("data-page");
+    card.addEventListener("click", () => {
+        let page = card.getAttribute("data-page");
 
-            if (page) {
-                let targetUrl = `${page}/${page}.html`;
-                window.location.href = targetUrl;
-            }
-        });
+        if (page) {
+            let targetUrl = `${page}/${page}.html`; 
+            window.location.href = targetUrl;
+        }
     });
+});
     
     // 상태 메시지 설정
     const STATUS_CONFIG = {
@@ -91,42 +91,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         initializeImages() {
-            if (!container) {
-                console.error('Container element not found');
-                return;
-            }
+    const container = document.querySelector('.container');
+    if (!container) {
+        console.error('Container element not found');
+        return;
+    }
 
-            const systemStatus = document.querySelector('.system-status') || container;
+    const systemStatus = document.querySelector('.system-status') || container;
+    Object.entries(this.config.messages).forEach(([message, imagePath]) => {
+        const img = this.createImageElement(imagePath);
+        systemStatus.appendChild(img);
+        this.imageElements[message] = img;
+    });
+}
 
-            // 이미지 요소 생성 및 초기화
-            Object.entries(this.config.messages).forEach(([message, imagePath]) => {
-                const img = this.createImageElement(imagePath);
-                systemStatus.appendChild(img);
-                this.imageElements[message] = img;
-            });
-        }
+       createImageElement(imagePath) {
+    const img = document.createElement('img');
+    img.src = imagePath || this.config.defaultImage;
+    img.alt = "Status Image";
+    img.className = 'status-image-overlay';
+    img.style.opacity = '0';
+    img.style.visibility = 'hidden';
+    
+    // 이미지 로드 이벤트 처리
+    img.onload = () => {
+        console.log(`Image loaded: ${imagePath}`);
+        img.dataset.loaded = 'true';
+    };
+    
+    // 로드 실패 시 디폴트 이미지 설정
+    img.onerror = () => {
+        console.error(`Failed to load image: ${imagePath}`);
+        img.src = this.config.defaultImage;  // 기본 이미지로 대체
+    };
 
-        createImageElement(imagePath) {
-            const img = document.createElement('img');
-            img.src = imagePath || this.config.defaultImage;
-            img.alt = "Status Image";
-            img.className = 'status-image-overlay';
-            img.style.opacity = '0';
-            img.style.visibility = 'hidden';
-            
-            // 이미지 로드 이벤트 처리
-            img.onload = () => {
-                console.log(`Image loaded: ${imagePath}`);
-                img.dataset.loaded = 'true';
-            };
-            img.onerror = () => {
-                console.error(`Failed to load image: ${imagePath}`);
-                img.src = this.config.defaultImage;
-            };
-
-            return img;
-        }
-
+    return img;
+}
         getRandomMessage() {
             const messages = Object.keys(this.config.messages);
             if (this.usedMessages.length === messages.length) {
