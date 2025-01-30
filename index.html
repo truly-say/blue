@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Lam Graduation Cruise</title>
   <link rel="stylesheet" href="styles/styles.css">
-<link rel="stylesheet" href="styles/glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
   <meta name="description" content="2025 Blue Lam Graduation Cruise - 청춘의 최종본">
 </head>
@@ -64,15 +63,21 @@
       </div>
     </section>
   </div>
-  <div class="audio-controls">
-    <button id="wave-sound-play" class="media-btn">⏵</button>
-    <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="100">
-  </div>
   <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
+  <div class="audio-controls">
+    <button id="wave-sound-play" class="media-btn">⏵</button>
+    <div class="controls-group">
+        <div class="progress-bar" id="progress-bar">
+            <div id="progress-bar-inner" class="progress-bar-inner"></div>
+            <div id="progress-bar-thumb" class="progress-bar-thumb"></div>
+        </div>
+        <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="100">
+    </div>
+</div>
   <script src="script/status-config.js"></script>
   <script src="script/audio.js"></script>
   <script src="script/script.js"></script>

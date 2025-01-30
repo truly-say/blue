@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Lam - System Status</title>
   <link rel="stylesheet" href="../styles/styles.css">
-<link rel="stylesheet" href="../styles/glitch.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-</head>
+  </head>
 <body>
   <nav class="navbar">
     <a href="../index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
@@ -62,46 +61,7 @@
         </div>
       </div>
     </section>
-
-    <section id="character-profiles" class="status-section">
-      <h2>캐릭터 프로필</h2>
-      <div class="status-content">
-        <div class="character-profile">
-          <h3>캐릭터 1 - 이름</h3>
-          <p>이곳에 캐릭터 1의 기본 신상 정보 작성
-            - 예: 이름, 나이, 소속, 역할
-            - 현재 상태 및 심리적 특성
-            - 프로젝트 내 중요성 및 평가</p>
-        </div>
-        <div class="character-profile">
-          <h3>캐릭터 2 - 이름</h3>
-          <p>이곳에 캐릭터 2의 기본 신상 정보 작성
-            - 예: 이름, 나이, 소속, 역할
-            - 현재 상태 및 심리적 특성
-            - 프로젝트 내 중요성 및 평가</p>
-        </div>
-        <div class="status-gauge">
-          <div class="status-progress" id="characterProfileProgress"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="risk-assessment" class="status-section">
-      <h2>위험 평가</h2>
-      <div class="status-content">
-        <p>이곳에 현재 시스템 및 프로젝트의 전반적인 위험 수준 평가 작성</p>
-        <ul>
-          <li>주요 위험 요인 식별</li>
-          <li>각 위험 요인의 심각도 및 대응 전략</li>
-          <li>잠재적 위험이 프로젝트에 미치는 영향 분석</li>
-        </ul>
-        <div class="status-gauge">
-          <div class="status-progress" id="riskAssessmentProgress"></div>
-        </div>
-      </div>
-    </section>
-  </div>
-
+  
   <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
@@ -156,6 +116,8 @@
       });
     });
   </script>
-  <script src="../script/script.js"></script>
+  <script src="script/status-config.js"></script>
+  <script src="script/audio.js"></script>
+  <script src="script/script.js"></script>
 </body>
 </html>
