@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Blue Lam Graduation Cruise Timeline - Important project milestones from 2025.01.03 to 2025.02.02">
+  <title>Blue Lam Graduation Cruise - Timeline</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="../styles/glitch.css">
+  <link rel="stylesheet" href="timeline.css">
+   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
+    <div class="nav-controls">
+      <div class="nav-time" id="current-datetime" aria-live="polite"></div>
+      <div class="nav-danger-level" id="danger-level" aria-live="polite">SYSTEM: UNSTABLE</div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="timeline-section">
+      <header class="hero-section">
+        <h1 class="intermittent-glitch">TIMELINE</h1>
+        <div class="subtitle" role="doc-subtitle">2025.01.02 ~ 2025.02.02</div>
+      </header>
+
+      <div class="timeline-container" role="list">
+        <div class="timeline-item" data-secret="bl-01" id="start">
+          <div class="timeline-date">2025.01.02</div>
+          <div class="timeline-content">
+            <h3>프로젝트 시작</h3>
+            <p>Blue Lam 프로젝트 공식 개시. 시스템 초기화 완료.</p>
+            <div class="hidden-message">cd /root/bluelam/init && ./start.sh</div>
+            <div class="easter-egg" style="top: 10px; right: 10px;" onclick="revealSecret('bl-01')" tabindex="0" role="button" aria-label="숨겨진 내용 보기"></div>
+            <div class="secret-panel" id="secret-bl-01">
+              <div class="terminal-text">
+                > INITIALIZING SYSTEM...
+                > LOADING CORE MODULES...
+                > WARNING: MEMORY CORRUPTION DETECTED
+                > ENCRYPTED MESSAGE FOUND:
+              </div>
+              <div class="encrypted-text">
+                VGhlIGZpcnN0IGtleSBpcyBoaWRkZW4gaW4gdGhlIHdhdmVz
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-secret="bl-02" id="midpoint">
+          <div class="timeline-date">2025.01.15</div>
+          <div class="timeline-content">
+            <h3>시스템 불안정성 감지</h3>
+            <p>예상치 못한 데이터 변조 발생. 긴급 대응 필요.</p>
+            <div class="hidden-message">sudo chmod 777 /sys/class/memory</div>
+            <div class="easter-egg" style="top: 10px; right: 10px;" onclick="revealSecret('bl-02')" tabindex="0" role="button" aria-label="숨겨진 내용 보기"></div>
+            <div class="secret-panel" id="secret-bl-02">
+              <div class="terminal-text">
+                > ACCESSING MEMORY BLOCK...
+                > CORRUPTED DATA FOUND
+                > ATTEMPTING RECOVERY...
+                > HIDDEN MESSAGE DETECTED:
+              </div>
+              <div class="encrypted-text">
+                RmluZCB0aGUgYmx1ZSBsYW1iZGEgaW4gdGhlIGRlZXA=
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-secret="bl-03">
+          <div class="timeline-date">2025.01.30</div>
+          <div class="timeline-content">
+            <h3>최종 테스트</h3>
+            <p>시스템 안정화 시도 중. 데이터 복구 진행률: 78%</p>
+            <div class="hidden-message">grep -R "LAMBDA" /var/log/bluelam/*</div>
+            <div class="easter-egg" style="top: 10px; right: 10px;" onclick="revealSecret('bl-03')" tabindex="0" role="button" aria-label="숨겨진 내용 보기"></div>
+            <div class="secret-panel" id="secret-bl-03">
+              <div class="terminal-text">
+                > SCANNING LOGS...
+                > UNUSUAL PATTERN DETECTED
+                > DECRYPTING...
+                > MESSAGE FRAGMENTS:
+              </div>
+              <div class="encrypted-text">
+                QmVuZWF0aCB0aGUgd2F2ZXMsIHRoZSB0cnV0aCBsaWVz
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-secret="bl-04" id="finale">
+          <div class="timeline-date">2025.02.02</div>
+          <div class="timeline-content">
+            <h3>최종 단계</h3>
+            <p>Blue Lam 프로젝트 완료. 시스템 재부팅 준비.</p>
+            <div class="hidden-message">shutdown -r now</div>
+            <div class="easter-egg" style="top: 10px; right: 10px;" onclick="revealSecret('bl-04')" tabindex="0" role="button" aria-label="숨겨진 내용 보기"></div>
+            <div class="secret-panel" id="secret-bl-04">
+              <div class="terminal-text">
+                > PREPARING FOR SHUTDOWN...
+                > SAVING FINAL STATE...
+                > CRITICAL MESSAGE FOUND:
+              </div>
+              <div class="encrypted-text">
+                VGhlIGZpbmFsIGtleSB3aWxsIHNldCB5b3UgZnJlZQ==
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <nav class="side-nav" role="navigation" aria-label="Timeline navigation">
+    <button class="side-nav-toggle" aria-label="메뉴 열기">☰</button>
+    <a href="#start" class="side-nav-item" data-section="start">프로젝트 시작</a>
+    <a href="#midpoint" class="side-nav-item" data-section="midpoint">시스템 불안정성 감지</a>
+    <a href="#finale" class="side-nav-item" data-section="finale">최종 단계</a>
+  </nav>
+
+  <div class="waves">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+
+<script src="../script/script.js"></script>
+<script src="../script/status-config.js"></script>
+<script src="timeline.js"></script>
+</body>
+</html>
