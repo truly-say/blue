@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
   <link rel="stylesheet" href="../styles/styles.css">
-<link rel="stylesheet" href="../styles/glitch.css">
+  <link rel="stylesheet" href="../styles/glitch.css">
   <link rel="stylesheet" href="youth.css">
   <title>미완성 청춘에게</title>
 </head>
@@ -13,10 +13,8 @@
   <div class="overlay"></div>
   <nav class="navbar">
     <a href="#" class="nav-logo">미완성</a>
-    <div class="nav-controls">
-      <div class="nav-time" id="current-datetime"></div>
-      <div class="nav-danger-level">survivor: 3</div>
-    </div>
+    <div class="nav-time" id="current-datetime"></div>
+    <div class="nav-danger-level">survivor: 3</div>
   </nav>
   
   <div class="container">
@@ -38,14 +36,14 @@
     </div>
 
     <section class="info-section">
-      <div class="info-card glitch-hover" data-page="index">
+      <div class="info-card glitch-hover" onclick="location.href='../index.html'">
         <div class="info-card-inner">
           <h3>회상하기</h3>
           <p>14기의 기억을 더듬습니다</p>
           <div class="card-overlay"></div>
         </div>
       </div>
-      <div class="info-card glitch-hover" data-page="reboot">
+      <div class="info-card glitch-hover" onclick="location.href='../pages/reboot.html'">
         <div class="info-card-inner">
           <h3>재시작하기</h3>
           <p id="status-message">또다른 가능성을 봅니다</p>
@@ -57,55 +55,54 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-  // Snow effect code remains the same
-  const snowContainer = document.querySelector(".winter-snow");
-  const snowflakeCount = 100;
-  
-  for (let i = 0; i < snowflakeCount; i++) {
-    const snowflake = document.createElement("div");
-    snowflake.classList.add("snowflake");
-    snowflake.style.left = `${Math.random() * 100}vw`;
-    snowflake.style.opacity = `${0.4 + Math.random() * 0.6}`;
-    snowflake.style.width = snowflake.style.height = `${3 + Math.random() * 4}px`;
-    snowflake.style.animationDelay = `${Math.random() * 5}s`;
-    snowflake.style.animationDuration = `${10 + Math.random() * 20}s`;
-    snowContainer.appendChild(snowflake);
-  }
-
-  // Image glitch effect
-  const schoolImage = document.getElementById('schoolImage');
-  let isOriginalImage = true;
-
-  function triggerImageGlitch() {
-    if (Math.random() < 0.3) { // 30% probability
-      schoolImage.classList.add('glitching');
+      // Snow effect
+      const snowContainer = document.querySelector(".winter-snow");
+      const snowflakeCount = 100;
       
-      // Switch to glitch image
-      setTimeout(() => {
-        schoolImage.src = './images/홍련.png';  // Fixed path
-      }, Math.random() * 100);
+      for (let i = 0; i < snowflakeCount; i++) {
+        const snowflake = document.createElement("div");
+        snowflake.classList.add("snowflake");
+        snowflake.style.left = `${Math.random() * 100}vw`;
+        snowflake.style.opacity = `${0.4 + Math.random() * 0.6}`;
+        snowflake.style.width = snowflake.style.height = `${3 + Math.random() * 4}px`;
+        snowflake.style.animationDelay = `${Math.random() * 5}s`;
+        snowflake.style.animationDuration = `${10 + Math.random() * 20}s`;
+        snowContainer.appendChild(snowflake);
+      }
+
+      // Image glitch effect
+      const schoolImage = document.getElementById('schoolImage');
       
-      // Return to original image
-      setTimeout(() => {
-        schoolImage.src = './images/선청고등학교.png';  // Fixed path
-        schoolImage.classList.remove('glitching');
-      }, 300 + Math.random() * 200);
-    }
-  }
+      function glitchEffect() {
+        if (!schoolImage.classList.contains('glitching')) {
+          schoolImage.classList.add('glitching');
+          schoolImage.src = '../images/홍련.png';
+          
+          setTimeout(() => {
+            schoolImage.src = '../images/선청고등학교.png';
+            schoolImage.classList.remove('glitching');
+          }, 300);
+        }
+      }
 
-  // Trigger glitch effect every 3-7 seconds
-  setInterval(triggerImageGlitch, 3000 + Math.random() * 4000);
+      setInterval(() => {
+        if (Math.random() < 0.3) {  // 30% chance of glitch
+          glitchEffect();
+        }
+      }, 2000);
 
-  // Update current time
-  const updateDateTime = () => {
-    const now = new Date();
-    document.getElementById("current-datetime").textContent = 
-      now.toLocaleTimeString('ko-KR', { hour12: false });
-  };
-  
-  updateDateTime();
-  setInterval(updateDateTime, 1000);
-});
+      // Time update with original format
+      function updateDateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById("current-datetime").textContent = `${hours}:${minutes}:${seconds}`;
+      }
+      
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+    });
   </script>
   <script src="../script/script.js"></script>
   <script src="../script/status-config2.js"></script>

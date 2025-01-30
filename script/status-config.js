@@ -1,9 +1,11 @@
 // status-config.js
 const STATUS_CONFIG = {
+    // 현재 페이지가 index.html인지 확인하는 함수
     getImagePath: function(imageName) {
-        // 모든 이미지는 'images/' 폴더에서부터 시작하도록 절대 경로로 변경
-        const imagePath = `/blue/images/${imageName}`;  // 또는 최상위 경로에 맞는 경로 설정
-        return imagePath;
+        const isIndex = window.location.pathname.endsWith('index.html') || 
+                       window.location.pathname.endsWith('/');
+        const prefix = isIndex ? '' : '../';
+        return `${prefix}images/${imageName}`;
     },
 
     get messages() {

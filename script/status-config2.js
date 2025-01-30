@@ -1,10 +1,9 @@
-// status-config.js
+// status-config2.js
 const STATUS_CONFIG = {
     getImagePath: function(imageName) {
-        // 모든 이미지는 'images/' 폴더에서부터 시작하도록 절대 경로로 변경
-        const imagePath = `../images/${imageName}`; 
-        return imagePath;
+        return `../images/${imageName}`;
     },
+
     get messages() {
         return {
             // 도이성 상태
