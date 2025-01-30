@@ -12,7 +12,7 @@
 <body>
   <div class="horror-glitch"></div>
   <div class="overlay"></div>
- <nav class="navbar">
+  <nav class="navbar">
     <a href="#" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
     <div class="nav-controls">
       <div class="nav-time" id="current-datetime"></div>
@@ -64,12 +64,22 @@
       </div>
     </section>
   </div>
+  <div class="audio-controls">
+    <button id="wave-sound-play" class="media-btn">⏵</button>
+    <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="100">
+  </div>
   <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
   <script src="script/status-config.js"></script>
+  <script src="script/audio.js"></script>
   <script src="script/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        playWaveSound();
+    });
+  </script>
 </body>
 </html>

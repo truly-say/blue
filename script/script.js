@@ -11,15 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoCards = document.querySelectorAll(".info-card");
 
     infoCards.forEach((card) => {
-    card.addEventListener("click", () => {
-        let page = card.getAttribute("data-page");
+        card.addEventListener("click", () => {
+            let page = card.getAttribute("data-page");
 
-        if (page) {
-            let targetUrl = `${page}/${page}.html`; 
-            window.location.href = targetUrl;
-        }
+            if (page) {
+                let targetUrl = `${page}/${page}.html`;
+                window.location.href = targetUrl;
+            }
+        });
     });
-});
 
     // 상태 관리 클래스
     class StatusManager {
@@ -30,47 +30,47 @@ document.addEventListener('DOMContentLoaded', () => {
             this.currentlyVisibleImage = null;
             this.cycleInProgress = false;
             this.progressAnimation = null;
-            
+
             this.initializeImages();
         }
 
         initializeImages() {
-    const container = document.querySelector('.container');
-    if (!container) {
-        console.error('Container element not found');
-        return;
-    }
+            const container = document.querySelector('.container');
+            if (!container) {
+                console.error('Container element not found');
+                return;
+            }
 
-    const systemStatus = document.querySelector('.system-status') || container;
-    Object.entries(this.config.messages).forEach(([message, imagePath]) => {
-        const img = this.createImageElement(imagePath);
-        systemStatus.appendChild(img);
-        this.imageElements[message] = img;
-    });
-}
+            const systemStatus = document.querySelector('.system-status') || container;
+            Object.entries(this.config.messages).forEach(([message, imagePath]) => {
+                const img = this.createImageElement(imagePath);
+                systemStatus.appendChild(img);
+                this.imageElements[message] = img;
+            });
+        }
 
-       createImageElement(imagePath) {
-    const img = document.createElement('img');
-    img.src = imagePath || this.config.defaultImage;
-    img.alt = "Status Image";
-    img.className = 'status-image-overlay';
-    img.style.opacity = '0';
-    img.style.visibility = 'hidden';
-    
-    // 이미지 로드 이벤트 처리
-    img.onload = () => {
-        console.log(`Image loaded: ${imagePath}`);
-        img.dataset.loaded = 'true';
-    };
-    
-    // 로드 실패 시 디폴트 이미지 설정
-    img.onerror = () => {
-        console.error(`Failed to load image: ${imagePath}`);
-        img.src = this.config.defaultImage;  // 기본 이미지로 대체
-    };
+        createImageElement(imagePath) {
+            const img = document.createElement('img');
+            img.src = imagePath || this.config.defaultImage;
+            img.alt = "Status Image";
+            img.className = 'status-image-overlay';
+            img.style.opacity = '0';
+            img.style.visibility = 'hidden';
 
-    return img;
-}
+            // 이미지 로드 이벤트 처리
+            img.onload = () => {
+                console.log(`Image loaded: ${imagePath}`);
+                img.dataset.loaded = 'true';
+            };
+
+            // 로드 실패 시 디폴트 이미지 설정
+            img.onerror = () => {
+                console.error(`Failed to load image: ${imagePath}`);
+                img.src = this.config.defaultImage; // 기본 이미지로 대체
+            };
+
+            return img;
+        }
         getRandomMessage() {
             const messages = Object.keys(this.config.messages);
             if (this.usedMessages.length === messages.length) {
@@ -123,27 +123,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 const currentProgress = startProgress + (targetProgress - startProgress) * progress;
-                
+
                 gaugeEl.style.width = `${currentProgress}%`;
-                
+
                 if (progress < 1) {
                     this.progressAnimation = requestAnimationFrame(update);
                 }
             };
-            
+
             this.progressAnimation = requestAnimationFrame(update);
         }
 
         async runMessageCycle(message) {
             if (!textEl || !gaugeEl) return;
-            
+
             this.cycleInProgress = true;
             const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
-            
+
             // 프로그레스 바 리셋
             gaugeEl.style.width = '0%';
             this.animateProgress(3000, 100);
-            
+
             // 메시지와 이미지 표시
             textEl.textContent = message;
             await this.showImage(message);
@@ -158,18 +158,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     await new Promise(resolve => setTimeout(resolve, 2000));
                     break;
                 }
-                
+
                 dots += '.';
                 textEl.textContent = `${message}${dots}`;
                 await new Promise(resolve => setTimeout(resolve, 1000));
             }
-            
+
             await new Promise(resolve => setTimeout(resolve, 3000));
-            
+
             if (this.currentlyVisibleImage) {
                 await this.fadeOutImage(this.currentlyVisibleImage);
             }
-            
+
             this.cycleInProgress = false;
         }
 
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = new Date();
         const departureDate = new Date('2025-02-28T00:00:00');
         const diff = departureDate - now;
-        
+
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -227,16 +227,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 페이지 전환 효과 및 키보드 입력 처리
+    // 선청완 홈페이지로 이동
     let userInput = "";
-    
+
     document.addEventListener("keydown", (event) => {
         userInput += event.key.toLowerCase();
-        
+
         if (userInput.endsWith("lam")) {
             window.location.href = "youth/youth.html";
         }
-        
+
         if (userInput.length > 10) {
             userInput = userInput.slice(-10);
         }

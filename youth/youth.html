@@ -54,55 +54,59 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Snow effect
-      const snowContainer = document.querySelector(".winter-snow");
-      const snowflakeCount = 100;
-      
-      for (let i = 0; i < snowflakeCount; i++) {
-        const snowflake = document.createElement("div");
-        snowflake.classList.add("snowflake");
-        snowflake.style.left = `${Math.random() * 100}vw`;
-        snowflake.style.opacity = `${0.4 + Math.random() * 0.6}`;
-        snowflake.style.width = snowflake.style.height = `${3 + Math.random() * 4}px`;
-        snowflake.style.animationDelay = `${Math.random() * 5}s`;
-        snowflake.style.animationDuration = `${10 + Math.random() * 20}s`;
-        snowContainer.appendChild(snowflake);
-      }
+  document.addEventListener("DOMContentLoaded", () => {
+  // Snow effect
+  const snowContainer = document.querySelector(".winter-snow");
+  const snowflakeCount = 100;
+  
+  for (let i = 0; i < snowflakeCount; i++) {
+    const snowflake = document.createElement("div");
+    snowflake.classList.add("snowflake");
+    snowflake.style.left = `${Math.random() * 100}vw`;
+    snowflake.style.opacity = `${0.4 + Math.random() * 0.6}`;
+    snowflake.style.width = snowflake.style.height = `${3 + Math.random() * 4}px`;
+    snowflake.style.animationDelay = `${Math.random() * 5}s`;
+    snowflake.style.animationDuration = `${10 + Math.random() * 20}s`;
+    snowContainer.appendChild(snowflake);
+  }
 
-      // Image glitch effect
-      const schoolImage = document.getElementById('schoolImage');
-      
-      function glitchEffect() {
-        if (!schoolImage.classList.contains('glitching')) {
-          schoolImage.classList.add('glitching');
-          schoolImage.src = '../images/홍련.png';
-          
-          setTimeout(() => {
-            schoolImage.src = '../images/선청고등학교.png';
-            schoolImage.classList.remove('glitching');
-          }, 300);
-        }
-      }
+  // Image glitch effect
+  const schoolImage = document.getElementById('schoolImage');
+  
+  function glitchEffect() {
+    schoolImage.classList.add('glitching');
+    schoolImage.src = '../images/홍련.png';
+    
+    setTimeout(() => {
+      schoolImage.src = '../images/선청고등학교.png';
+      schoolImage.classList.remove('glitching');
+    }, 300);
+  }
 
-      setInterval(() => {
-        if (Math.random() < 0.3) {  // 30% chance of glitch
-          glitchEffect();
-        }
-      }, 2000);
+  // Glitch effect interval
+  setInterval(() => {
+    if (Math.random() < 0.3) {
+      glitchEffect();
+    }
+  }, 2000);
 
-      // Time update with original format
-      function updateDateTime() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        document.getElementById("current-datetime").textContent = `${hours}:${minutes}:${seconds}`;
-      }
-      
-      updateDateTime();
-      setInterval(updateDateTime, 1000);
-    });
+  // Simple time update with setInterval
+  const timeDisplay = document.getElementById("current-datetime");
+  
+  function updateTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    timeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+  }
+
+  // Initial time update
+  updateTime();
+  
+  // Update time every second
+  setInterval(updateTime, 1000);
+});
   </script>
   <script src="../script/script.js"></script>
   <script src="../script/status-config2.js"></script>

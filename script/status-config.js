@@ -25,7 +25,7 @@ const STATUS_CONFIG = {
             "최예슬이 정보를 수집하고 있습니다": this.getImagePath('커컥커.png'),
             "최예슬이 책상 위 물건들을 정리하고 있습니다": this.getImagePath('커컥커.png'),
             
-            // 생명 신호 없음 상태
+            // 사망자 상태
             "[신혜련의 생명 신호 감지되지 않음]": this.getImagePath('선청고등학교.png'),
             "[선지현의 생명 신호 감지되지 않음]": this.getImagePath('선청고등학교.png'),
             "[청검수의 생명 신호 감지되지 않음]": this.getImagePath('선청고등학교.png'),
@@ -66,7 +66,7 @@ const STATUS_CONFIG = {
             "[신원 미상]이 업무 이메일을 읽고 있습니다": this.getImagePath('겨ㅇ비.png'),
             
             // 연해령 상태
-            "연해령이 모델 설계 및 개발하고 있습니다": this.getImagePath('선청고등학교.png'),
+            "연해령이 모델 설계 및 개발을 하고 있습니다": this.getImagePath('선청고등학교.png'),
             "연해령이 책상에 엎드려 자고 있습니다": this.getImagePath('선청고등학교.png'),
             "연해령이 산책 중 만난 강아지를 쓰다듬고 있습니다": this.getImagePath('선청고등학교.png'),
             
