@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Lam - System Status</title>
   <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="status.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-  </head>
+</head>
 <body>
   <nav class="navbar">
     <a href="../index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
@@ -15,53 +16,53 @@
       <div class="nav-danger-level" id="danger-level">SYSTEM: CRITICAL</div>
     </div>
   </nav>
-
-  <div class="side-nav">
-    <a href="#system-overview" class="side-nav-item" data-section="system-overview">시스템 상태</a>
-    <a href="#project-progress" class="side-nav-item" data-section="project-progress">프로젝트 진행</a>
-    <a href="#character-profiles" class="side-nav-item" data-section="character-profiles">캐릭터 프로필</a>
-    <a href="#risk-assessment" class="side-nav-item" data-section="risk-assessment">위험 평가</a>
-  </div>
-
-  <div class="container">
-    <section class="hero-section">
-      <h1 class="intermittent-glitch" data-text="상태 및 현황">상태 및 현황</h1>
-      <div class="subtitle">"서브타이틀"</div>
-    </section>
-
-    <section id="system-overview" class="status-section">
-      <h2>시스템 상태</h2>
-      <div class="status-content">
-        <p>이곳에 주요 시스템 구성 및 현재 상태에 관한 상세 내용을 채우기</p>
-        <ul>
-          <li>이곳에 시스템 구조 세부 사항 작성</li>
-          <li>현재 시스템 안정성 수준 평가</li>
-          <li>주요 기술적 제약 사항 목록</li>
-        </ul>
-        <div class="status-gauge">
-          <div class="status-progress" id="systemOverviewProgress"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="project-progress" class="status-section">
-      <h2>프로젝트 진행 상태</h2>
-      <div class="status-content">
-        <p>이곳에 Blue Lam 프로젝트의 현재 진행 상황에 대한 종합적인 평가를 작성</p>
-        <div class="status-detail">
-          <strong>주요 진행 지표:</strong>
-          <ul>
-            <li>이곳에 프로젝트 목표 달성 진행 상황 작성</li>
-            <li>현재까지의 주요 성과 요약</li>
-            <li>향후 예상되는 도전 과제 및 리스크</li>
-          </ul>
-        </div>
-        <div class="status-gauge">
-          <div class="status-progress" id="projectProgressBar"></div>
-        </div>
-      </div>
-    </section>
   
+  <div class="container">
+    <header class="hero-section">
+        <h1 class="intermittent-glitch">TIMELINE</h1>
+        <div class="subtitle" role="doc-subtitle">2025.01.02 ~ 2025.02.02</div>
+      </header>
+    <section class="status-section" id="cruise-exploration">
+      <div class="game-container">
+          <div class="floor-selection grid grid-cols-5 gap-4 mb-6" id="floor-selection">
+              <!-- 층 선택 카드들이 여기에 동적으로 추가됨 -->
+          </div>
+
+          <div class="game-panels grid grid-cols-2 gap-6">
+              <div class="locations-panel bg-dark-panel rounded-lg p-4">
+                  <h3 class="panel-title">위치</h3>
+                  <div id="locations-container" class="space-y-3">
+                      <!-- 위치 카드들이 여기에 동적으로 추가됨 -->
+                  </div>
+              </div>
+
+              <div class="right-panels grid grid-rows-2 gap-6">
+                  <div class="interactions-panel bg-dark-panel rounded-lg p-4">
+                      <h3 class="panel-title">상호작용</h3>
+                      <div id="interactions-container" class="space-y-3">
+                          <!-- 상호작용 카드들이 여기에 동적으로 추가됨 -->
+                      </div>
+                  </div>
+
+                  <div class="bottom-panels grid grid-cols-2 gap-4">
+                      <div class="clues-panel bg-dark-panel rounded-lg p-4">
+                          <h3 class="panel-title">단서</h3>
+                          <ul id="clues-list" class="space-y-2">
+                              <!-- 단서 목록이 여기에 동적으로 추가됨 -->
+                          </ul>
+                      </div>
+
+                      <div class="inventory-panel bg-dark-panel rounded-lg p-4">
+                          <h3 class="panel-title">인벤토리</h3>
+                          <ul id="inventory-list" class="space-y-2">
+                              <!-- 인벤토리 아이템들이 여기에 동적으로 추가됨 -->
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
   <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
@@ -70,43 +71,26 @@
 
   <script>
     function updateActiveSection() {
-      const sections = document.querySelectorAll('.status-section');
-      const navItems = document.querySelectorAll('.side-nav-item');
-
-      sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-          navItems.forEach(item => item.classList.remove('active'));
+  const sections = document.querySelectorAll('.status-section');
+  const navItems = document.querySelectorAll('.side-nav-item');
+  
+  // 두 요소가 모두 존재할 때만 실행
+  if (sections.length > 0 && navItems.length > 0) {
+    sections.forEach((section, index) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+        navItems.forEach(item => item.classList.remove('active'));
+        if (navItems[index]) {
           navItems[index].classList.add('active');
         }
-      });
-    }
+      }
+    });
+  }
+}
 
-    function simulateProgressBars() {
-      const progressBars = [
-        'systemOverviewProgress',
-        'projectProgressBar', 
-        'characterProfileProgress', 
-        'riskAssessmentProgress'
-      ];
-
-      progressBars.forEach(barId => {
-        const progressBar = document.getElementById(barId);
-        let progress = 0;
-        const progressInterval = setInterval(() => {
-          progress += Math.random() * 15;
-          progressBar.style.width = `${Math.min(progress, 100)}%`;
-          
-          if (progress >= 100) {
-            clearInterval(progressInterval);
-          }
-        }, 1000);
-      });
-    }
 
     window.addEventListener('scroll', updateActiveSection);
     updateActiveSection();
-    simulateProgressBars();
 
     document.querySelectorAll('.side-nav-item').forEach(item => {
       item.addEventListener('click', (e) => {
@@ -115,9 +99,14 @@
         document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
       });
     });
+
+    document.addEventListener('DOMContentLoaded', () => {
+  window.addEventListener('scroll', updateActiveSection);
+  updateActiveSection();
+});
   </script>
-  <script src="script/status-config.js"></script>
-  <script src="script/audio.js"></script>
-  <script src="script/script.js"></script>
+  <div id="root"></div>
+  <script src="cruise-exploration.js"></script>
+  <script src="../script/script.js"></script>
 </body>
 </html>
