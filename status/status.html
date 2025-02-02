@@ -16,97 +16,25 @@
       <div class="nav-danger-level" id="danger-level">SYSTEM: CRITICAL</div>
     </div>
   </nav>
-  
-  <div class="container">
-    <header class="hero-section">
-        <h1 class="intermittent-glitch">TIMELINE</h1>
-        <div class="subtitle" role="doc-subtitle">2025.01.02 ~ 2025.02.02</div>
-      </header>
-    <section class="status-section" id="cruise-exploration">
-      <div class="game-container">
-          <div class="floor-selection grid grid-cols-5 gap-4 mb-6" id="floor-selection">
-              <!-- 층 선택 카드들이 여기에 동적으로 추가됨 -->
-          </div>
 
-          <div class="game-panels grid grid-cols-2 gap-6">
-              <div class="locations-panel bg-dark-panel rounded-lg p-4">
-                  <h3 class="panel-title">위치</h3>
-                  <div id="locations-container" class="space-y-3">
-                      <!-- 위치 카드들이 여기에 동적으로 추가됨 -->
-                  </div>
-              </div>
+   <!-- 게임 메뉴 -->
+   <div class="game-menu hidden">
+    <div class="menu-content">
+      <h2>게임 메뉴</h2>
+      <button id="save-game">저장하기</button>
+      <button id="load-game">불러오기</button>
+      <button id="close-menu">닫기</button>
+    </div>
+  </div>
 
-              <div class="right-panels grid grid-rows-2 gap-6">
-                  <div class="interactions-panel bg-dark-panel rounded-lg p-4">
-                      <h3 class="panel-title">상호작용</h3>
-                      <div id="interactions-container" class="space-y-3">
-                          <!-- 상호작용 카드들이 여기에 동적으로 추가됨 -->
-                      </div>
-                  </div>
-
-                  <div class="bottom-panels grid grid-cols-2 gap-4">
-                      <div class="clues-panel bg-dark-panel rounded-lg p-4">
-                          <h3 class="panel-title">단서</h3>
-                          <ul id="clues-list" class="space-y-2">
-                              <!-- 단서 목록이 여기에 동적으로 추가됨 -->
-                          </ul>
-                      </div>
-
-                      <div class="inventory-panel bg-dark-panel rounded-lg p-4">
-                          <h3 class="panel-title">인벤토리</h3>
-                          <ul id="inventory-list" class="space-y-2">
-                              <!-- 인벤토리 아이템들이 여기에 동적으로 추가됨 -->
-                          </ul>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
   <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
 
-  <script>
-    function updateActiveSection() {
-  const sections = document.querySelectorAll('.status-section');
-  const navItems = document.querySelectorAll('.side-nav-item');
-  
-  // 두 요소가 모두 존재할 때만 실행
-  if (sections.length > 0 && navItems.length > 0) {
-    sections.forEach((section, index) => {
-      const rect = section.getBoundingClientRect();
-      if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-        navItems.forEach(item => item.classList.remove('active'));
-        if (navItems[index]) {
-          navItems[index].classList.add('active');
-        }
-      }
-    });
-  }
-}
-
-
-    window.addEventListener('scroll', updateActiveSection);
-    updateActiveSection();
-
-    document.querySelectorAll('.side-nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = item.getAttribute('href').substring(1);
-        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-  window.addEventListener('scroll', updateActiveSection);
-  updateActiveSection();
-});
-  </script>
-  <div id="root"></div>
-  <script src="cruise-exploration.js"></script>
+  <!-- 모듈 스크립트 -->
+  <script type="module" src="./game/main.js"></script>
   <script src="../script/script.js"></script>
 </body>
 </html>

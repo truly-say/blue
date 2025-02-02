@@ -1,0 +1,70 @@
+## 주요 문제점
+
+1. 단일 파일에 모든 코드가 몰려있어 유지보수가 어려움
+2. 게임 상태 관리가 불명확하고 전역 변수에 의존
+3. UI 생성 로직과 게임 로직이 혼재
+4. 이벤트 핸들링이 불명확하고 중복된 코드가 많음
+5. 타입 정의와 상수가 코드 내에 산재
+
+## 개선된 파일 구조
+
+```
+game/
+├── constants/
+│   ├── gameTypes.js        # 게임 관련 타입 정의
+│   ├── cruiseData.js       # 크루즈 데이터(층, 위치, 상호작용 등)
+│   └── messages.js         # 게임 내 메시지 상수
+├── components/
+│   ├── FloorCard.js        # 층 선택 카드 컴포넌트
+│   ├── LocationCard.js     # 위치 카드 컴포넌트
+│   ├── InteractionCard.js  # 상호작용 카드 컴포넌트
+│   ├── Inventory.js        # 인벤토리 UI 컴포넌트
+│   └── MessageLog.js       # 메시지 로그 컴포넌트
+├── services/
+│   ├── GameState.js        # 게임 상태 관리
+│   ├── MessageSystem.js    # 메시지 시스템
+│   └── UIManager.js        # UI 요소 생성/관리
+├── utils/
+│   └── helpers.js          # 유틸리티 함수들
+├── styles/
+│   └── game.css           # 게임 관련 스타일
+└── main.js                # 게임 초기화 및 실행
+```
+
+## 주요 변경사항
+
+1. **상태 관리 개선**
+   - GameState 클래스로 게임 상태 중앙화
+   - 옵저버 패턴을 사용한 상태 변경 감지
+
+2. **UI 컴포넌트 분리**
+   - 각 UI 요소를 독립적인 컴포넌트로 분리
+   - 컴포넌트 간 의존성 최소화
+
+3. **이벤트 시스템 개선**
+   - 이벤트 위임 패턴 사용
+   - 중복 이벤트 리스너 제거
+
+4. **데이터 구조화**
+   - 게임 데이터를 별도 파일로 분리
+   - 타입과 상수 중앙화
+
+5. **기능 통합**
+   - 단서와 아이템 시스템 통합
+   - 중복 기능 제거
+
+## 삭제/통합되는 기능들
+
+1. CluePuzzleSystem 클래스 삭제 (아이템 시스템으로 통합)
+2. updateActiveSection 함수 삭제 (불필요한 기능)
+3. createClueAnalysisUI 함수 삭제 (아이템 설명으로 통합)
+
+## 공통 기능 (helpers.js로 이동)
+
+1. canAccessFloor - 층 접근 가능 여부 확인
+2. createCard - 카드 UI 생성 공통 함수
+3. showMessage - 메시지 표시 함수
+4. updateInventory - 인벤토리 업데이트
+5. handleInteraction - 상호작용 처리
+
+이러한 구조로 변경하면 코드의 가독성과 유지보수성이 크게 향상될 것입니다.
