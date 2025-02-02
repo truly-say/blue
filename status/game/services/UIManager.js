@@ -36,10 +36,55 @@ export class UIManager {
           <h3>인벤토리</h3>
           <div id="inventory-list" class="inventory-list"></div>
         </div>
+        <div class="game-controls">
+          <button id="saveGame" class="save-button">게임 저장</button>
+          <button id="resetGame" class="reset-button">게임 초기화</button>
+        </div>
       </div>
     `;
 
+
     document.body.appendChild(container);
+
+    // 컨트롤 버튼 스타일 추가
+    const style = document.createElement('style');
+    style.textContent = `
+      .game-controls {
+        padding: 1rem;
+        margin-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      .game-controls button {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-bottom: 0.5rem;
+      }
+      
+      .save-button {
+        background-color:rgb(78, 122, 216);
+        color: white;
+      }
+      
+      .save-button:hover {
+        background-color: #1d4ed8;
+      }
+      
+      .reset-button {
+        background-color:rgb(78, 78, 78);
+        color: white;
+      }
+      
+      .reset-button:hover {
+        background-color:rgb(124, 124, 124);
+      }
+    `;
+    document.head.appendChild(style);
   }
 
   initializeUI() {
@@ -221,5 +266,52 @@ export class UIManager {
           break;
       }
     });
+    
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('.drop-button')) {
+        e.preventDefault();
+        e.stopPropagation();
+        const index = parseInt(e.target.dataset.id);
+        this.gameState.dropItem(index);
+        this.renderInventory();
+      }
+    });
+     // 저장 버튼 이벤트 리스너
+     const saveButton = document.getElementById('saveGame');
+     if (saveButton) {
+       saveButton.addEventListener('click', () => {
+         const result = this.gameState.saveGame();
+         this.messageSystem.showMessage(result.message, result.success ? 'success' : 'error');
+       });
+     }
+ 
+     // 초기화 버튼 이벤트 리스너
+     const resetButton = document.getElementById('resetGame');
+     if (resetButton) {
+       resetButton.addEventListener('click', () => {
+         if (confirm('정말로 게임을 초기화하시겠습니까? 모든 진행 상황이 삭제됩니다.')) {
+           const result = this.gameState.resetGame();
+           this.messageSystem.showMessage(result.message, 'info');
+           this.updateUI();
+         }
+       });
+     }
+ 
+     // 게임 초기화 이벤트 리스너
+     this.gameState.on('gameReset', () => {
+       this.updateUI();
+     });
+
+    // 게임 초기화 이벤트 리스너
+    this.gameState.on('gameReset', () => {
+      this.updateUI();
+    });
+  }
+
+  updateUI() {
+    this.renderFloors();
+    this.renderLocations();
+    this.renderInventory();
+  
   }
 }
