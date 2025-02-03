@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blue Lam Graduation Cruise - Memory</title>
   <link rel="stylesheet" href="../styles/styles.css">
-   <link rel="stylesheet" href="../styles/glitch.css">
    <link rel="stylesheet" href="memory.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
 </head>
@@ -31,6 +30,11 @@
     </section>
   <div class="container" id="memories-container">
     <!-- 메모리 조각이 여기에 동적으로 삽입. -->
+  
+    <div class="audio-controls">
+      <button id="wave-sound-play" class="media-btn">⏵</button>
+      <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="100">
+    </div>
     <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
@@ -164,7 +168,8 @@ function initializeMemories() {
 
 document.addEventListener('DOMContentLoaded', initializeMemories);
   </script>
-  <script src="../script/status-config.js"></script>
-  <script src="../script/script.js"></script>
+  <script src="script/status-config.js"></script>
+  <script src="../script/audio.js"></script>
+  <script src="script/script.js"></script>
 </body>
 </html>

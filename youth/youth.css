@@ -1,11 +1,11 @@
 /* youth.css */
 @keyframes snowfall {
   0% {
-    transform: translateY(-10%); /* 화면 위에서 시작 */
+    transform: translateY(-10%);
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh); /* 화면 아래로 이동 */
+    transform: translateY(100vh);
     opacity: 0.5;
   }
 }
@@ -22,35 +22,36 @@ body {
 }
 
 .winter-snow {
-  position: fixed; /* 화면에 고정 */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* 인터랙션 차단 */
+  pointer-events: none;
   z-index: 1;
 }
+
 h1 {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   margin: 0.5rem 0;
 }
 
 .subtitle {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   opacity: 0.8;
 }
+
 .snowflake {
   position: absolute;
-  top: -10%; /* 화면 위에서 시작 */
+  top: -10%;
   width: 8px;
   height: 8px;
-  background: rgba(255, 255, 255, 0.8); /* 밝은 흰색 눈송이 */
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* 부드러운 빛남 */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   animation: snowfall linear infinite;
 }
 
-/* 각 눈송이의 랜덤 속성 설정 */
 .snowflake:nth-child(odd) {
   animation-duration: 8s;
 }
@@ -59,23 +60,21 @@ h1 {
   animation-duration: 12s;
 }
 
-    /* Modified navbar to be static */
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(26, 42, 58, 0.9);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(26, 42, 58, 0.9);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
 
-    /* Image glitch effect */
-    @keyframes imageGlitch {
+@keyframes imageGlitch {
   0% {
     transform: translate(-50%, -50%);
     opacity: 0.3;
@@ -101,50 +100,50 @@ h1 {
     opacity: 0.3;
   }
 }
+
 .school-name {
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
   margin-bottom: 1rem;
 }
 
 .school-image-overlay {
   position: absolute;
-  top: 20%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 200px;
+  width: 90%;
+  max-width: 240px;
   opacity: 0.3;
-  z-index: 0; /* Changed from 1 to 0 to move behind */
+  z-index: 0;
   filter: grayscale(80%) brightness(0.4);
   transition: opacity 0.2s ease;
 }
 
-    .school-image-overlay.glitching {
+.school-image-overlay.glitching {
   animation: imageGlitch 0.3s steps(3) forwards;
 }
 
-    /* Rest of the previous styles remain the same */
-    .nav-logo {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
+.nav-logo {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
 
-    .nav-controls {
-      display: flex;
-      gap: 2rem;
-    }
+.nav-controls {
+  display: flex;
+  gap: 2rem;
+}
 
 .container {
   position: relative;
-  padding-top: 60px; /* Space for navbar */
+  padding-top: 80px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem; /* Adds consistent spacing between sections */
+  gap: 2rem;
 }
 
 .hero-section {
@@ -154,6 +153,7 @@ h1 {
   position: relative;
   z-index: 2;
 }
+
 .info-section {
   width: 90%;
   max-width: 1200px;
@@ -183,23 +183,15 @@ h1 {
 
 @media (max-width: 768px) {
   .container {
-    padding-top: 40px;
+    padding-top: 60px;
   }
-  
+
   .info-section {
     grid-template-columns: 1fr;
   }
-  
+
   .system-status {
     width: 95%;
-  }
-  
-  .school-name {
-    font-size: 1.2rem;
-  }
-  
-  h1 {
-    font-size: 2rem;
   }
 }
 
@@ -216,4 +208,16 @@ h1 {
   background: linear-gradient(90deg, #4a90e2, #63b3ed);
   width: 75%;
   transition: width 0.3s ease;
+}
+
+.loading {
+  color: #fff;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }

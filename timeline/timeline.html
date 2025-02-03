@@ -6,7 +6,6 @@
   <meta name="description" content="Blue Lam Graduation Cruise Timeline - Important project milestones from 2025.01.03 to 2025.02.02">
   <title>Blue Lam Graduation Cruise - Timeline</title>
   <link rel="stylesheet" href="../styles/styles.css">
-  <link rel="stylesheet" href="../styles/glitch.css">
   <link rel="stylesheet" href="timeline.css">
    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
 </head>
@@ -120,14 +119,31 @@
     <a href="#finale" class="side-nav-item" data-section="finale">최종 단계</a>
   </nav>
 
+  <div class="audio-controls">
+    <button id="wave-sound-play" class="media-btn">⏵</button>
+    <div class="controls-group">
+        <div class="progress-bar" id="progress-bar">
+            <div id="progress-bar-inner" class="progress-bar-inner"></div>
+            <div id="progress-bar-thumb" class="progress-bar-thumb"></div>
+        </div>
+        <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="100">
+    </div>
+</div>
+
   <div class="waves">
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
 
-<script src="../script/script.js"></script>
 <script src="../script/status-config.js"></script>
+  <script src="../script/audio.js"></script>
+  <script src="../script/script.js"></script>
 <script src="timeline.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      playWaveSound();
+  });
+</script>
 </body>
 </html>
