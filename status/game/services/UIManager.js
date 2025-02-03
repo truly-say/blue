@@ -165,28 +165,21 @@ export class UIManager {
   }
 
   handleInteraction(interactionId, event) {
-    // 이벤트 전파 중지
+    // 이벤트 중복 방지
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
-
+  
     const currentLocation = this.getCurrentLocation();
     if (!currentLocation) return;
-
+  
     const interaction = currentLocation.interactions.find(i => i.name === interactionId);
     if (!interaction) return;
-
-    // 이미 수행된 상호작용인지 확인
-    if (interaction.performed) {
-      this.messageSystem.showMessage('이미 수행한 상호작용입니다.', 'warning');
-      return;
-    }
-
+  
     const result = this.gameState.handleInteraction(interaction);
+    
     if (result.success) {
-      // 상호작용을 수행했다고 표시
-      interaction.performed = true;
       this.messageSystem.showMessage(result.message, 'success');
       if (result.givesItem) {
         this.messageSystem.showMessage(`${result.givesItem}을(를) 획득했습니다.`, 'success');
@@ -196,6 +189,24 @@ export class UIManager {
       this.messageSystem.showMessage(result.message, 'warning');
     }
   }
+  
+    clearMessages() {
+      this.messageHistory = [];
+      const container = document.querySelector('.messages-container');
+      if (container) {
+        container.innerHTML = '';
+      }
+    }
+  
+    // 메시지 로그가 하나만 생성되도록 보장
+    initializeContainer() {
+      // 기존 메시지 로그 제거
+      const existingLogs = document.querySelectorAll('.message-log-container');
+      existingLogs.forEach(log => log.remove());
+  
+      this.createMessageContainer();
+    }
+  
 
   getCurrentLocation() {
     if (!this.gameState.selectedFloor || !this.gameState.selectedLocation) return null;
