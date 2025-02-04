@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateDateTime() {
         const now = new Date();
-        const departureDate = new Date('2025-02-28T:00:00');
+        const departureDate = new Date('2025-02-28T00:00:00');
         const diff = departureDate - now;
     
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         userInput += event.key.toLowerCase();
 
         if (userInput.endsWith("lam")) {
-            window.location.href = "youth/youth.html";
+            window.location.href = "yout/youth.html";
         }
 
         if (userInput.length > 10) {

@@ -88,9 +88,14 @@ export class UIManager {
   }
 
   initializeUI() {
-    this.renderFloors();
-    this.renderInventory();
-    this.messageSystem.showMessage('게임을 시작합니다.', 'info');
+    // 초기 층 선택
+    this.gameState.selectFloor(this.gameState.selectedFloor);
+    
+    // UI 업데이트
+    this.updateUI();
+    
+    // 시작 메시지 표시
+    this.gameState.messageSystem.showMessage('크루즈 조사를 시작합니다.', 'info');
   }
 
   renderFloors() {
@@ -118,14 +123,27 @@ export class UIManager {
     const container = document.getElementById('locations-container');
     if (!container || !this.gameState.selectedFloor) return;
 
-    const floor = floorData[this.gameState.selectedFloor];
+    const floor = window.gameData[this.gameState.selectedFloor];
     if (!floor) return;
 
-    container.innerHTML = Object.entries(floor.locations)
+    // 현재 층 정보 업데이트
+    const floorTitle = document.querySelector('.floor-title');
+    const floorDescription = document.querySelector('.floor-description');
+    
+    if (floorTitle && floorDescription) {
+      floorTitle.textContent = `${this.gameState.selectedFloor}층 - ${floor.name}`;
+      floorDescription.textContent = floor.description;
+    }
+
+    // 층 이동 선택지 추가
+    const stairsHtml = this.renderStairsOptions();
+
+    // 장소 목록 렌더링
+    container.innerHTML = stairsHtml + Object.entries(floor.locations)
       .map(([id, location]) => {
-        const isUnlocked = location.isLocked ? this.gameState.unlockedLocations.has(id) : true;
+        const isUnlocked = !location.isLocked || this.gameState.unlockedLocations.has(id);
         const isSelected = this.gameState.selectedLocation === id;
-        const isStairs = location.type === LocationType.STAIRS;
+        const isStairs = location.type === window.gameTypes.LocationType.STAIRS;
         
         return `
           <div class="location-card ${isSelected ? 'selected' : ''} ${isStairs ? 'stairs' : ''} ${isUnlocked ? '' : 'locked'}"
@@ -133,16 +151,43 @@ export class UIManager {
                data-id="${id}">
             <h4>${location.name}</h4>
             <p>${location.description}</p>
-            ${isUnlocked && isSelected ? this.renderInteractionsHTML(location) : ''}
+            ${isUnlocked && isSelected ? this.renderInteractionsList(location) : ''}
           </div>
         `;
       })
       .join('');
   }
 
+  renderStairsOptions() {
+    const currentFloor = parseInt(this.gameState.selectedFloor);
+    const possibleFloors = Object.keys(window.gameData).map(Number);
+    const accessibleFloors = possibleFloors.filter(floor => 
+      this.gameState.unlockedFloors.includes(floor.toString()));
 
+    const stairsHtml = [];
+    
+    if (accessibleFloors.includes(currentFloor + 1)) {
+      stairsHtml.push(`
+        <div class="location-card stairs" data-action="select-floor" data-id="${currentFloor + 1}">
+          <h4>위층으로</h4>
+          <p>${currentFloor + 1}층으로 이동할 수 있습니다.</p>
+        </div>
+      `);
+    }
 
-  renderInteractionsHTML(location) {
+    if (accessibleFloors.includes(currentFloor - 1)) {
+      stairsHtml.push(`
+        <div class="location-card stairs" data-action="select-floor" data-id="${currentFloor - 1}">
+          <h4>아래층으로</h4>
+          <p>${currentFloor - 1}층으로 이동할 수 있습니다.</p>
+        </div>
+      `);
+    }
+
+    return stairsHtml.join('');
+  }
+
+  renderInteractionsList(location) {
     if (!location.interactions) return '';
     
     return `
@@ -151,15 +196,14 @@ export class UIManager {
           const interactionId = `${this.gameState.selectedFloor}-${this.gameState.selectedLocation}-${interaction.name}`;
           const isCompleted = this.gameState.completedInteractions.has(interactionId);
           const canInteract = !isCompleted && (!interaction.requiresItem || 
-            this.gameState.inventory.includes(interaction.requiresItem));
+            this.gameState.hasItem(interaction.requiresItem));
           
           return `
-            <button class="interaction-button ${isCompleted ? 'completed' : ''} ${canInteract ? '' : 'disabled'}"
+            <button class="interaction-button ${isCompleted ? 'completed' : ''}"
                     data-action="perform-interaction"
                     data-id="${interaction.name}"
                     ${canInteract ? '' : 'disabled'}>
               ${interaction.name}
-              ${isCompleted ? ' (완료)' : ''}
             </button>
           `;
         }).join('')}
@@ -213,7 +257,8 @@ export class UIManager {
 
     getCurrentLocation() {
       if (!this.gameState.selectedFloor || !this.gameState.selectedLocation) return null;
-      return floorData[this.gameState.selectedFloor]?.locations[this.gameState.selectedLocation];
+      const floorData = window.gameData?.[this.gameState.selectedFloor];
+      return floorData?.locations?.[this.gameState.selectedLocation];
     }
 
 
@@ -242,53 +287,85 @@ export class UIManager {
       .join('');
   }
 
+  // services/UIManager.js에 추가
   setupEventListeners() {
     // 클릭 이벤트 위임
     document.addEventListener('click', (e) => {
       const target = e.target.closest('[data-action]');
-      if (!target) return;
-
-      const action = target.dataset.action;
-      const id = target.dataset.id;
-
-      switch (action) {
-        case 'select-floor':
-          this.handleFloorSelection(id);
-          break;
-        case 'select-location':
-          this.handleLocationSelection(id);
-          break;
-        case 'perform-interaction':
-          this.handleInteraction(id);
-          break;
-        case 'use-item':
-          const itemIndex = parseInt(target.dataset.index);
-          this.handleItemUse(itemIndex);
-          break;
+      if (target) {
+        const action = target.dataset.action;
+        const id = target.dataset.id;
+  
+        switch (action) {
+          case 'select-floor':
+            this.handleFloorSelection(id);
+            break;
+          case 'select-location':
+            this.handleLocationSelection(id);
+            break;
+          case 'perform-interaction':
+            this.handleInteraction(id);
+            break;
+          case 'use-item':
+            const itemIndex = parseInt(target.dataset.index);
+            this.handleItemUse(itemIndex);
+            break;
+        }
+      }
+  
+      // 인벤토리 아이템 클릭 처리
+      const inventoryItem = e.target.closest('.inventory-item');
+      if (inventoryItem && this.gameState.itemModal) {
+        const index = parseInt(inventoryItem.dataset.index);
+        const item = this.gameState.inventory[index];
+        if (item) {
+          this.gameState.itemModal.showModal(item, index);
+        }
       }
     });
-
-    // 저장 버튼 
+  
+    // 저장 버튼 이벤트
     const saveButton = document.getElementById('saveGame');
     if (saveButton) {
       saveButton.addEventListener('click', () => {
         const result = this.gameState.saveGame();
-        this.messageSystem.showMessage(result.message, result.success ? 'success' : 'error');
+        this.gameState.messageSystem.showMessage(result.message, result.success ? 'success' : 'error');
       });
     }
-
-    // 초기화 버튼
+  
+    // 초기화 버튼 이벤트
     const resetButton = document.getElementById('resetGame');
     if (resetButton) {
       resetButton.addEventListener('click', () => {
         if (confirm('게임을 초기화하시겠습니까? 모든 진행상황이 삭제됩니다.')) {
           const result = this.gameState.resetGame();
-          this.messageSystem.showMessage(result.message, 'info');
+          this.gameState.messageSystem.showMessage(result.message, 'info');
           this.updateUI();
         }
       });
     }
   }
+
+renderInventory() {
+  const container = document.getElementById('inventory-list');
+  if (!container) return;
+
+  if (this.gameState.inventory.length === 0) {
+    container.innerHTML = '<p class="empty-inventory">인벤토리가 비어있습니다.</p>';
+    return;
+  }
+
+  container.innerHTML = this.gameState.inventory
+    .map((item, index) => `
+      <div class="inventory-item" data-index="${index}">
+        <span class="item-name">${item}</span>
+        <div class="item-icons">
+          <span class="info-icon">ℹ️</span>
+        </div>
+      </div>
+    `)
+    .join('');
+}
 
   handleClick(e) {
     const target = e.target.closest('[data-action]');
@@ -330,20 +407,22 @@ export class UIManager {
     }
   }
 
-  handleInteraction(interactionId) {
+  async handleInteraction(interactionId) {
     const location = this.getCurrentLocation();
     if (!location) return;
-
+  
     const interaction = location.interactions.find(i => i.name === interactionId);
     if (!interaction) return;
-
-    const result = this.gameState.handleInteraction(interaction);
-    this.messageSystem.showMessage(result.message, result.success ? 'success' : 'warning');
+  
+    const result = await this.gameState.handleInteraction(interaction);
+    if (result.message) {
+      this.gameState.messageSystem.showMessage(result.message, result.success ? 'success' : 'warning');
+    }
+    
     if (result.success) {
       this.updateUI();
     }
   }
-
   handleItemUse(itemIndex) {
     const item = this.gameState.inventory[itemIndex];
     if (!item) return;

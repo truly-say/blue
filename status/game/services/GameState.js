@@ -1,4 +1,7 @@
 // services/GameState.js
+import { ItemModal } from '../components/ItemModal.js';
+import { ChoiceManager } from './ChoiceManager.js';
+import { UnlockManager } from './UnlockManager.js';
 import { floorData } from '../constants/cruiseData.js';
 
 export class GameState {
@@ -17,6 +20,14 @@ export class GameState {
     this.unlockedFloors = ['7'];
     this.unlockedLocations = new Set(['restaurant', 'observatory']);
     this.completedInteractions = new Set();
+    this.unlockedSpecial = new Set();
+    this.interactionHistory = new Map();
+  }
+
+  initializeManagers() {
+    this.itemModal = new ItemModal(this);
+    this.choiceManager = new ChoiceManager(this);
+    this.unlockManager = new UnlockManager(this);
   }
 
   setMessageSystem(messageSystem) {
@@ -25,6 +36,10 @@ export class GameState {
 
   setUIManager(uiManager) {
     this.uiManager = uiManager;
+  }
+
+  hasItem(itemName) {
+    return this.inventory.includes(itemName);
   }
 
   loadSavedState() {
@@ -38,6 +53,10 @@ export class GameState {
         this.unlockedFloors = state.unlockedFloors || ['7'];
         this.unlockedLocations = new Set(state.unlockedLocations || ['restaurant', 'observatory']);
         this.completedInteractions = new Set(state.completedInteractions || []);
+        this.unlockedSpecial = new Set(state.unlockedSpecial || []);
+        if (state.interactionHistory) {
+          this.interactionHistory = new Map(state.interactionHistory);
+        }
       }
     } catch (error) {
       console.error('Failed to load saved state:', error);
@@ -52,7 +71,9 @@ export class GameState {
         inventory: this.inventory,
         unlockedFloors: this.unlockedFloors,
         unlockedLocations: Array.from(this.unlockedLocations),
-        completedInteractions: Array.from(this.completedInteractions)
+        completedInteractions: Array.from(this.completedInteractions),
+        unlockedSpecial: Array.from(this.unlockedSpecial),
+        interactionHistory: Array.from(this.interactionHistory)
       };
       localStorage.setItem('gameState', JSON.stringify(state));
       return { success: true, message: '게임이 저장되었습니다.' };
@@ -71,39 +92,6 @@ export class GameState {
     return { success: true, message: '게임이 초기화되었습니다.' };
   }
 
-  addItem(item) {
-    if (this.inventory.length >= this.maxInventorySize) {
-      if (this.messageSystem) {
-        this.messageSystem.showMessage('인벤토리가 가득 찼습니다.', 'warning');
-      }
-      return false;
-    }
-
-    this.inventory.push(item);
-    if (this.messageSystem) {
-      this.messageSystem.showMessage(`${item}을(를) 획득했습니다.`, 'success');
-    }
-    if (this.uiManager) {
-      this.uiManager.updateUI();
-    }
-    return true;
-  }
-
-  hasItem(itemName) {
-    return this.inventory.includes(itemName);
-  }
-
-  removeItem(index) {
-    if (index >= 0 && index < this.inventory.length) {
-      const removedItem = this.inventory.splice(index, 1)[0];
-      if (this.uiManager) {
-        this.uiManager.updateUI();
-      }
-      return removedItem;
-    }
-    return null;
-  }
-
   selectFloor(floorNumber) {
     const floor = floorData[floorNumber];
     if (!floor) {
@@ -111,22 +99,15 @@ export class GameState {
     }
 
     if (!this.unlockedFloors.includes(floorNumber)) {
-      const requiredItems = {
-        '6': ['모스 부호 해독'],
-        '5': ['작은 열쇠'],
-        '4': ['비상 열쇠'],
-        '3': ['미로 열쇠']
-      };
-
-      const required = requiredItems[floorNumber];
-      if (required && !required.every(item => this.inventory.includes(item))) {
-        return {
-          success: false,
-          message: `이 층은 아직 접근할 수 없습니다. ${required.join(', ')}이(가) 필요합니다.`
-        };
+      if (this.unlockManager) {
+        if (!this.unlockManager.canUnlock('floor', floorNumber)) {
+          return {
+            success: false,
+            message: this.unlockManager.getUnlockRequirements('floor', floorNumber)
+          };
+        }
+        this.unlockedFloors.push(floorNumber);
       }
-
-      this.unlockedFloors.push(floorNumber);
     }
 
     this.selectedFloor = floorNumber;
@@ -135,7 +116,12 @@ export class GameState {
     return { success: true, message: `${floorNumber}층으로 이동했습니다.` };
   }
 
+
   selectLocation(locationId) {
+    if (!this.selectedFloor) {
+      return { success: false, message: '층을 먼저 선택해주세요.' };
+    }
+
     const floor = floorData[this.selectedFloor];
     if (!floor) {
       return { success: false, message: '잘못된 층입니다.' };
@@ -159,72 +145,89 @@ export class GameState {
     this.selectedLocation = locationId;
     return { success: true, message: `${location.name}에 도착했습니다.` };
   }
-
-  // GameState.js의 handleInteraction 메서드 수정
-handleInteraction(interaction) {
-  if (!interaction) {
-    return { success: false, message: '잘못된 상호작용입니다.' };
-  }
-
-  const interactionId = `${this.selectedFloor}-${this.selectedLocation}-${interaction.name}`;
   
-  if (this.completedInteractions.has(interactionId)) {
-    return { success: false, message: '더 이상 둘러볼 게 없는 모양이다.' };
-  }
-
-  if (interaction.requiresItem && !this.inventory.includes(interaction.requiresItem)) {
-    return {
-      success: false,
-      message: `${interaction.requiresItem}이(가) 필요합니다.`
-    };
-  }
-
-  // 층간 이동 처리
-  if (interaction.moveToFloor) {
-    this.selectedFloor = interaction.moveToFloor;
-    this.selectedLocation = null;
-    return {
-      success: true,
-      message: interaction.result,
-      moveToFloor: interaction.moveToFloor
-    };
-  }
-
-  if (interaction.givesItem && this.inventory.length >= this.maxInventorySize) {
-    return { success: false, message: '인벤토리가 가득 찼습니다.' };
-  }
-
-  if (interaction.givesItem) {
-    this.addItem(interaction.givesItem);
-  }
-
-  this.completedInteractions.add(interactionId);
-
-  return {
-    success: true,
-    message: interaction.result,
-    givesItem: interaction.givesItem
-  };
-}
-
-  useItem(itemName) {
-    const location = floorData[this.selectedFloor]?.locations[this.selectedLocation];
-    if (!location) {
-      return { success: false, message: '아이템을 사용할 수 없는 위치입니다.' };
+  async handleInteraction(interaction) {
+    if (!interaction) {
+      return { success: false, message: '잘못된 상호작용입니다.' };
     }
 
-    if (location.unlockRequirement === itemName) {
-      this.unlockedLocations.add(this.selectedLocation);
-      const itemIndex = this.inventory.indexOf(itemName);
-      if (itemIndex !== -1) {
-        this.inventory.splice(itemIndex, 1);
+    const interactionId = `${this.selectedFloor}-${this.selectedLocation}-${interaction.name}`;
+    const currentCount = this.interactionHistory.get(interactionId) || 0;
+    
+    if (this.completedInteractions.has(interactionId)) {
+      return { success: false, message: '더 이상 조사할 만한 게 없습니다.' };
+    }
+
+    if (interaction.requiresItem && !this.inventory.includes(interaction.requiresItem)) {
+      return {
+        success: false,
+        message: `${interaction.requiresItem}이(가) 필요합니다.`
+      };
+    }
+
+    // scripts 배열이 있는지 확인
+    if (interaction.scripts) {
+      // 현재 카운트에 해당하는 스크립트가 있는지 확인
+      if (currentCount < interaction.scripts.length) {
+        // 스크립트 메시지 반환
+        const message = interaction.scripts[currentCount];
+        this.interactionHistory.set(interactionId, currentCount + 1);
+
+        // 마지막 스크립트인 경우 선택지 또는 아이템 획득 처리
+        if (currentCount === interaction.scripts.length - 1) {
+          if (interaction.choices && interaction.choices[currentCount]) {
+            return await this.choiceManager.handleChoice(interaction.choices[currentCount]);
+          }
+          if (interaction.givesItem) {
+            const confirmed = await this.choiceManager.confirmItemAcquisition(interaction.givesItem);
+            if (confirmed) {
+              this.addItem(interaction.givesItem);
+            }
+          }
+          // 모든 스크립트를 봤으므로 완료 처리
+          this.completedInteractions.add(interactionId);
+        }
+
+        return { success: true, message };
       }
+    }
+
+    this.completedInteractions.add(interactionId);
+    return { success: false, message: '더 이상 조사할 만한 게 없습니다.' };
+  }
+
+  getCurrentLocation() {
+    if (!this.selectedFloor || !this.selectedLocation) return null;
+    return floorData[this.selectedFloor]?.locations[this.selectedLocation];
+  }
+
+  async addItem(item) {
+    if (this.inventory.length >= this.maxInventorySize) {
+      this.messageSystem.showMessage('인벤토리가 가득 찼습니다.', 'warning');
+      return false;
+    }
+
+    const confirmed = await this.choiceManager.confirmItemAcquisition(item);
+    if (!confirmed) {
+      return false;
+    }
+
+    this.inventory.push(item);
+    this.messageSystem.showMessage(`${item}을(를) 획득했습니다.`, 'success');
+    if (this.uiManager) {
+      this.uiManager.updateUI();
+    }
+    return true;
+  }
+
+  removeItem(index) {
+    if (index >= 0 && index < this.inventory.length) {
+      const removedItem = this.inventory.splice(index, 1)[0];
       if (this.uiManager) {
         this.uiManager.updateUI();
       }
-      return { success: true, message: `${itemName}을(를) 사용하여 잠금을 해제했습니다.` };
+      return removedItem;
     }
-
-    return { success: false, message: '여기서는 이 아이템을 사용할 수 없습니다.' };
+    return null;
   }
 }
