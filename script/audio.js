@@ -187,31 +187,48 @@ window.waveAudio.addEventListener("loadedmetadata", () => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+    const playBtn = document.getElementById('wave-sound-play');
+    const volumeSlider = document.getElementById('volume-slider');
     const progressBar = document.getElementById('progress-bar');
     const progressBarInner = document.getElementById('progress-bar-inner');
     const progressBarThumb = document.getElementById('progress-bar-thumb');
-    const controlsGroup = document.querySelector('.controls-group');
 
-    if (progressBar) {
-        progressBar.style.display = 'block';
-        progressBar.style.width = '100%';
-        progressBar.style.visibility = 'visible';
+    if (!window.waveAudio) {
+        window.waveAudio = new Audio('../파도소리.mp3');
+        window.waveAudio.loop = true;
     }
 
-    if (progressBarInner) {
-        progressBarInner.style.display = 'block';
-        progressBarInner.style.visibility = 'visible';
+    // 재생/일시정지 버튼
+    playBtn.addEventListener('click', function() {
+        if (window.waveAudio.paused) {
+            window.waveAudio.play();
+            playBtn.textContent = "⏸";
+            playBtn.classList.add('playing');
+        } else {
+            window.waveAudio.pause();
+            playBtn.textContent = "⏵";
+            playBtn.classList.remove('playing');
+        }
+    });
+
+    // 볼륨 조절
+    volumeSlider.addEventListener('input', function() {
+        window.waveAudio.volume = this.value / 100;
+    });
+
+    // 진행바 업데이트
+    function updateProgress() {
+        const progress = (window.waveAudio.currentTime / window.waveAudio.duration) * 100;
+        progressBarInner.style.width = `${progress}%`;
+        progressBarThumb.style.left = `${progress}%`;
     }
 
-    if (progressBarThumb) {
-        progressBarThumb.style.display = 'block';
-        progressBarThumb.style.visibility = 'visible';
-    }
+    window.waveAudio.addEventListener('timeupdate', updateProgress);
 
-    if (controlsGroup) {
-        controlsGroup.style.display = 'flex';
-        controlsGroup.style.width = '100%';
-    }
-
-    playWaveSound();
+    // 진행바 클릭
+    progressBar.addEventListener('click', function(e) {
+        const rect = progressBar.getBoundingClientRect();
+        const ratio = (e.clientX - rect.left) / rect.width;
+        window.waveAudio.currentTime = ratio * window.waveAudio.duration;
+    });
 });
