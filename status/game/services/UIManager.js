@@ -1,90 +1,90 @@
 // services/UIManager.js
-import { FloorCard } from '../components/FloorCard.js';
-import { LocationCard } from '../components/LocationCard.js';
-import { Inventory } from '../components/Inventory.js';
 import { MessageSystem } from './MessageSystem.js';
 import { floorData } from '../constants/cruiseData.js';
-import { GameMessages } from '../constants/messages.js';
+import { LocationType } from '../constants/gameTypes.js'; 
+
 
 export class UIManager {
   constructor(gameState) {
     this.gameState = gameState;
     this.messageSystem = new MessageSystem();
+    this.gameState.setMessageSystem(this.messageSystem);
+    
+    // DOM이 로드된 후 UI 초기화
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.setupUI());
+    } else {
+      this.setupUI();
+    }
+  }
+
+  setupUI() {
     this.createGameContainer();
-    this.initializeUI();
     this.setupEventListeners();
+    this.renderInitialState();
+  }
+  
+  renderInitialState() {
+    this.renderFloors();
+    this.renderLocations();
+    this.renderInventory();
+    this.messageSystem.showMessage('게임을 시작합니다.', 'info');
   }
 
   createGameContainer() {
-    const existingContainer = document.getElementById('game-container');
+    const existingContainer = document.querySelector('.game-container');
     if (existingContainer) {
       existingContainer.remove();
     }
 
     const container = document.createElement('div');
-    container.id = 'game-container';
     container.className = 'game-container';
-
+    
     container.innerHTML = `
       <div class="game-content">
-        <div id="floor-selection" class="floor-selection"></div>
+        <div class="current-floor">
+          <h2 class="floor-title"></h2>
+          <p class="floor-description"></p>
+        </div>
         <div id="locations-container" class="locations-container"></div>
       </div>
       <div class="game-sidebar">
-        <div id="message-container" class="message-container"></div>
-        <div class="inventory-panel">
+        <div class="message-log-container">
+          <div class="message-log-header">
+            <h3>메시지 로그</h3>
+            <button class="clear-log-button" data-action="clear-messages">지우기</button>
+          </div>
+          <div class="messages-container"></div>
+        </div>
+        <div id="inventory-panel" class="inventory-panel">
           <h3>인벤토리</h3>
           <div id="inventory-list" class="inventory-list"></div>
         </div>
         <div class="game-controls">
-          <button id="saveGame" class="save-button">게임 저장</button>
-          <button id="resetGame" class="reset-button">게임 초기화</button>
+          <button id="saveGame" class="save-button">저장하기</button>
+          <button id="resetGame" class="reset-button">초기화</button>
         </div>
       </div>
     `;
 
-
     document.body.appendChild(container);
+    
+    // 메시지 로그 컨테이너 참조 설정
+    const messagesContainer = container.querySelector('.messages-container');
+    if (this.messageSystem) {
+      this.messageSystem.setContainer(messagesContainer);
+    }
+  }
 
-    // 컨트롤 버튼 스타일 추가
-    const style = document.createElement('style');
-    style.textContent = `
-      .game-controls {
-        padding: 1rem;
-        margin-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      
-      .game-controls button {
-        width: 100%;
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 0.375rem;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.2s;
-        margin-bottom: 0.5rem;
-      }
-      
-      .save-button {
-        background-color:rgb(78, 122, 216);
-        color: white;
-      }
-      
-      .save-button:hover {
-        background-color: #1d4ed8;
-      }
-      
-      .reset-button {
-        background-color:rgb(78, 78, 78);
-        color: white;
-      }
-      
-      .reset-button:hover {
-        background-color:rgb(124, 124, 124);
-      }
-    `;
-    document.head.appendChild(style);
+  updateCurrentFloor() {
+    const floorTitle = document.querySelector('.floor-title');
+    const floorDescription = document.querySelector('.floor-description');
+    const currentFloor = floorData[this.gameState.selectedFloor];
+
+    if (floorTitle && floorDescription && currentFloor) {
+      floorTitle.textContent = `${this.gameState.selectedFloor}층 - ${currentFloor.name}`;
+      floorDescription.textContent = currentFloor.description;
+    }
   }
 
   initializeUI() {
@@ -94,99 +94,102 @@ export class UIManager {
   }
 
   renderFloors() {
-    const floorSelection = document.getElementById('floor-selection');
-    if (!floorSelection) return;
+    const container = document.getElementById('floor-selection');
+    if (!container) return;
 
-    floorSelection.innerHTML = '';
-    
-    Object.entries(floorData).forEach(([floorNumber, floor]) => {
-      const card = document.createElement('div');
-      card.className = 'floor-card';
-      card.dataset.action = 'select-floor';
-      card.dataset.id = floorNumber;
-      
-      card.innerHTML = `
-        <h3>${floorNumber}층 - ${floor.name}</h3>
-        <p>${floor.description}</p>
-      `;
-      
-      floorSelection.appendChild(card);
-    });
+    container.innerHTML = Object.entries(floorData)
+      .map(([number, floor]) => {
+        const isUnlocked = this.gameState.unlockedFloors.includes(number);
+        const isSelected = this.gameState.selectedFloor === number;
+        return `
+          <div class="floor-card ${isSelected ? 'selected' : ''} ${isUnlocked ? '' : 'locked'}"
+               data-action="select-floor"
+               data-id="${number}">
+            <h3>${number}층 - ${floor.name}</h3>
+            <p>${floor.description}</p>
+          </div>
+        `;
+      })
+      .join('');
   }
+
 
   renderLocations() {
-    const locationsContainer = document.getElementById('locations-container');
-    if (!locationsContainer || !this.gameState.selectedFloor) return;
+    const container = document.getElementById('locations-container');
+    if (!container || !this.gameState.selectedFloor) return;
 
-    locationsContainer.innerHTML = '';
-    const currentFloor = floorData[this.gameState.selectedFloor];
-    
-    Object.entries(currentFloor.locations).forEach(([locationId, location]) => {
-      const card = document.createElement('div');
-      card.className = 'location-card';
-      card.dataset.action = 'select-location';
-      card.dataset.id = locationId;
-      
-      card.innerHTML = `
-        <h4>${location.name}</h4>
-        <p>${location.description}</p>
-      `;
-      
-      locationsContainer.appendChild(card);
-    });
+    const floor = floorData[this.gameState.selectedFloor];
+    if (!floor) return;
+
+    container.innerHTML = Object.entries(floor.locations)
+      .map(([id, location]) => {
+        const isUnlocked = location.isLocked ? this.gameState.unlockedLocations.has(id) : true;
+        const isSelected = this.gameState.selectedLocation === id;
+        const isStairs = location.type === LocationType.STAIRS;
+        
+        return `
+          <div class="location-card ${isSelected ? 'selected' : ''} ${isStairs ? 'stairs' : ''} ${isUnlocked ? '' : 'locked'}"
+               data-action="select-location"
+               data-id="${id}">
+            <h4>${location.name}</h4>
+            <p>${location.description}</p>
+            ${isUnlocked && isSelected ? this.renderInteractionsHTML(location) : ''}
+          </div>
+        `;
+      })
+      .join('');
   }
 
-  renderInteractions(location) {
-    if (!location || !location.interactions) return;
+
+
+  renderInteractionsHTML(location) {
+    if (!location.interactions) return '';
     
-    const container = document.createElement('div');
-    container.className = 'interactions-container';
-    
-    location.interactions.forEach(interaction => {
-      const button = document.createElement('button');
-      button.className = 'interaction-button';
-      button.dataset.action = 'perform-interaction';
-      button.dataset.id = interaction.name;
-      button.textContent = interaction.name;
-      
-      container.appendChild(button);
-    });
-    
-    // 현재 선택된 위치 카드에 상호작용 추가
-    const locationCard = document.querySelector(`.location-card[data-id="${this.gameState.selectedLocation}"]`);
-    if (locationCard) {
-      // 기존 상호작용 컨테이너 제거
-      const existingContainer = locationCard.querySelector('.interactions-container');
-      if (existingContainer) {
-        existingContainer.remove();
-      }
-      locationCard.appendChild(container);
-    }
+    return `
+      <div class="interactions-list">
+        ${location.interactions.map(interaction => {
+          const interactionId = `${this.gameState.selectedFloor}-${this.gameState.selectedLocation}-${interaction.name}`;
+          const isCompleted = this.gameState.completedInteractions.has(interactionId);
+          const canInteract = !isCompleted && (!interaction.requiresItem || 
+            this.gameState.inventory.includes(interaction.requiresItem));
+          
+          return `
+            <button class="interaction-button ${isCompleted ? 'completed' : ''} ${canInteract ? '' : 'disabled'}"
+                    data-action="perform-interaction"
+                    data-id="${interaction.name}"
+                    ${canInteract ? '' : 'disabled'}>
+              ${interaction.name}
+              ${isCompleted ? ' (완료)' : ''}
+            </button>
+          `;
+        }).join('')}
+      </div>
+    `;
   }
 
-  handleInteraction(interactionId, event) {
-    // 이벤트 중복 방지
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  
-    const currentLocation = this.getCurrentLocation();
-    if (!currentLocation) return;
-  
-    const interaction = currentLocation.interactions.find(i => i.name === interactionId);
+  handleInteraction(interactionId) {
+    const location = this.getCurrentLocation();
+    if (!location) return;
+
+    const interaction = location.interactions.find(i => i.name === interactionId);
     if (!interaction) return;
-  
-    const result = this.gameState.handleInteraction(interaction);
-    
-    if (result.success) {
-      this.messageSystem.showMessage(result.message, 'success');
-      if (result.givesItem) {
-        this.messageSystem.showMessage(`${result.givesItem}을(를) 획득했습니다.`, 'success');
+
+    // 계단 이동 처리
+    if (interaction.moveToFloor) {
+      const result = this.gameState.selectFloor(interaction.moveToFloor);
+      this.messageSystem.showMessage(result.message, result.success ? 'success' : 'warning');
+      if (result.success) {
+        this.updateCurrentFloor();
+        this.updateUI();
       }
+      return;
+    }
+
+    // 일반 상호작용 처리
+    const result = this.gameState.handleInteraction(interaction);
+    this.messageSystem.showMessage(result.message, result.success ? 'success' : 'warning');
+    if (result.success) {
       this.updateUI();
-    } else {
-      this.messageSystem.showMessage(result.message, 'warning');
     }
   }
   
@@ -208,42 +211,39 @@ export class UIManager {
     }
   
 
-  getCurrentLocation() {
-    if (!this.gameState.selectedFloor || !this.gameState.selectedLocation) return null;
-    
-    const floor = floorData[this.gameState.selectedFloor];
-    if (!floor) return null;
+    getCurrentLocation() {
+      if (!this.gameState.selectedFloor || !this.gameState.selectedLocation) return null;
+      return floorData[this.gameState.selectedFloor]?.locations[this.gameState.selectedLocation];
+    }
 
-    return floor.locations[this.gameState.selectedLocation];
-  }
-
-  updateUI() {
-    this.renderFloors();
-    this.renderLocations();
-    this.renderInventory();
-  }
 
   renderInventory() {
-    const inventoryList = document.getElementById('inventory-list');
-    if (!inventoryList) return;
+    const container = document.getElementById('inventory-list');
+    if (!container) return;
 
-    inventoryList.innerHTML = '';
-    
     if (this.gameState.inventory.length === 0) {
-      const emptyMessage = document.createElement('p');
-      emptyMessage.textContent = '인벤토리가 비어있습니다.';
-      inventoryList.appendChild(emptyMessage);
-    } else {
-      this.gameState.inventory.forEach((item, index) => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'inventory-item';
-        itemElement.textContent = item;
-        inventoryList.appendChild(itemElement);
-      });
+      container.innerHTML = '<p class="empty-inventory">인벤토리가 비어있습니다.</p>';
+      return;
     }
+
+    container.innerHTML = this.gameState.inventory
+      .map((item, index) => `
+        <div class="inventory-item">
+          <span class="item-name">${item}</span>
+          <div class="item-buttons">
+            <button class="item-action-btn"
+                    data-action="use-item"
+                    data-index="${index}">
+              사용
+            </button>
+          </div>
+        </div>
+      `)
+      .join('');
   }
 
   setupEventListeners() {
+    // 클릭 이벤트 위임
     document.addEventListener('click', (e) => {
       const target = e.target.closest('[data-action]');
       if (!target) return;
@@ -251,78 +251,113 @@ export class UIManager {
       const action = target.dataset.action;
       const id = target.dataset.id;
 
-      // 이벤트 전파 중지
-      e.stopPropagation();
-
       switch (action) {
         case 'select-floor':
-          if (this.gameState.selectFloor(id)) {
-            this.messageSystem.showMessage(`${id}층으로 이동했습니다.`, 'info');
-            this.renderLocations();
-          }
+          this.handleFloorSelection(id);
           break;
-
         case 'select-location':
-          if (this.gameState.selectLocation(id)) {
-            const location = this.getCurrentLocation();
-            if (location) {
-              this.messageSystem.showMessage(`${location.name}에 도착했습니다.`, 'info');
-              this.renderInteractions(location);
-            }
-          }
+          this.handleLocationSelection(id);
           break;
-
         case 'perform-interaction':
           this.handleInteraction(id);
           break;
+        case 'use-item':
+          const itemIndex = parseInt(target.dataset.index);
+          this.handleItemUse(itemIndex);
+          break;
       }
     });
-    
-    document.addEventListener('click', (e) => {
-      if (e.target.matches('.drop-button')) {
-        e.preventDefault();
-        e.stopPropagation();
-        const index = parseInt(e.target.dataset.id);
-        this.gameState.dropItem(index);
-        this.renderInventory();
-      }
-    });
-     // 저장 버튼 이벤트 리스너
-     const saveButton = document.getElementById('saveGame');
-     if (saveButton) {
-       saveButton.addEventListener('click', () => {
-         const result = this.gameState.saveGame();
-         this.messageSystem.showMessage(result.message, result.success ? 'success' : 'error');
-       });
-     }
- 
-     // 초기화 버튼 이벤트 리스너
-     const resetButton = document.getElementById('resetGame');
-     if (resetButton) {
-       resetButton.addEventListener('click', () => {
-         if (confirm('정말로 게임을 초기화하시겠습니까? 모든 진행 상황이 삭제됩니다.')) {
-           const result = this.gameState.resetGame();
-           this.messageSystem.showMessage(result.message, 'info');
-           this.updateUI();
-         }
-       });
-     }
- 
-     // 게임 초기화 이벤트 리스너
-     this.gameState.on('gameReset', () => {
-       this.updateUI();
-     });
 
-    // 게임 초기화 이벤트 리스너
-    this.gameState.on('gameReset', () => {
+    // 저장 버튼 
+    const saveButton = document.getElementById('saveGame');
+    if (saveButton) {
+      saveButton.addEventListener('click', () => {
+        const result = this.gameState.saveGame();
+        this.messageSystem.showMessage(result.message, result.success ? 'success' : 'error');
+      });
+    }
+
+    // 초기화 버튼
+    const resetButton = document.getElementById('resetGame');
+    if (resetButton) {
+      resetButton.addEventListener('click', () => {
+        if (confirm('게임을 초기화하시겠습니까? 모든 진행상황이 삭제됩니다.')) {
+          const result = this.gameState.resetGame();
+          this.messageSystem.showMessage(result.message, 'info');
+          this.updateUI();
+        }
+      });
+    }
+  }
+
+  handleClick(e) {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+
+    const action = target.dataset.action;
+    const id = target.dataset.id;
+
+    switch (action) {
+      case 'select-floor':
+        this.handleFloorSelection(id);
+        break;
+      case 'select-location':
+        this.handleLocationSelection(id);
+        break;
+      case 'perform-interaction':
+        this.handleInteraction(id);
+        break;
+      case 'use-item':
+        const itemIndex = parseInt(target.dataset.index);
+        this.handleItemUse(itemIndex);
+        break;
+    }
+  }
+
+  handleFloorSelection(floorId) {
+    const result = this.gameState.selectFloor(floorId);
+    this.messageSystem.showMessage(result.message, result.success ? 'success' : 'warning');
+    if (result.success) {
       this.updateUI();
-    });
+    }
+  }
+
+  handleLocationSelection(locationId) {
+    const result = this.gameState.selectLocation(locationId);
+    this.messageSystem.showMessage(result.message, result.success ? 'success' : 'warning');
+    if (result.success) {
+      this.updateUI();
+    }
+  }
+
+  handleInteraction(interactionId) {
+    const location = this.getCurrentLocation();
+    if (!location) return;
+
+    const interaction = location.interactions.find(i => i.name === interactionId);
+    if (!interaction) return;
+
+    const result = this.gameState.handleInteraction(interaction);
+    this.messageSystem.showMessage(result.message, result.success ? 'success' : 'warning');
+    if (result.success) {
+      this.updateUI();
+    }
+  }
+
+  handleItemUse(itemIndex) {
+    const item = this.gameState.inventory[itemIndex];
+    if (!item) return;
+
+    const result = this.gameState.useItem(item);
+    this.messageSystem.showMessage(result.message, result.success ? 'success' : 'warning');
+    if (result.success) {
+      this.updateUI();
+    }
   }
 
   updateUI() {
-    this.renderFloors();
+    this.updateCurrentFloor();
     this.renderLocations();
     this.renderInventory();
-  
   }
 }

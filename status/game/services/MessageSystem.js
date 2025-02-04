@@ -1,16 +1,39 @@
 // services/MessageSystem.js
+import { floorData } from '../constants/cruiseData.js';
+
 export class MessageSystem {
   constructor() {
     this.messageHistory = [];
     this.maxMessages = 100;
-    this.initializeContainer();
+    this.messageContainer = null;
   }
 
   initializeContainer() {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.createMessageLog());
-    } else {
-      this.createMessageLog();
+    // 기존 메시지 로그 컨테이너 제거
+    const existingLogs = document.querySelectorAll('.message-log-container');
+    existingLogs.forEach(log => log.remove());
+
+    const container = document.createElement('div');
+    container.className = 'message-log-container';
+    
+    container.innerHTML = `
+      <div class="message-log-header">
+        <h3>메시지 로그</h3>
+        <button class="clear-log-button">지우기</button>
+      </div>
+      <div class="messages-container"></div>
+    `;
+
+    // 버튼에 이벤트 리스너 추가
+    const clearButton = container.querySelector('.clear-log-button');
+    clearButton.addEventListener('click', () => this.clearMessages());
+
+    this.messageContainer = container.querySelector('.messages-container');
+
+    // game-sidebar에 추가
+    const sidebar = document.querySelector('.game-sidebar');
+    if (sidebar) {
+      sidebar.insertBefore(container, sidebar.firstChild);
     }
   }
 
@@ -71,26 +94,36 @@ export class MessageSystem {
     }
   }
 
+  setContainer(container) {
+    this.messageContainer = container;
+    // 기존 메시지 히스토리 표시
+    this.messageHistory.forEach(msg => {
+      this.appendMessageElement(msg.message, msg.type);
+    });
+  }
+
   showMessage(message, type = 'info') {
     if (!message) return;
 
+    // 메시지 히스토리에 추가
     this.messageHistory.push({ message, type });
     if (this.messageHistory.length > this.maxMessages) {
       this.messageHistory.shift();
     }
 
-    if (this.messageContainer) {
-      const messageElement = document.createElement('div');
-      messageElement.className = `message-item ${type}`;
-      messageElement.textContent = message;
-      
-      this.messageContainer.appendChild(messageElement);
-      
-      // 자동 스크롤
-      if (this.messageContainer.dataset.autoScroll !== 'false') {
-        this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
-      }
-    }
+    // UI에 메시지 추가
+    this.appendMessageElement(message, type);
+  }
+
+  appendMessageElement(message, type) {
+    if (!this.messageContainer) return;
+
+    const messageElement = document.createElement('div');
+    messageElement.className = `message-item ${type}`;
+    messageElement.textContent = message;
+    
+    this.messageContainer.appendChild(messageElement);
+    this.messageContainer.scrollTop = this.messageContainer.scrollHeight;
   }
 
   clearMessages() {

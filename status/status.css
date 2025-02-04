@@ -13,16 +13,25 @@
 }
 
 .game-container {
-    width: 100%;
-    max-width: 1500px;
-    margin: 20px auto;  /* 상단 여백 추가 */
-    background: linear-gradient(135deg, rgba(0,0,50,0.9), rgba(10,10,30,0.95));
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 6px 30px rgba(0,255,255,0.3);
-    border: 2px solid var(--primary-color);
-    position: relative;  /* 위치 고정 */
-    z-index: 10;        /* waves 위에 표시되도록 */
+  position: relative;  /* fixed를 relative로 변경 */
+  width: 100%;
+  max-width: 1500px;
+  margin: 80px auto 20px;  /* 상단 마진 추가 */
+  background: linear-gradient(135deg, rgba(0,0,50,0.9), rgba(10,10,30,0.95));
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 6px 30px rgba(0,255,255,0.3);
+  border: 2px solid var(--primary-color);
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  z-index: 10;
+}
+
+body {
+  overflow: auto !important;  /* 스크롤 허용 */
+  height: auto;  /* 높이 제한 해제 */
+  min-height: 100vh;
 }
 
 .game-panels {
@@ -32,13 +41,11 @@
 }
 
 .floor-selection {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    padding: 15px;
-    max-height: 400px;
-    overflow-y: auto;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
   
 
 .floor-selection .floor-card {
@@ -82,8 +89,7 @@
 .locations-panel, 
 .interactions-panel, 
 .clues-panel, 
-.inventory-panel,
-.interaction-button {
+.inventory-panel {
     background-color: var(--panel-background);
     border: 1px solid var(--secondary-color);
     color: var(--text-color);
@@ -182,39 +188,24 @@
 }
 
 .interaction-button {
-  background: linear-gradient(to right, rgba(30, 41, 59, 0.9), rgba(40, 51, 69, 0.9));
-  color: #e0e0ff;
-  border: 1px solid rgba(161, 201, 232, 0.25);
-  padding: 0.75rem 1.25rem;
-  border-radius: 0.375rem;
+  background: rgba(78, 152, 240, 0.2);
+  color: #c5e8ff;
+  border: 1px solid rgba(78, 152, 240, 0.3);
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 10px;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  width: 100%;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: left;
+  transition: all 0.3s ease;
 }
 
-.interaction-button:hover {
-  background: linear-gradient(to right, rgba(55, 74, 97, 0.5), rgba(100, 105, 146, 0.5));
-  border-color: rgba(81, 149, 254, 0.3);
-  color: #e0e0ff;
+.interaction-button:hover:not(:disabled) {
+  background: rgba(78, 152, 240, 0.3);
+  border-color: #4e98f0;
 }
 
-.interaction-button:active {
-  transform: scale(0.99);
-  background: linear-gradient(to right, rgba(20, 31, 49, 0.9), rgba(30, 41, 59, 0.9));
-  box-shadow: 0 0 10px rgba(161, 201, 232, 0.1) inset;
-}
-
-.interaction-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(161, 201, 232, 0.3);
+.interaction-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .hidden {
@@ -244,45 +235,46 @@
   
   /* 메인 콘텐츠 영역 */
   .game-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    overflow-y: auto;
-    padding-bottom: 1rem;
+    background: rgba(14, 27, 43, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(78, 152, 240, 0.2);
   }
   
-  /* 사이드바 */
   .game-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    height: 100%;
+    gap: 20px;
+  }
+  
+  .message-log-container {
+    background: rgba(14, 27, 43, 0.8);
+    border: 1px solid rgba(78, 152, 240, 0.2);
+    border-radius: 8px;
+    padding: 15px;
   }
   
   /* 층 선택 카드 */
   .floor-card {
-    background-color: rgba(30, 41, 59, 0.9);
-    border: 1px solid #334155;
-    border-radius: 8px;
+    background: rgba(20, 40, 70, 0.8);
     padding: 15px;
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    border: 1px solid rgba(78, 152, 240, 0.2);
     cursor: pointer;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    transition: all 0.3s ease;
   }
   
   .floor-card:hover {
+    border-color: #4e98f0;
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: rgba(40, 51, 69, 0.9);
+    box-shadow: 0 4px 12px rgba(78, 152, 240, 0.2);
   }
   
   .floor-card.selected {
-    border-color: #60a5fa;
-    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
+    border-color: #4e98f0;
+    background: rgba(30, 50, 80, 0.8);
   }
+  
   
   .floor-card.locked {
     opacity: 0.7;
@@ -304,13 +296,25 @@
   
   /* 위치 카드 */
   .location-card {
-    background: rgba(30, 41, 59, 0.9);
-    border: 1px solid #334155;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
+    background: rgba(20, 40, 70, 0.8);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(78, 152, 240, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
   
+  .location-card:hover {
+    border-color: #4e98f0;
+    transform: translateY(-2px);
+  }
+  
+  .location-card.selected {
+    border-color: #4e98f0;
+    background: rgba(30, 50, 80, 0.8);
+  }
+
   .location-card.locked {
     opacity: 0.7;
     cursor: not-allowed;
@@ -318,14 +322,43 @@
   
   /* 인벤토리 패널 */
   .inventory-panel {
-    background: rgba(30, 41, 59, 0.9);
-    border: 1px solid #334155;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    height: 300px;
-    overflow-y: auto;
+    background: rgba(14, 27, 43, 0.8);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(78, 152, 240, 0.2);
   }
   
+  .inventory-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: rgba(30, 50, 80, 0.8);
+    border: 1px solid rgba(78, 152, 240, 0.2);
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  
+  .item-action-btn,
+  .save-button,
+  .reset-button {
+    padding: 6px 12px;
+    border: 1px solid rgba(78, 152, 240, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #c5e8ff;
+  }
+  
+  .item-action-btn {
+    background: rgba(78, 152, 240, 0.2);
+  }
+  
+  .item-action-btn:hover {
+    background: rgba(78, 152, 240, 0.3);
+    border-color: #4e98f0;
+  }
+
   /* 메시지 로그 */
   .message-log {
     background: rgba(30, 41, 59, 0.9);
@@ -429,3 +462,183 @@
   .menu-content button:hover {
     background: #2563eb;
   }
+
+.message-log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.message-log-header h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.clear-log-button {
+  background: rgba(255, 74, 74, 0.2);
+  color: #fff;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.clear-log-button:hover {
+  background: rgba(255, 74, 74, 0.3);
+}
+
+/* 메시지 컨테이너 */
+.messages-container {
+  height: 200px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: rgba(78, 152, 240, 0.1);
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: rgba(78, 152, 240, 0.2);
+  border-radius: 3px;
+}
+
+
+/* 메시지 아이템 */
+.message-item {
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background: rgba(30, 50, 80, 0.8);
+  border-left: 3px solid;
+}
+
+.message-item.info { border-color: #4e98f0; }
+.message-item.success { border-color: #4ef0a5; }
+.message-item.warning { border-color: #f0c44e; }
+.message-item.error { border-color: #f04e4e; }
+
+.message-item:last-child {
+  margin-bottom: 0;
+}
+
+/* 버튼 스타일 */
+.item-action-btn,
+.save-button,
+.reset-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.item-action-btn {
+  background: rgba(74, 255, 255, 0.2);
+  color: #fff;
+}
+
+.item-action-btn:hover {
+  background: rgba(74, 255, 255, 0.3);
+}
+
+.save-button {
+  background: rgba(78, 152, 240, 0.2);
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.save-button:hover {
+  background: rgba(78, 152, 240, 0.3);
+  border-color: #4e98f0;
+}
+
+.reset-button {
+  background: rgba(240, 78, 78, 0.2);
+  width: 100%;
+}
+
+.reset-button:hover {
+  background: rgba(240, 78, 78, 0.3);
+  border-color: #f04e4e;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+  .message-log-container {
+    margin-bottom: 15px;
+  }
+  
+  .messages-container {
+    height: 150px;
+  }
+}
+
+/* 현재 층 표시 */
+.current-floor {
+  background: rgba(0, 41, 83, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.floor-title {
+  color: #4affff;
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+}
+
+.floor-description {
+  color: #fff;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* 계단 카드 특별 스타일 */
+.location-card.stairs {
+  background: rgba(74, 255, 255, 0.1);
+  border: 1px solid rgba(74, 255, 255, 0.2);
+}
+
+.location-card.stairs:hover {
+  background: rgba(74, 255, 255, 0.15);
+  transform: translateY(-3px);
+}
+
+.location-card.stairs h4 {
+  color: #4affff;
+}
+
+/* 잠긴 계단 */
+.location-card.stairs.locked {
+  background: rgba(255, 74, 74, 0.1);
+  border: 1px solid rgba(255, 74, 74, 0.2);
+}
+
+.location-card.stairs.locked h4 {
+  color: #ff4a4a;
+}

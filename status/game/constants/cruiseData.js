@@ -1,20 +1,10 @@
 // constants/cruiseData.js
 import { LocationType } from './gameTypes.js';
 
-// 층별 잠금해제 조건
-export const floorUnlockConditions = {
-  '7': null,
-  '6': (inventory) => true, // 처음부터 열려있음
-  '5': (inventory) => inventory.includes('작은 열쇠'),
-  '4': (inventory) => inventory.includes('비상 열쇠'),
-  '3': (inventory) => inventory.includes('미로 열쇠')
-};
-
 export const floorData = {
   '7': {
     name: '최상층',
     description: '크루즈의 최상층. 전망과 식사를 즐길 수 있는 공간.',
-    unlockCondition: floorUnlockConditions['7'],
     locations: {
       restaurant: {
         name: '레스토랑',
@@ -28,13 +18,6 @@ export const floorData = {
             result: '테이블 위에 수상한 메모가 있다.',
             requiresItem: null,
             givesItem: '수상한 메모'
-          },
-          {
-            name: '주방 살펴보기',
-            description: '주방 안을 살펴본다.',
-            result: '주방에서 이상한 영수증을 발견했다.',
-            requiresItem: null,
-            givesItem: '수상한 영수증'
           }
         ]
       },
@@ -52,14 +35,62 @@ export const floorData = {
             givesItem: '모스 부호 기록'
           }
         ]
+      },
+      stairs_down: {
+        name: '계단 (아래층으로)',
+        type: LocationType.STAIRS,
+        description: '6층으로 내려가는 계단.',
+        isLocked: false,
+        targetFloor: '6',
+        interactions: [
+          {
+            name: '6층으로 내려가기',
+            description: '계단을 통해 6층으로 이동한다.',
+            result: '계단을 내려가 6층에 도착했다.',
+            requiresItem: null,
+            moveToFloor: '6'
+          }
+        ]
       }
     }
   },
   '6': {
     name: '객실층',
-    description: '승객들의 객실이 있는 층. 일부 객실은 잠겨있다.',
-    unlockCondition: floorUnlockConditions['6'],
+    description: '승객들의 객실이 있는 층.',
     locations: {
+      stairs_up: {
+        name: '계단 (위층으로)',
+        type: LocationType.STAIRS,
+        description: '7층으로 올라가는 계단.',
+        isLocked: false,
+        targetFloor: '7',
+        interactions: [
+          {
+            name: '7층으로 올라가기',
+            description: '계단을 통해 7층으로 이동한다.',
+            result: '계단을 올라가 7층에 도착했다.',
+            requiresItem: null,
+            moveToFloor: '7'
+          }
+        ]
+      },
+      stairs_down: {
+        name: '계단 (아래층으로)',
+        type: LocationType.STAIRS,
+        description: '5층으로 내려가는 계단.',
+        isLocked: false,
+        requiresItem: '작은 열쇠',
+        targetFloor: '5',
+        interactions: [
+          {
+            name: '5층으로 내려가기',
+            description: '계단을 통해 5층으로 이동한다.',
+            result: '계단을 내려가 5층에 도착했다.',
+            requiresItem: '작은 열쇠',
+            moveToFloor: '5'
+          }
+        ]
+      },
       corridor: {
         name: '복도',
         type: LocationType.ROOM,
@@ -93,7 +124,7 @@ export const floorData = {
       }
     }
   }
+  // 추가 층들도 같은 형식으로 구성...
 };
 
-// Default export for convenience
 export default floorData;
