@@ -188,17 +188,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusManager = new StatusManager(STATUS_CONFIG);
     statusManager.startMessageLoop();
 
-    // 기존의 시간 업데이트 및 글리치 효과 함수들...
     function updateDateTime() {
         const now = new Date();
-        const departureDate = new Date('2025-02-28T00:00:00');
+        const departureDate = new Date('2025-02-02T00:00:00');
         const diff = departureDate - now;
-
+    
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
+    
         if (timeDisplay) {
             timeDisplay.textContent = new Intl.DateTimeFormat('ko-KR', {
                 year: 'numeric',
@@ -209,9 +208,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 hour12: false
             }).format(now);
         }
-
+    
         if (countdownDisplay) {
-            countdownDisplay.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            // 카운트다운이 0이 되면 버튼 표시
+            if (diff <= 0) {
+                const youthButton = document.getElementById('youth-button');
+                if (youthButton && youthButton.classList.contains('hidden')) {
+                    youthButton.classList.remove('hidden');
+                }
+                // 시간을 0으로 고정
+                countdownDisplay.textContent = `0d 00h 00m 00s`;
+            } else {
+                // 시간이 남았을 때는 2자리 숫자로 표시
+                const formatNumber = (num) => String(num).padStart(2, '0');
+                countdownDisplay.textContent = `${days}d ${formatNumber(hours)}h ${formatNumber(minutes)}m ${formatNumber(seconds)}s`;
+            }
         }
     }
 
