@@ -4,7 +4,7 @@ const STATUS_CONFIG = {
     getImagePath: function(imageName) {
         const isIndex = window.location.pathname.endsWith('index.html') || 
                        window.location.pathname.endsWith('/');
-        const prefix = isIndex ? '' : '../';
+        const prefix = isIndex ? 'assets/' : '../../assets/';
         return `${prefix}images/${imageName}`;
     },
 
