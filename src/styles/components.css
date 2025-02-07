@@ -15,28 +15,6 @@
   border-bottom: 1px solid rgba(150, 180, 200, 0.1);
 }
 
-.nav-logo {
-  position: relative;
-  text-decoration: none;
-  color: #7cacca;
-  transition: transform 0.3s ease, color 0.3s ease;
-  display: inline-block;
-}
-
-.nav-logo::before {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #7cacca;
-  transition: width 0.3s ease;
-}
-
-.nav-logo:hover::before {
-  width: 100%;
-}
 
 .audio-controls {
   position: fixed;

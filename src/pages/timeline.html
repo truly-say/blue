@@ -10,10 +10,9 @@
    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
 </head>
 <body>
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
-    <a href="../index.html" class="nav-logo glitch-text" data-text="BLUE LAM">BLUE LAM</a>
-    <div class="nav-controls">
-      <div class="nav-time" id="current-datetime" aria-live="polite"></div>
+  <nav class="navbar">
+    <a href="../index.html" class="nav-logo" data-text="BLUE LAM">BLUE LAM</a>
+<div class="nav-time" id="current-datetime" aria-live="polite"></div>
       <div class="nav-danger-level" id="danger-level" aria-live="polite">SYSTEM: UNSTABLE</div>
     </div>
   </nav>
@@ -21,7 +20,7 @@
   <main class="container">
     <section class="timeline-section">
       <header class="hero-section">
-        <h1 class="intermittent-glitch">TIMELINE</h1>
+        <h1>TIMELINE</h1>
         <div class="subtitle" role="doc-subtitle">2025.01.02 ~ 2025.02.02</div>
       </header>
 
@@ -136,10 +135,9 @@
     <div class="wave"></div>
   </div>
 
-<script src="../script/status-config.js"></script>
-  <script src="../script/audio.js"></script>
-  <script src="../script/script.js"></script>
-<script src="timeline.js"></script>
+  <script src="../src/scripts/status-config.js"></script>
+<script src="../src/scripts/audio.js"></script>
+<script src="../src/scripts/script.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
       playWaveSound();

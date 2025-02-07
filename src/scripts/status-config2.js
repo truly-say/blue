@@ -1,8 +1,9 @@
 // status-config2.js
 const STATUS_CONFIG = {
     getImagePath: function(imageName) {
-        return `../images/${imageName}`;
+        return `../../assets/images/${imageName}`;
     },
+
 
     get messages() {
         return {

@@ -1,5 +1,5 @@
 if (!window.waveAudio) {
-    window.waveAudio = new Audio('../파도소리.mp3');
+    window.waveAudio = new Audio('../assets/audio/파도소리.mp3');
     window.waveAudio.loop = true;
 }
 

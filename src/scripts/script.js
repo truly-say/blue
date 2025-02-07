@@ -15,12 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
             let page = card.getAttribute("data-page");
 
             if (page) {
-                let targetUrl = `${page}/${page}.html`;
+                // 정확한 경로로 수정
+                let targetUrl = `./src/pages/${page}.html`;
                 window.location.href = targetUrl;
             }
         });
     });
-
     // 상태 관리 클래스
     class StatusManager {
         constructor(config) {
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         userInput += event.key.toLowerCase();
 
         if (userInput.endsWith("lam")) {
-            window.location.href = "yout/youth.html";
+            window.location.href = "./src/pages/youth.html";
         }
 
         if (userInput.length > 10) {

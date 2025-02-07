@@ -1,3 +1,12 @@
+/* Updated glitch.css - Only nav.logo glitch effect */
+
+.nav-logo {
+  position: relative;
+  color: #7cacca;
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
 .nav-logo:hover::after {
   content: attr(data-text);
   position: absolute;
@@ -11,11 +20,6 @@
   animation: glitch-anim 3s infinite linear alternate-reverse;
 }
 
-@keyframes fade-glitch {
-  0% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
-}
- 
 @keyframes glitch-anim {
   0% { clip: rect(47px, 9999px, 54px, 0); }
   5% { clip: rect(29px, 9999px, 84px, 0); }
@@ -40,90 +44,8 @@
   100% { clip: rect(39px, 9999px, 67px, 0); }
 }
 
-/* Glitch class for elements */
-.glitch {
-  animation: glitch-anim 0.2s infinite;
-}
-
-/* 글리치 효과 베이스 스타일 */
-.glitch-text {
-  position: relative;
-  display: inline-block;
-  color: white;
-  font-weight: 600;
-  overflow: hidden;
-}
-
-/* Active 글리치 */
-.glitch-active {
-  animation: glitch-shake 0.4s ease-in-out, glitch-color 0.4s ease-in-out;
-  text-shadow: 
-    2px 0 #ff003c, 
-    -2px 0 #00d1ff, 
-    1px -1px #f2ff00, 
-    -1px 1px #00ff72;
-}
-
-/* 글리치 흔들림 효과 */
-@keyframes glitch-shake {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
-  10% {
-    transform: translate(-2px, -2px);
-  }
-  20% {
-    transform: translate(2px, -1px);
-  }
-  30% {
-    transform: translate(-1px, 1px);
-  }
-  40% {
-    transform: translate(3px, -3px);
-  }
-  50% {
-    transform: translate(-2px, 2px);
-  }
-  60% {
-    transform: translate(2px, -1px);
-  }
-  70% {
-    transform: translate(-1px, -3px);
-  }
-  80% {
-    transform: translate(1px, 2px);
-  }
-  90% {
-    transform: translate(-2px, -1px);
-  }
-}
-
-/* 색상 변화 */
-@keyframes glitch-color {
-  0% {
-    text-shadow: 1px 0 #ff003c, -1px 0 #00d1ff;
-  }
-  50% {
-    text-shadow: -2px 2px #f2ff00, 2px -2px #00ff72;
-  }
-  100% {
-    text-shadow: 2px -1px #00d1ff, -2px 1px #ff003c;
-  }
-}
- .original-text {
-            position: relative;
-            z-index: 3;
-            color: inherit;
-        }
-        .color-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            opacity: 0.7;
-            z-index: 1;
-        }
-       
-.info-card.glitch-active:hover {
-  animation: glitch-shake 0.5s ease-in-out, glitch-color 0.5s ease-in-out;
+/* Add hover effect for nav logo */
+.nav-logo:hover {
+  color: var(--frost-blue, #ffffff);
+  text-shadow: 0 0 10px rgba(74, 255, 255, 0.3);
 }
