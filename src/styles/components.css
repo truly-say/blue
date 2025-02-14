@@ -1,6 +1,6 @@
-/* Winter Cruise Suspense Theme */
-/* components.css */
-/* Navbar styles */
+/* components.css - 컴포넌트 스타일 정의 */
+
+/* 네비게이션 바 */
 .navbar {
   position: fixed;
   top: 0;
@@ -15,7 +15,7 @@
   border-bottom: 1px solid rgba(150, 180, 200, 0.1);
 }
 
-
+/* 오디오 컨트롤 */
 .audio-controls {
   position: fixed;
   bottom: 20px;
@@ -84,6 +84,7 @@
 .volume-slider {
   width: 100px;
   height: 4px;
+  appearance: none;
   -webkit-appearance: none;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
@@ -98,7 +99,7 @@
   cursor: pointer;
 }
 
-/* Info Cards */
+/* 정보 카드 섹션 */
 .info-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -135,6 +136,7 @@
   color: rgba(180, 200, 220, 0.9);
 }
 
+/* 카드 회전 효과 */
 .info-card:nth-child(odd) {
   transform: translateX(-10px) rotate(-2deg);
 }
@@ -148,225 +150,69 @@
   box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 40px rgba(70, 100, 130, 0.2);
 }
 
-/* Status and Timeline Sections */
+/* 상태 및 타임라인 섹션 */
 .status-section,
 .timeline-section {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    text-align: center;
-    color: #c0d0e0;
-    background: rgba(10, 30, 50, 0.6);
-    margin-bottom: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  color: #c0d0e0;
+  background: rgba(10, 30, 50, 0.6);
+  margin-bottom: 2rem;
 }
-  
+
 .status-section h2,
 .timeline-section h2 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    color: #7cacca;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #7cacca;
 }
 
 .status-content,
 .timeline-content {
-    max-width: 800px;
-    background: rgba(7, 20, 35, 0.7);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    border: 1px solid rgba(100, 130, 160, 0.2);
-}
-  
-/* Side Navigation */
-.side-nav {
-    background: rgba(7, 20, 35, 0.95);
-    color: #c0d0e0;
-}
-  
-.side-nav-toggle {
-    background: rgba(7, 20, 35, 0.95);
-    color: #7cacca;
-}
-  
-.side-nav-item {
-    color: #c0d0e0;
-    opacity: 0.7;
+  max-width: 800px;
+  background: rgba(7, 20, 35, 0.7);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  border: 1px solid rgba(100, 130, 160, 0.2);
 }
 
-.side-nav-item:hover {
-  opacity: 1;
-  background: rgba(70, 100, 130, 0.1);
+/* 타임라인 섹션 추가 스타일 */
+.timeline-section p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
-.side-nav-item.active {
-  opacity: 1;
-  background: rgba(70, 100, 130, 0.15);
-}
-
-.side-nav-item:focus {
-  outline: 2px solid #7cacca;
-}
-  
-  
-  /* 반응형 조정 */
-@media (max-width: 500px) {
-    .audio-controls {
-      padding: 14px;
-      gap: 14px;
-    }
-    
-    .media-btn {
-      width: 42px;
-      height: 42px;
-      font-size: 20px;
-    }
-    
-    .controls-group {
-      gap: 12px;
-    }
-    
-    .volume-slider {
-      width: 60px;
-    }
-  }
-
-  /* Hero section */
-  .hero-section {
-    text-align: center;
-    padding: 4rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .info-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    transform: perspective(1000px) rotateX(2deg) rotateY(-1deg);
-    gap: 2.5rem;
-    padding: 4rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-  
-.info-card {
-    background: rgba(10, 30, 50, 0.8);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    text-decoration: none;
-    color: #c0d0e0;
-    text-align: center;
-    z-index: 2;
-    cursor: pointer;
-    border: 1px solid rgba(100, 130, 160, 0.2);
-}
-  
-.info-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: #7cacca;
-}
-  
-.info-card p {
-    font-size: 1rem;
-    color: rgba(180, 200, 220, 0.9);
-}
-  
-.info-card:hover {
-    transform: translateY(-10px) rotate(0deg) scale(1.03);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 40px rgba(70, 100, 130, 0.2);
-}
-  
-  
-  /* Status section */
-  .status-section {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    text-align: center;
-    color: white;
-    background: rgba(0, 31, 63, 0.6);
-    margin-bottom: 2rem;
-  }
-  
-  .status-section h2 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    color: #4affff;
-  }
-  
-  .status-content {
-    max-width: 800px;
-    background: rgba(0, 15, 31, 0.7);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  }
-  
-  /* Timeline section */
-  .timeline-section {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    text-align: center;
-    color: white;
-    background: rgba(0, 31, 63, 0.6);
-    margin-bottom: 2rem;
-  }
-  
-  .timeline-section h2 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    color: #4affff;
-  }
-
-  .timeline-section p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  .timeline-content {
-    max-width: 800px;
-    background: rgba(0, 15, 31, 0.7);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  }
-  
-  /* Side Navigation Styles */
+/* 사이드 네비게이션 */
 .side-nav {
   position: fixed;
-  right: -180px;
+  right: -180px;  /* 유지 - 기본적으로 숨겨진 상태 */
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 15, 31, 0.95);
+  background: rgba(7, 20, 35, 0.95);
   padding: 1rem;
   border-radius: 10px 0 0 10px;
   z-index: 1000;
   transition: right 0.3s ease;
   width: min(200px, 90vw);
+  /* 그림자 효과 추가로 시각적 구분감 향상 */
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
 }
 
+/* 토글 버튼 유지 및 개선 */
 .side-nav-toggle {
   position: absolute;
   left: -40px;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 15, 31, 0.95);
-  color: #4affff;
+  background: rgba(7, 20, 35, 0.95);
+  color: var(--glitch-blue);
   padding: 10px;
   border-radius: 10px 0 0 10px;
   cursor: pointer;
@@ -377,8 +223,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* 토글 버튼에도 그림자 효과 추가 */
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
 }
 
+/* hover/focus 시 표시 동작 유지 */
 .side-nav:hover,
 .side-nav:focus-within {
   right: 0;
@@ -406,35 +255,112 @@
 }
 
 .side-nav-item:focus {
-  outline: 2px solid #4affff;
+  outline: 2px solid var(--glitch-blue);
   outline-offset: -2px;
 }
 
-/* Responsive Adjustments */
+/* 히어로 섹션 */
+.hero-section {
+  text-align: center;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 상태 표시 섹션 */
+.status-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  color: white;
+  background: rgba(0, 31, 63, 0.6);
+  margin-bottom: 2rem;
+}
+
+.status-section h2 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: var(--glitch-blue);
+}
+
+.status-content {
+  max-width: 800px;
+  background: rgba(0, 15, 31, 0.7);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* 모바일 반응형 스타일 */
 @media (max-width: 768px) {
   .side-nav {
-      bottom: 0;
-      top: auto;
-      left: 0;
-      right: 0;
-      transform: none;
-      width: 100%;
-      background: rgba(10, 20, 30, 0.95);
-      border-left: 1px solid rgba(74, 255, 255, 0.1);
-      border-radius: 10px 10px 0 0;
-      display: flex;
-      justify-content: space-around;
-      padding: 0.5rem;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    background: rgba(10, 20, 30, 0.95);
+    border-left: 1px solid rgba(74, 255, 255, 0.1);
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem;
   }
 
   .side-nav-item {
-      color: #4affff;
-      margin: 0;
-      padding: 0.5rem;
-      font-size: 0.9rem;
+    color: var(--glitch-blue);
+    margin: 0;
+    padding: 0.5rem;
+    font-size: 0.9rem;
   }
 
   .side-nav-toggle {
-      display: none;
+    display: none;
+  }
+  
+  .info-section {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+
+  .status-section h2,
+  .timeline-section h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .audio-controls {
+    padding: 14px;
+    gap: 14px;
+  }
+  
+  .media-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+  
+  .controls-group {
+    gap: 12px;
+  }
+  
+  .volume-slider {
+    width: 60px;
+  }
+  
+  .info-card {
+    padding: 1.5rem;
+  }
+  
+  .info-card h3 {
+    font-size: 1.3rem;
   }
 }

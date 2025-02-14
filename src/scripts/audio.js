@@ -1,40 +1,55 @@
-if (!window.waveAudio) {
-    window.waveAudio = new Audio('../assets/audio/파도소리.mp3');
-    window.waveAudio.loop = true;
+// audio.js - 파도 소리 오디오 플레이어 관리 시스템
+
+// DOM 요소 안전하게 가져오기 위한 유틸리티 함수
+function getElement(id) {
+    const element = document.getElementById(id);
+    if (!element) {
+        console.warn(`Element with id '${id}' not found`);
+    }
+    return element;
 }
 
-// 재생 상태 변수
+// 전역 오디오 객체가 없을 경우 초기화
+if (!window.waveAudio) {
+    window.waveAudio = new Audio('../assets/audio/파도소리.mp3');
+    window.waveAudio.loop = true; // 무한 반복 설정
+}
+
+// 세션 스토리지에서 재생 상태 복원 
 let isPlaying = sessionStorage.getItem("audioPlaying") === "true";
 
-// 진행 바 클릭 시 특정 시점으로 이동
-document.getElementById("progress-bar").addEventListener("click", function(e) {
-    const progressBar = document.getElementById("progress-bar");
-    const rect = progressBar.getBoundingClientRect();
-    
-    // 클릭 위치의 비율 계산
-    const percent = ((e.clientX - rect.left) / rect.width);
-    
-    // 오디오의 전체 재생 시간에서 해당 비율의 시점으로 이동
-    window.waveAudio.currentTime = percent * window.waveAudio.duration;
-    
-    // 진행 바 업데이트
-    updateProgressBar();
-});
+// 프로그레스바 클릭 이벤트 처리
+function initializeProgressBar() {
+    const progressBar = getElement("progress-bar");
+    if (progressBar) {
+        progressBar.addEventListener("click", function(e) {
+            const rect = progressBar.getBoundingClientRect();
+            // 클릭 위치의 상대적 비율 계산 (0~1)
+            const percent = ((e.clientX - rect.left) / rect.width);
+            // 계산된 비율로 오디오 재생 위치 이동
+            window.waveAudio.currentTime = percent * window.waveAudio.duration;
+            // UI 업데이트
+            updateProgressBar();
+        });
+    }
+}
 
-// 전역 오디오 객체 생성 및 관리
+// 오디오 관리자 객체 정의
 const AudioManager = {
+    // 초기화 메서드
     init() {
+        // 오디오 객체 없으면 생성
         if (!window.waveAudio) {
             window.waveAudio = new Audio('../파도소리.mp3');
             window.waveAudio.loop = true;
             
-            // 오디오 로드 완료 시 저장된 상태 복원
+            // 메타데이터 로드 완료 시 이전 상태 복원
             window.waveAudio.addEventListener('loadedmetadata', () => {
                 this.restoreAudioState();
             });
         }
         
-        // 페이지 언로드 직전에 현재 상태 저장
+        // 페이지 종료 시 현재 상태 저장
         window.addEventListener('beforeunload', () => {
             if (window.waveAudio) {
                 sessionStorage.setItem("audioTime", window.waveAudio.currentTime);
@@ -46,189 +61,170 @@ const AudioManager = {
         return window.waveAudio;
     },
 
+    // 이전 상태 복원 메서드
     restoreAudioState() {
+        // 세션 스토리지에서 저장된 값 로드
         const savedTime = parseFloat(sessionStorage.getItem("audioTime") || 0);
         const wasPlaying = sessionStorage.getItem("audioPlaying") === "true";
         const savedVolume = sessionStorage.getItem("audioVolume") || 100;
+        const volumeSlider = getElement("volume-slider");
+        const playBtn = getElement("wave-sound-play");
 
-        // 볼륨 먼저 설정
-        window.waveAudio.volume = savedVolume / 100;
-        document.getElementById("volume-slider").value = savedVolume;
+        if (window.waveAudio) {
+            // 볼륨 설정 복원
+            window.waveAudio.volume = savedVolume / 100;
+            if (volumeSlider) volumeSlider.value = savedVolume;
 
-        // 시간 설정
-        if (window.waveAudio.duration) {
-            window.waveAudio.currentTime = Math.min(savedTime, window.waveAudio.duration);
-        }
-
-        // 재생 상태 복원
-        if (wasPlaying) {
-            // 자동 재생 정책을 고려한 재생 시도
-            const playPromise = window.waveAudio.play();
-            if (playPromise) {
-                playPromise.catch(error => {
-                    console.log("Auto-play prevented:", error);
-                });
+            // 재생 시간 복원
+            if (window.waveAudio.duration) {
+                window.waveAudio.currentTime = Math.min(savedTime, window.waveAudio.duration);
             }
-            document.getElementById("wave-sound-play").textContent = "⏸";
-            document.getElementById("wave-sound-play").classList.add("playing");
+
+            // 재생 상태 복원
+            if (wasPlaying) {
+                const playPromise = window.waveAudio.play();
+                if (playPromise) {
+                    playPromise.catch(error => {
+                        console.log("Auto-play prevented:", error);
+                    });
+                }
+                if (playBtn) {
+                    playBtn.textContent = "⏸";
+                    playBtn.classList.add("playing");
+                }
+            }
         }
     }
 };
 
-// 페이지 로드 시 초기화
-document.addEventListener("DOMContentLoaded", () => {
-    const audio = AudioManager.init();
-});
+// 이벤트 리스너 초기화 함수
+function initializeAudioControls() {
+    const playBtn = getElement('wave-sound-play');
+    const volumeSlider = getElement('volume-slider');
+    const progressBar = getElement('progress-bar');
 
-// 오디오 상태 복원
-function restoreAudioState() {
-    const savedTime = parseFloat(sessionStorage.getItem("audioTime") || 0);
-    const savedVolume = sessionStorage.getItem("audioVolume") || 100;
+    // 재생/일시정지 버튼 이벤트
+    if (playBtn) {
+        playBtn.addEventListener('click', togglePlay);
+    }
 
-    window.waveAudio.currentTime = savedTime;
-    window.waveAudio.volume = savedVolume / 100;
+    // 볼륨 슬라이더 이벤트
+    if (volumeSlider) {
+        volumeSlider.addEventListener('input', adjustVolume);
+    }
 
-    document.getElementById("volume-slider").value = savedVolume;
+    // 오디오 시간 업데이트 이벤트
+    if (window.waveAudio) {
+        window.waveAudio.addEventListener('timeupdate', updateProgressBar);
+    }
 
-    if (isPlaying) {
-        window.waveAudio.play();
-        document.getElementById("wave-sound-play").textContent = "⏸";
-        document.getElementById("wave-sound-play").classList.add("playing");
+    // 프로그레스바 이벤트
+    if (progressBar) {
+        initializeProgressBar();
     }
 }
 
-// 오디오 재생/정지
+// 오디오 상태 복원 함수
+function restoreAudioState() {
+    const savedTime = parseFloat(sessionStorage.getItem("audioTime") || 0);
+    const savedVolume = sessionStorage.getItem("audioVolume") || 100;
+    const volumeSlider = getElement("volume-slider");
+
+    if (window.waveAudio) {
+        window.waveAudio.currentTime = savedTime;
+        window.waveAudio.volume = savedVolume / 100;
+        if (volumeSlider) volumeSlider.value = savedVolume;
+
+        if (isPlaying) {
+            window.waveAudio.play();
+            const playBtn = getElement("wave-sound-play");
+            if (playBtn) {
+                playBtn.textContent = "⏸";
+                playBtn.classList.add("playing");
+            }
+        }
+    }
+}
+
+// 재생/일시정지 토글 함수
 function togglePlay() {
-    const playBtn = document.getElementById("wave-sound-play");
+    const playBtn = getElement("wave-sound-play");
+    
+    if (!window.waveAudio || !playBtn) return;
 
     if (window.waveAudio.paused) {
+        // 재생 시작
         window.waveAudio.play();
         isPlaying = true;
         playBtn.textContent = "⏸";
         playBtn.classList.add("playing");
     } else {
+        // 일시정지
         window.waveAudio.pause();
         isPlaying = false;
         playBtn.textContent = "⏵";
         playBtn.classList.remove("playing");
     }
 
+    // 상태 저장
     sessionStorage.setItem("audioPlaying", isPlaying);
 }
 
-// 볼륨 조절
+// 볼륨 조절 함수
 function adjustVolume(event) {
-    window.waveAudio.volume = event.target.value / 100;
+    if (!window.waveAudio) return;
+    window.waveAudio.volume = event.target.value / 100; // 0-100 값을 0-1로 변환
     sessionStorage.setItem("audioVolume", event.target.value);
 }
 
+// 파도 소리 재생 함수
 function playWaveSound() {
+    // 오디오 객체 없으면 초기화
     if (!window.waveAudio) {
-        // 오디오 객체 초기화
         window.waveAudio = new Audio('../파도소리.mp3');
         window.waveAudio.loop = true;
     }
 
-    // 재생 시도
+    // 재생 시도 및 에러 처리
     const playPromise = window.waveAudio.play();
-
-    // 자동 재생 정책을 고려한 재생
     if (playPromise !== undefined) {
         playPromise.catch(error => {
             console.log("Auto-play prevented:", error);
-            // 필요하다면 사용자 상호작용을 요구하는 로직 추가
         });
     }
 
-    // 재생 버튼 상태 업데이트
-    const playBtn = document.getElementById("wave-sound-play");
+    // UI 업데이트
+    const playBtn = getElement("wave-sound-play");
     if (playBtn) {
         playBtn.textContent = "⏸";
         playBtn.classList.add("playing");
     }
 }
 
-// 진행 바 업데이트
+// 프로그레스바 업데이트 함수
 function updateProgressBar() {
-    // 오디오의 duration이 있는지 확인
-    if (window.waveAudio.duration) {
-        const progress = (window.waveAudio.currentTime / window.waveAudio.duration) * 100;
-        const progressBarInner = document.getElementById("progress-bar-inner");
-        const progressBarThumb = document.getElementById("progress-bar-thumb");
-        
-        if (progressBarInner && progressBarThumb) {
-            progressBarInner.style.width = `${progress}%`;
-            progressBarThumb.style.left = `${progress}%`;
-        }
-        
-        sessionStorage.setItem("audioTime", window.waveAudio.currentTime);
-    }
+    if (!window.waveAudio || !window.waveAudio.duration) return;
+
+    // 현재 재생 진행률 계산 (0-100%)
+    const progress = (window.waveAudio.currentTime / window.waveAudio.duration) * 100;
+    const progressBarInner = getElement("progress-bar-inner");
+    const progressBarThumb = getElement("progress-bar-thumb");
+    
+    // UI 업데이트
+    if (progressBarInner) progressBarInner.style.width = `${progress}%`;
+    if (progressBarThumb) progressBarThumb.style.left = `${progress}%`;
+    
+    // 현재 시간 저장
+    sessionStorage.setItem("audioTime", window.waveAudio.currentTime);
 }
 
-// 진행 바 클릭 이동
-document.getElementById("progress-bar").addEventListener("click", function(e) {
-    const progressBar = document.getElementById("progress-bar");
-    const rect = progressBar.getBoundingClientRect();
-    const percent = ((e.clientX - rect.left) / rect.width) * 100;
-    window.waveAudio.currentTime = (percent / 100) * window.waveAudio.duration;
-    updateProgressBar();
+// 페이지 로드 시 초기화
+document.addEventListener("DOMContentLoaded", () => {
+    AudioManager.init();
+    initializeAudioControls();
 });
 
-// 이벤트 리스너 등록
-document.getElementById("wave-sound-play").addEventListener("click", togglePlay);
-document.getElementById("volume-slider").addEventListener("input", adjustVolume);
-window.waveAudio.addEventListener("timeupdate", updateProgressBar);
-
-// 페이지 로드 시 오디오 상태 복원
-document.addEventListener("DOMContentLoaded", restoreAudioState);
-
+// 추가 이벤트 리스너 등록
 window.waveAudio.addEventListener("loadedmetadata", () => {
     window.waveAudio.addEventListener("timeupdate", updateProgressBar);
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const playBtn = document.getElementById('wave-sound-play');
-    const volumeSlider = document.getElementById('volume-slider');
-    const progressBar = document.getElementById('progress-bar');
-    const progressBarInner = document.getElementById('progress-bar-inner');
-    const progressBarThumb = document.getElementById('progress-bar-thumb');
-
-    if (!window.waveAudio) {
-        window.waveAudio = new Audio('../파도소리.mp3');
-        window.waveAudio.loop = true;
-    }
-
-    // 재생/일시정지 버튼
-    playBtn.addEventListener('click', function() {
-        if (window.waveAudio.paused) {
-            window.waveAudio.play();
-            playBtn.textContent = "⏸";
-            playBtn.classList.add('playing');
-        } else {
-            window.waveAudio.pause();
-            playBtn.textContent = "⏵";
-            playBtn.classList.remove('playing');
-        }
-    });
-
-    // 볼륨 조절
-    volumeSlider.addEventListener('input', function() {
-        window.waveAudio.volume = this.value / 100;
-    });
-
-    // 진행바 업데이트
-    function updateProgress() {
-        const progress = (window.waveAudio.currentTime / window.waveAudio.duration) * 100;
-        progressBarInner.style.width = `${progress}%`;
-        progressBarThumb.style.left = `${progress}%`;
-    }
-
-    window.waveAudio.addEventListener('timeupdate', updateProgress);
-
-    // 진행바 클릭
-    progressBar.addEventListener('click', function(e) {
-        const rect = progressBar.getBoundingClientRect();
-        const ratio = (e.clientX - rect.left) / rect.width;
-        window.waveAudio.currentTime = ratio * window.waveAudio.duration;
-    });
 });

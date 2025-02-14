@@ -1,10 +1,11 @@
-/* Updated glitch.css - Only nav.logo glitch effect */
-
 .nav-logo {
   position: relative;
   color: #7cacca;
   text-decoration: none;
   transition: transform 0.3s ease, color 0.3s ease;
+  display: inline-block;
+  white-space: nowrap; /* 추가: 텍스트 줄바꿈 방지 */
+  overflow: visible; /* 추가: 글리치가 잘리지 않도록 */
 }
 
 .nav-logo:hover::after {
@@ -15,6 +16,7 @@
   top: 0;
   color: white;
   background: none;
+  white-space: nowrap; /* 추가: 텍스트 줄바꿈 방지 */
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
   animation: glitch-anim 3s infinite linear alternate-reverse;
@@ -44,7 +46,6 @@
   100% { clip: rect(39px, 9999px, 67px, 0); }
 }
 
-/* Add hover effect for nav logo */
 .nav-logo:hover {
   color: var(--frost-blue, #ffffff);
   text-shadow: 0 0 10px rgba(74, 255, 255, 0.3);
