@@ -10,10 +10,13 @@
 </head>
 <body>
   <div class="overlay"></div>
+  <!-- 네비게이션 바 구조 수정 -->
   <nav class="navbar">
     <a href="#" class="nav-logo">미완성</a>
-    <div class="nav-time" id="current-datetime"></div>
-    <div class="nav-danger-level">survivor: 3</div>
+    <div class="nav-controls">
+      <div class="nav-time" id="current-datetime"></div>
+      <div class="nav-danger-level">survivor: 3</div>
+    </div>
   </nav>
   
   <div class="container">
@@ -22,8 +25,8 @@
     
     <section class="hero-section">
       <div class="school-name">善淸高等學校</div>
-<h1>미완성 청춘에게</h1>
-<div class="subtitle">"어쩌고 부제목"</div>
+      <h1>미완성 청춘에게</h1>
+      <div class="subtitle">돌아보자면 이미 많은 길을 지나왔다.</div>
     </section>
 
     <div class="system-status">
@@ -42,15 +45,13 @@
           <div class="card-overlay"></div>
         </div>
       </div>
-      <div class="info-card glitch-hover" onclick="location.href='reboot.html'">
+      <div class="info-card glitch-hover" onclick="location.href='credits.html'">
         <div class="info-card-inner">
-          <h3>재시작하기</h3>
-          <p id="status-message">또다른 가능성을 봅니다</p>
+          <h3>마지막</h3>
+          <p>미완성 청춘에게</p>
           <div class="card-overlay"></div>
         </div>
       </div>
-    </section>
-  </div>
 
   <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -91,19 +92,52 @@
       }
     }, 2000);
 
-    // Time update
+    // 시간 업데이트 - 수정된 부분
     const timeDisplay = document.getElementById("current-datetime");
+    
+    // script.js의 타이머 제거 (충돌 방지)
+    if (window.timeUpdateInterval) {
+      clearInterval(window.timeUpdateInterval);
+    }
+    
+    // 이전 표시 시간을 저장할 변수
+    let lastTimeStr = "";
     
     function updateTime() {
       const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      timeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+      
+      // index.html과 같은 포맷 사용 (년. 월. 일. 시:분)
+      const formattedTime = new Intl.DateTimeFormat('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).format(now);
+      
+      // 이전 시간과 다를 때만 DOM 업데이트
+      if (formattedTime !== lastTimeStr) {
+        timeDisplay.textContent = formattedTime;
+        lastTimeStr = formattedTime;
+      }
     }
 
+    // 초기 시간 설정
     updateTime();
-    setInterval(updateTime, 1000);
+    
+    // 독립적인 타이머 사용 (script.js와 충돌 방지)
+    const youthTimeInterval = setInterval(updateTime, 1000);
+    
+    // 페이지 언로드 시 타이머 정리
+    window.addEventListener('beforeunload', () => {
+      clearInterval(youthTimeInterval);
+    });
+    
+    // script.js의 updateDateTime 함수 재정의 (충돌 방지)
+    window.updateDateTime = function() {
+      // youth.html에서는 아무 작업도 하지 않음
+    };
   });
   </script>
   <script src="../scripts/script.js"></script>

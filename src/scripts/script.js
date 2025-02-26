@@ -1,3 +1,4 @@
+// src/scripts/script.js
 document.addEventListener('DOMContentLoaded', () => {
     // DOM 요소 초기 선택 및 참조
     const textEl = document.querySelector('.status-text');          // 상태 텍스트를 표시할 요소
@@ -6,6 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const countdownDisplay = document.querySelector('#countdown');   // 카운트다운 표시 요소
     const glitchTarget = document.querySelector('.intermittent-glitch'); // 글리치 효과 적용 대상
     const container = document.querySelector('.container');         // 메인 컨테이너
+    const youthButton = document.getElementById('youth-button');    // 미완성 청춘으로 버튼
+
+    // youth-button 클릭 이벤트 추가
+    if (youthButton) {
+        youthButton.addEventListener('click', () => {
+            window.location.href = './src/pages/youth.html';
+        });
+    }
 
     // info-card 클릭 이벤트 처리
     const infoCards = document.querySelectorAll(".info-card");
@@ -59,12 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // 초기 상태: 숨김
             img.style.opacity = '0';
             img.style.visibility = 'hidden';
-
-            // 이미지 로드 완료 시 처리
-            img.onload = () => {
-                console.log(`Image loaded: ${imagePath}`);
-                img.dataset.loaded = 'true';
-            };
 
             // 이미지 로드 실패 시 기본 이미지로 대체
             img.onerror = () => {

@@ -12,7 +12,8 @@
 <body>
   <nav class="navbar">
     <a href="../../index.html" class="nav-logo" data-text="BLUE LAM">BLUE LAM</a>
-<div class="nav-time" id="current-datetime" aria-live="polite"></div>
+    <div class="nav-controls">
+      <div class="nav-time" id="current-datetime" aria-live="polite"></div>
       <div class="nav-danger-level" id="danger-level" aria-live="polite">SYSTEM: UNSTABLE</div>
     </div>
   </nav>
@@ -31,8 +32,8 @@
             <h3>프로젝트 시작</h3>
             <p>Blue Lam 프로젝트 공식 개시. 시스템 초기화 완료.</p>
             <div class="hidden-message">cd /root/bluelam/init && ./start.sh</div>
-            <div class="easter-egg" style="top: 10px; right: 10px;" onclick="revealSecret('bl-01')" tabindex="0" role="button" aria-label="숨겨진 내용 보기"></div>
-            <div class="secret-panel" id="secret-bl-01">
+            <div class="easter-egg" onclick="toggleSecret('bl-01')"></div>
+            <div class="secret-panel" id="secret-bl-01" style="display: none;">
               <div class="terminal-text">
                 > INITIALIZING SYSTEM...
                 > LOADING CORE MODULES...
@@ -52,8 +53,8 @@
             <h3>시스템 불안정성 감지</h3>
             <p>예상치 못한 데이터 변조 발생. 긴급 대응 필요.</p>
             <div class="hidden-message">sudo chmod 777 /sys/class/memory</div>
-            <div class="easter-egg" style="top: 10px; right: 10px;" onclick="revealSecret('bl-02')" tabindex="0" role="button" aria-label="숨겨진 내용 보기"></div>
-            <div class="secret-panel" id="secret-bl-02">
+            <div class="easter-egg" onclick="toggleSecret('bl-02')"></div>
+            <div class="secret-panel" id="secret-bl-02" style="display: none;">
               <div class="terminal-text">
                 > ACCESSING MEMORY BLOCK...
                 > CORRUPTED DATA FOUND
@@ -73,8 +74,8 @@
             <h3>최종 테스트</h3>
             <p>시스템 안정화 시도 중. 데이터 복구 진행률: 78%</p>
             <div class="hidden-message">grep -R "LAMBDA" /var/log/bluelam/*</div>
-            <div class="easter-egg" style="top: 10px; right: 10px;" onclick="revealSecret('bl-03')" tabindex="0" role="button" aria-label="숨겨진 내용 보기"></div>
-            <div class="secret-panel" id="secret-bl-03">
+            <div class="easter-egg" onclick="toggleSecret('bl-03')"></div>
+            <div class="secret-panel" id="secret-bl-03" style="display: none;">
               <div class="terminal-text">
                 > SCANNING LOGS...
                 > UNUSUAL PATTERN DETECTED
@@ -94,8 +95,8 @@
             <h3>최종 단계</h3>
             <p>Blue Lam 프로젝트 완료. 시스템 재부팅 준비.</p>
             <div class="hidden-message">shutdown -r now</div>
-            <div class="easter-egg" style="top: 10px; right: 10px;" onclick="revealSecret('bl-04')" tabindex="0" role="button" aria-label="숨겨진 내용 보기"></div>
-            <div class="secret-panel" id="secret-bl-04">
+            <div class="easter-egg" onclick="toggleSecret('bl-04')"></div>
+            <div class="secret-panel" id="secret-bl-04" style="display: none;">
               <div class="terminal-text">
                 > PREPARING FOR SHUTDOWN...
                 > SAVING FINAL STATE...
@@ -109,7 +110,7 @@
         </div>
       </div>
     </section>
-  </div>
+  </main>
 
   <nav class="side-nav" role="navigation" aria-label="Timeline navigation">
     <button class="side-nav-toggle" aria-label="메뉴 열기">☰</button>
@@ -119,15 +120,11 @@
   </nav>
 
   <div class="audio-controls">
-    <button id="wave-sound-play" class="media-btn">⏵</button>
+    <button id="wave-sound-play" class="media-btn">▶</button>
     <div class="controls-group">
-        <div class="progress-bar" id="progress-bar">
-            <div id="progress-bar-inner" class="progress-bar-inner"></div>
-            <div id="progress-bar-thumb" class="progress-bar-thumb"></div>
-        </div>
-        <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="100">
+      <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="50">
     </div>
-</div>
+  </div>
 
   <div class="waves">
     <div class="wave"></div>
@@ -135,14 +132,31 @@
     <div class="wave"></div>
   </div>
 
+  <!-- 직접 스크립트 삽입 -->
+  <script>
+    // 시크릿 토글 함수 추가
+    function toggleSecret(id) {
+      const panel = document.getElementById(`secret-${id}`);
+      
+      // 현재 숨겨진 상태인지 확인하고 토글
+      if (panel.style.display === 'none' || panel.style.display === '') {
+          panel.style.display = 'block';
+      } else {
+          panel.style.display = 'none';
+      }
+    }
+  </script>
+
   <script src="../scripts/status-config.js"></script>
   <script src="../scripts/audio.js"></script>
   <script src="../scripts/script.js"></script>
-  <script src="timeline.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-      playWaveSound();
-  });
-</script>
+  <script src="../scripts/timeline.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.playWaveSound) {
+        window.playWaveSound();
+      }
+    });
+  </script>
 </body>
 </html>
