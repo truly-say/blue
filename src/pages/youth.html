@@ -12,7 +12,7 @@
   <div class="overlay"></div>
   <!-- 네비게이션 바 구조 수정 -->
   <nav class="navbar">
-    <a href="#" class="nav-logo">미완성</a>
+    <a href="#" class="nav-logo">靑春</a>
     <div class="nav-controls">
       <div class="nav-time" id="current-datetime"></div>
       <div class="nav-danger-level">survivor: 3</div>
@@ -45,6 +45,13 @@
           <div class="card-overlay"></div>
         </div>
       </div>
+      <div class="info-card glitch-hover" onclick="location.href='youth-timeline.html'">
+        <div class="info-card-inner">
+          <h3>타임라인</h3>
+          <p>2028.01.07 ~ 2028.02.08</p>
+          <div class="card-overlay"></div>
+        </div>
+      </div>
       <div class="info-card glitch-hover" onclick="location.href='credits.html'">
         <div class="info-card-inner">
           <h3>마지막</h3>
@@ -52,6 +59,8 @@
           <div class="card-overlay"></div>
         </div>
       </div>
+    </section>
+  </div>
 
   <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -138,6 +147,31 @@
     window.updateDateTime = function() {
       // youth.html에서는 아무 작업도 하지 않음
     };
+    
+    // "youth" 키보드 입력 감지 추가
+    let keySequence = '';
+    const targetSequence = 'youth';
+    
+    document.addEventListener('keydown', (e) => {
+      // 현재 입력 문자 저장 (소문자로 통일)
+      keySequence += e.key.toLowerCase();
+      
+      // 입력 시퀀스가 너무 길어지면 초기화 (최대 10글자)
+      if (keySequence.length > 10) {
+        keySequence = keySequence.substring(keySequence.length - 10);
+      }
+      
+      // "youth" 입력 감지 시 reboot.html로 이동
+      if (keySequence.includes(targetSequence)) {
+        // 배경 깜박임 효과
+        document.body.classList.add('flash');
+        
+        // 약간의 딜레이 후 페이지 이동
+        setTimeout(() => {
+          window.location.href = 'reboot.html';
+        }, 500);
+      }
+    });
   });
   </script>
   <script src="../scripts/script.js"></script>

@@ -4,19 +4,19 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  /* 기본 스타일 */
-  body, html {
+}
+
+/* 기본 스타일 */
+body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
     font-family: 'Noto Sans KR', sans-serif;
     background: #2b4a75;
-  }
-  
-  /* 배경색 변경을 위한 오버레이 */
-  #dark-overlay {
+}
+
+/* 배경색 변경을 위한 오버레이 */
+#dark-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -26,17 +26,17 @@
     z-index: 5;
     pointer-events: none;
     transition: background-color 1s ease;
-  }
-  
-  /* 나가기 버튼 */
-  .exit-button {
+}
+
+/* 나가기 버튼 */
+.exit-button {
     position: fixed;
     top: 20px;
     left: 20px;
     z-index: 100;
-  }
-  
-  .exit-button a {
+}
+
+.exit-button a {
     color: white;
     text-decoration: none;
     font-size: 1.1rem;
@@ -44,15 +44,15 @@
     letter-spacing: 1px;
     padding: 8px 12px;
     display: block;
-  }
-  
-  .exit-button a:hover {
+}
+
+.exit-button a:hover {
     transform: translateX(-5px);
     transition: transform 0.3s;
-  }
-  
-  /* 신원 선택 화면 스타일 */
-  .identity-selector-container {
+}
+
+/* 신원 선택 화면 스타일 */
+.identity-selector-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -66,24 +66,24 @@
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.5s ease;
-  }
-  
-  .identity-question {
+}
+
+.identity-question {
     color: white;
     font-size: 2rem;
     margin-bottom: 2rem;
     text-shadow: 0 0 10px rgba(100, 180, 255, 0.5);
     letter-spacing: 1px;
-  }
-  
-  .identity-buttons {
+}
+
+.identity-buttons {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 240px;
-  }
-  
-  .identity-button {
+}
+
+.identity-button {
     background-color: rgba(20, 60, 100, 0.7);
     color: white;
     border: 1px solid rgba(100, 180, 255, 0.4);
@@ -96,21 +96,21 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
-  }
-  
-  .identity-button:hover {
+}
+
+.identity-button:hover {
     background-color: rgba(40, 100, 160, 0.8);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 8px rgba(100, 180, 255, 0.4);
-  }
-  
-  .identity-button:active {
+}
+
+.identity-button:active {
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* 건너뛰기 버튼 */
-  .skip-message-btn {
+}
+
+/* 건너뛰기 버튼 */
+.skip-message-btn {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -134,41 +134,41 @@
                 opacity 0.3s ease,
                 transform 0.3s ease;
     overflow: hidden; /* 잔물결 효과가 버튼 밖으로 나가지 않도록 */
-  }
-  
-  .skip-message-btn:hover {
+}
+
+.skip-message-btn:hover {
     background-color: rgba(40, 80, 120, 0.8);
     border-color: rgba(150, 200, 255, 0.6);
     transform: translateY(-3px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(100, 180, 255, 0.2);
     color: rgba(210, 235, 255, 1);
-  }
-  
-  .skip-message-btn:active {
+}
+
+.skip-message-btn:active {
     transform: translateY(1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     background-color: rgba(30, 60, 90, 0.85);
-  }
-  
-  /* 버튼 잔물결 효과 */
-  .button-ripple {
+}
+
+/* 버튼 잔물결 효과 */
+.button-ripple {
     position: absolute;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     transform: scale(0);
     animation: ripple 0.6s linear;
     pointer-events: none;
-  }
-  
-  @keyframes ripple {
+}
+
+@keyframes ripple {
     to {
-      transform: scale(4);
-      opacity: 0;
+        transform: scale(4);
+        opacity: 0;
     }
-  }
-  
-  /* 중앙 메시지 컨테이너 */
-  .center-messages-container {
+}
+
+/* 중앙 메시지 컨테이너 */
+.center-messages-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -181,19 +181,19 @@
     z-index: 30;
     padding: 20px;
     overflow: hidden;
-  }
-  
-  /* 중앙 메시지 래퍼 - 왼쪽 정렬을 위한 컨테이너 */
-  .messages-wrapper {
+}
+
+/* 중앙 메시지 래퍼 - 왼쪽 정렬을 위한 컨테이너 */
+.messages-wrapper {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 80%;
     max-width: 700px;
-  }
-  
-  /* 중앙 메시지 */
-  .center-message {
+}
+
+/* 중앙 메시지 */
+.center-message {
     position: relative;
     background-color: rgba(0, 31, 63, 0.9);
     color: white;
@@ -207,10 +207,10 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
     line-height: 1.5;
     text-align: left;
-  }
-  
-  /* 메시지 꼬리표 - CSS로 통일하여 처리 */
-  .center-message::after {
+}
+
+/* 메시지 꼬리표 - CSS로 통일하여 처리 */
+.center-message::after {
     content: '';
     position: absolute;
     bottom: -8px;
@@ -220,21 +220,21 @@
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-top: 10px solid rgba(0, 31, 63, 0.9); /* 메시지와 같은 배경색 */
-  }
-  
-  .center-message.visible {
+}
+
+.center-message.visible {
     opacity: 1;
     transform: translateY(0);
-  }
-  
-  .center-message.moving-up {
+}
+
+.center-message.moving-up {
     transform: translateY(-50px);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s ease;
-  }
-  
-  /* 마지막 메시지 */
-  .final-message {
+}
+
+/* 마지막 메시지 */
+.final-message {
     background: linear-gradient(135deg, #000000, #000033, #000066, #000099);
     color: white;
     padding: 25px 30px;
@@ -250,45 +250,111 @@
     position: relative;
     overflow: hidden;
     animation: gradient-shift 8s ease infinite alternate;
-  }
-  
-  .final-message.visible {
+}
+
+.final-message.visible {
     opacity: 1;
     transform: scale(1);
-  }
+}
 
-  /* 재시작 메시지 추가 스타일 */
-  .restart-message {
+/* 재시작 메시지 컨테이너 수정 - 중앙 정렬 강화 */
+#restartMessageContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    padding: 20px;
+}
+
+#restartMessageContainer .messages-wrapper {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center !important; /* 중앙 정렬 강제 */
+    justify-content: center;
+}
+
+/* 재시작 메시지 스타일 - 확실한 중앙 정렬 */
+.restart-message {
     background: linear-gradient(135deg, #001a33, #00264d, #003366, #004080);
-    line-height: 1.8;
-  }
+    color: white;
+    padding: 20px 25px;
+    border-radius: 24px;
+    font-size: 1.4rem;
+    width: 90%;
+    max-width: 600px;
+    text-align: center !important; /* 텍스트 중앙 정렬 강제 */
+    opacity: 0;
+    margin: 0 auto !important; /* 중앙 배치 강제 */
+    transition: opacity 0.5s ease;
+    line-height: 1.6;
+    margin-left: auto !important; /* 좌측 마진 무효화 */
+    margin-right: auto !important; /* 우측 마진 추가 */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
 
-  .update-text {
+.restart-message.visible {
+    opacity: 1;
+}
+
+.restart-message strong {
+    color: #4affff;
+    text-shadow: 0 0 8px rgba(74, 255, 255, 0.6);
+    animation: pulse-text 2s infinite ease-in-out;
+}
+
+/* 업데이트 메시지와 기다림 메시지 - 중앙 정렬 */
+.update-message, .wait-message {
+    background: rgba(0, 31, 63, 0.8);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 20px;
+    text-align: center !important;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: none;
+    width: 80%;
+    max-width: 500px;
+    margin: 15px auto !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.update-message {
     font-size: 1.1rem;
-    margin-top: 20px;
-    opacity: 0.8;
-  }
+    margin-top: 20px !important;
+}
 
-  .wait-text {
-    font-size: 0.9rem;
-    margin-top: 10px;
-    opacity: 0.5;
-  }
+.wait-message {
+    font-size: 0.95rem;
+    margin-top: 10px !important;
+    background: rgba(0, 31, 63, 0.7);
+}
 
-  @keyframes gradient-shift {
+.update-message.visible, .wait-message.visible {
+    opacity: 1;
+}
+
+@keyframes gradient-shift {
     0% {
-      background-position: 0% 50%;
+        background-position: 0% 50%;
     }
     50% {
-      background-position: 100% 50%;
+        background-position: 100% 50%;
     }
     100% {
-      background-position: 0% 50%;
+        background-position: 0% 50%;
     }
-  }
-  
-  /* 메인 메시지 */
-  .main-center-message {
+}
+
+/* 메인 메시지 */
+.main-center-message {
     background-color: rgba(0, 31, 63, 0.95); /* 통일된 배경색 */
     color: white;
     padding: 20px 30px;
@@ -301,21 +367,21 @@
     transition: opacity 0.7s ease, transform 0.7s ease;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  }
-  
-  .main-center-message.visible {
+}
+
+.main-center-message.visible {
     opacity: 1;
     transform: scale(1);
-  }
-  
-  .main-center-message.moving-up {
+}
+
+.main-center-message.moving-up {
     transform: translateY(-50px) scale(0.9);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s ease;
-  }
-  
-  /* 팝업 메시지 컨테이너 */
-  .popup-container {
+}
+
+/* 팝업 메시지 컨테이너 */
+.popup-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -323,10 +389,10 @@
     height: 100%;
     pointer-events: none;
     z-index: 40;
-  }
-  
-  /* 팝업 메시지 */
-  .popup-message {
+}
+
+/* 팝업 메시지 */
+.popup-message {
     position: absolute;
     padding: 15px 25px;
     background-color: rgba(0, 31, 63, 0.95);
@@ -339,15 +405,15 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
     line-height: 1.4;
     max-width: 90%;
-  }
-  
-  .popup-message.visible {
+}
+
+.popup-message.visible {
     opacity: 1;
     transform: scale(1);
-  }
-  
-  /* 눈 효과 */
-  .winter-snow {
+}
+
+/* 눈 효과 */
+.winter-snow {
     position: fixed;
     top: 0;
     left: 0;
@@ -355,321 +421,253 @@
     height: 100%;
     z-index: 1;
     pointer-events: none;
-  }
-  
-  .snow-particle {
+}
+
+.snow-particle {
     position: absolute;
     background-color: white;
     border-radius: 50%;
     opacity: 0.8;
     pointer-events: none;
-  }
-  
-  /* 크레딧 컨테이너 */
-  .credits-container {
+}
+
+/* 크레딧 컨테이너 */
+.credits-container {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
     z-index: 20;
     visibility: hidden;
-  }
-  
-  .credits-container.visible {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.credits-container.visible {
     visibility: visible;
-  }
-  
-  /* 크레딧 콘텐츠 */
-  .credits-content {
+}
+
+/* 크레딧 컨텐츠 - 중앙 정렬 개선 */
+.credits-content {
     position: absolute;
     top: 100vh;
     left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
+    width: 90%;
     max-width: 800px;
-    text-align: center;
     padding: 30px 20px 100px;
     color: white;
-    will-change: transform; /* 성능 최적화 */
-  }
-  
-  /* 크레딧 제목 */
-  .credits-title {
+    will-change: transform;
+    transform: translateX(-50%) translateY(0);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* 크레딧 제목 */
+.credits-title {
     font-size: 2.5rem;
-    margin-bottom: 8rem; /* 간격 조정 */
+    margin-bottom: 6rem;
     color: white;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
-  }
-  
-  /* 크레딧 섹션 */
-  .credits-section {
-    margin-bottom: 8rem; /* 간격 조정 */
-    padding: 30px 20px;
-  }
-  
-  /* 섹션 제목 */
-  .credits-section-title {
+}
+
+/* 크레딧 섹션 */
+.credits-section {
+    margin-bottom: 5rem;
+    padding: 20px;
+    width: 100%;
+}
+
+/* 섹션 제목 */
+.credits-section-title {
     font-size: 1.5rem;
     color: white;
-    margin-bottom: 3rem; /* 간격 조정 */
+    margin-bottom: 2rem;
     font-weight: normal;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  
-  /* 크레딧 항목 */
-  .credit-item {
-    margin-bottom: 2rem; /* 간격 조정 */
-  }
-  
-  /* 크레딧 라인 */
-  .credit-line {
+}
+
+/* 크레딧 항목 */
+.credit-item {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+/* 크레딧 라인 */
+.credit-line {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     text-align: center;
     padding: 10px 0;
-  }
-  
-  /* 캐릭터 이름 */
-  .character-name {
+}
+
+/* 캐릭터 이름 */
+.character-name {
     color: white;
     font-size: 1.1rem;
     text-align: right;
     flex: 1;
     padding-right: 10px;
     font-weight: 500;
-  }
-  
-  /* 구분자 */
-  .credit-separator {
+    max-width: 45%;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+/* 구분자 */
+.credit-separator {
     color: white;
     font-size: 1.2rem;
     padding: 0 10px;
-  }
-  
-  /* 소유자 이름 - 수정된 부분 */
-  .character-owner {
+}
+
+/* 소유자 이름 */
+.character-owner {
     color: rgba(255, 255, 255, 0.7);
     font-size: 1.1rem;
     text-align: left;
     flex: 1;
     padding-left: 10px;
-    opacity: 0.7; /* 약간 투명하게 */
-    font-weight: normal; /* 일반 두께로 변경 */
-  }
-  
-  /* 크레딧 푸터 */
-  .credits-footer {
-    margin-top: 8rem; /* 간격 조정 */
-    margin-bottom: 4rem;
+    opacity: 0.7;
+    font-weight: normal;
+    max-width: 45%;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+/* 크레딧 푸터 */
+.credits-footer {
+    margin-top: 5rem;
+    margin-bottom: 8rem;
     font-size: 1.2rem;
-    line-height: 2.5; /* 간격 조정 */
+    line-height: 2.5;
     color: white;
-  }
-  
-  /* 단일 항목 */
-  .credit-single-item {
+}
+
+/* 단일 항목 */
+.credit-single-item {
     color: white;
     font-size: 1.1rem;
     margin: 0.8rem 0;
-  }
-  
-  /* AND YOU 강조 */
-  .thanks-you-section {
+}
+
+/* AND YOU 강조 */
+.thanks-you-section {
     margin-top: 5rem;
     margin-bottom: 10rem;
-  }
+}
 
-  .emphasis-item {
+.emphasis-item {
     font-size: 1.6rem;
     font-weight: 500;
     letter-spacing: 2px;
     color: #ffffff;
     text-shadow: 0 0 10px rgba(100, 180, 255, 0.8);
     animation: glow 3s infinite alternate;
-  }
-  
-  @keyframes glow {
+}
+
+@keyframes glow {
     0% {
-      text-shadow: 0 0 5px rgba(100, 180, 255, 0.5);
-      transform: scale(1);
+        text-shadow: 0 0 5px rgba(100, 180, 255, 0.5);
+        transform: scale(1);
     }
     100% {
-      text-shadow: 0 0 20px rgba(120, 210, 255, 0.9);
-      transform: scale(1.05);
+        text-shadow: 0 0 20px rgba(120, 210, 255, 0.9);
+        transform: scale(1.05);
     }
-  }
-  
-  /* 모바일 반응형 */
-  @media (max-width: 768px) {
-    .credits-title {
-      font-size: 2rem;
+}
+
+@keyframes pulse-text {
+    0%, 100% {
+        opacity: 1;
     }
-    
-    .credits-section-title {
-      font-size: 1.3rem;
+    50% {
+        opacity: 0.7;
     }
-    
+}
+
+/* 메시지 꼬리표 제거 - 재시작 메시지에서는 필요 없음 */
+#restartMessageContainer .center-message::after {
+    display: none;
+}
+
+/* center-message의 기본 좌측 정렬 덮어쓰기 */
+#restartMessageContainer .center-message {
+    align-self: center !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    max-width: 95% !important;
+    transform: none !important;
+}
+
+/* 모바일 반응형 - 개선 */
+@media (max-width: 768px) {
+    /* 크레딧 항목 스타일 개선 */
     .credit-line {
-      flex-direction: column;
-      gap: 5px;
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
     }
     
-    .character-name, 
-    .character-owner {
-      text-align: center;
-      padding: 0;
+    .character-name, .character-owner {
+        text-align: center;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
     }
     
     .credit-separator {
-      display: none;
+        display: none;
     }
     
+    /* 크레딧 섹션 간격 조정 */
+    .credits-section {
+        margin-bottom: 3rem;
+        padding: 15px 10px;
+    }
+    
+    /* 크레딧 컨텐츠 중앙 정렬 보장 */
+    .credits-content {
+        transform: translateX(-50%) translateY(0) !important;
+        width: 95% !important;
+        left: 50% !important;
+        text-align: center !important;
+    }
+    
+    /* 메시지 스타일 조정 */
     .center-message {
-      font-size: 1.1rem;
-      padding: 14px 20px;
+        font-size: 1.1rem;
+        padding: 14px 20px;
     }
     
     .main-center-message {
-      font-size: 1.2rem;
-      padding: 16px 24px;
-    }
-    
-    .popup-message {
-      font-size: 1rem;
-      padding: 12px 20px;
+        font-size: 1.2rem;
+        padding: 16px 24px;
     }
     
     .final-message {
-      font-size: 1.2rem;
+        font-size: 1.2rem;
     }
     
-    .messages-wrapper {
-      width: 90%;
+    .restart-message {
+        width: 95%;
+        font-size: 1.2rem;
+        padding: 16px 20px;
     }
     
-    .identity-selector-container {
-      padding: 20px;
+    .update-message {
+        font-size: 1rem;
+        width: 90%;
     }
     
-    .identity-question {
-      font-size: 1.5rem;
-      text-align: center;
+    .wait-message {
+        font-size: 0.9rem;
+        width: 85%;
     }
-    
-    .identity-buttons {
-      width: 220px;
-    }
-  }
-
-  /* 최종 메시지 컨테이너 */
-  .final-message-container {
-    position: relative;
-    max-width: 90%;
-    margin: 10px;
-  }
-  
-  /* 재시작 메시지 효과 */
-  @keyframes pulse-text {
-    0%, 100% {
-      opacity: 0.9;
-    }
-    50% {
-      opacity: 0.6;
-    }
-  }
-  
-  /* 재시작 메시지 추가 스타일 */
-  .restart-message strong {
-    color: #4affff;
-    text-shadow: 0 0 8px rgba(74, 255, 255, 0.6);
-    animation: pulse-text 2s infinite ease-in-out;
-  }
-  
-  .update-message {
-    font-size: 1.1rem;
-    opacity: 0.8;
-  }
-
-  .wait-message {
-    font-size: 0.9rem;
-    opacity: 0.5;
-  }
-  
-  @keyframes pulse-text {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.7;
-    }
-  }
- /* 최종 재시작 메시지 스타일 */
- .final-restart-message {
-    background-color: white;
-    color: #001f3f;
-    padding: 16px 24px;
-    border-radius: 24px;
-    font-size: 1.4rem;
-    max-width: 90%;
-    margin: 0 auto 16px;
-    opacity: 0;
-    letter-spacing: -0.5px;
-    transition: opacity 0.5s ease;
-    text-align: center;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  }
-  
-  .final-restart-message.visible {
-    opacity: 1;
-  }
-  
-  .final-restart-message strong {
-    font-weight: bold;
-    color: #004080;
-  }
-  
-  .update-final-message, .wait-final-message {
-    background-color: white;
-    color: #001f3f;
-    font-size: 1.1rem;
-    padding: 12px 20px;
-    border-radius: 24px;
-    margin: 8px auto;
-    max-width: 80%;
-    opacity: 0;
-    letter-spacing: -0.5px;
-    transition: opacity 0.5s ease;
-    text-align: center;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  }
-  
-  .update-final-message.visible, .wait-final-message.visible {
-    opacity: 1;
-  }
-  
-  .wait-final-message {
-    font-size: 0.9rem;
-    opacity: 0;
-  }
-  
-  .wait-final-message.visible {
-    opacity: 0.7;
-  }
-  
-  /* 메시지 컨테이너 고정 위치 */
-  #restartMessageContainer .messages-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* 재시작 메시지 추가 스타일 */
+}

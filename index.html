@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Lam Graduation Cruise</title>
     <link rel="stylesheet" href="src/styles/styles.css">
+    <link rel="stylesheet" href="src/styles/audio-footer.css">
+    <link rel="stylesheet" href="src/styles/modal.css">
+    <link rel="stylesheet" href="src/styles/date-restriction.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
     <meta name="description" content="2025 Blue Lam Graduation Cruise - 청춘의 최종본">
   </head>
@@ -51,14 +54,14 @@
             <div class="card-overlay"></div>
         </div>
     </div>
-    <div class="info-card glitch-hover" data-page="status">
+    <div class="info-card glitch-hover" data-page="map">
         <div class="info-card-inner">
-            <h3>상태</h3>
-            <p id="status-message">SYSTEM DEGRADATION IMMINENT</p>
+            <h3>맵</h3>
+            <p>CRUISE SHIP MAP</p>
             <div class="card-overlay"></div>
         </div>
     </div>
-    <div class="info-card glitch-hover" data-page="memory">
+    <div class="info-card glitch-hover" id="memory-card">
         <div class="info-card-inner">
             <h3>memory</h3>
             <p>"우리도 결국엔 完璧을 熱望했었잖아."</p>
@@ -73,16 +76,34 @@
     <div class="wave"></div>
   </div>
   
-  <!-- 오디오 컨트롤 추가 -->
-  <div class="audio-controls">
+  <!-- 비밀번호 모달 (메모리 페이지 클릭 시 표시) -->
+  <div class="password-modal" id="passwordModal">
+    <div class="password-container">
+      <h2>보안 시스템</h2>
+      <p>이번 졸업여행의 목적지를 입력하세요.</p>
+      <div class="password-input-container">
+        <input type="password" id="passwordInput" placeholder="비밀번호 입력" maxlength="5">
+        <button id="submitPassword">확인</button>
+      </div>
+      <div class="password-hint">
+        <span id="passwordHint">티켓을 확인하세요.</span>
+      </div>
+      <div class="error-message" id="errorMessage"></div>
+    </div>
+  </div>
+  
+  <!-- 오디오 푸터 -->
+  <footer class="audio-footer">
+    <div class="audio-title">Ocean Waves</div>
     <button id="wave-sound-play" class="media-btn">▶</button>
     <div class="controls-group">
       <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="50">
     </div>
-  </div>
+  </footer>
   
   <script src="src/scripts/status-config.js"></script>
   <script src="src/scripts/audio.js"></script>
   <script src="src/scripts/script.js"></script>
+  <script src="src/scripts/modal.js"></script>
 </body>
 </html>

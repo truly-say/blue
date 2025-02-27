@@ -24,7 +24,7 @@ const STATUS_CONFIG = {
             
             // 이도윤 상태
             "이도윤이 휴대폰 문자를 보고 있습니다": this.getImagePath('3이도윤.png'),
-            "이도윤이 깊은 생각에 잠깁니다": this.getImagePath('3이도윤.png'),
+            "이도윤이 생각에 잠깁니다": this.getImagePath('3이도윤.png'),
             "이도윤이 사라진 물건을 찾고 있습니다": this.getImagePath('3이도윤.png'),
             
             // 구해늘 상태
@@ -39,13 +39,13 @@ const STATUS_CONFIG = {
             
             // 남현우 상태
             "남현우가 서류를 준비하고 있습니다": this.getImagePath('3남현우.png'),
-            "남현우가 의자를 뒤로 젖힌 채 천장을 보고 있습니다": this.getImagePath('3남현우.png'),
+            "남현우가 천장을 보고 있습니다": this.getImagePath('3남현우.png'),
             "남현우가 농담을 던지고 반응을 보고 있습니다": this.getImagePath('3남현우.png'),
             
             // 이겨울 상태
             "이겨울이 출근하고 있습니다": this.getImagePath('3이겨울.png'),
             "이겨울이 일정을 확인하고 있습니다": this.getImagePath('3이겨울.png'),
-            "이겨울이 참새를 잡았습니다 ": this.getImagePath('3이겨울.png'),
+            "이겨울이 참새를 잡았습니다": this.getImagePath('3이겨울.png'),
             
             // 연해령 상태
             "연해령이 시스템을 점검하고 있습니다": this.getImagePath('3연해령.png'),
@@ -63,14 +63,14 @@ const STATUS_CONFIG = {
             "[신원 미상]이 카메라 메모리를 확인하고 있습니다": this.getImagePath('선청고등학교.png'),
             
             // 현진우 상태
-            "현진우가 눈을 마주치지 않고 고개를 돌립니다": this.getImagePath('3현진우.png'),
+            "현진우가 고개를 돌립니다": this.getImagePath('3현진우.png'),
             "현진우가 누군가와 대화를 나누고 있습니다": this.getImagePath('3현진우.png'),
-            "현진우가 눈을 감고 가만히 앉아 있습니다": this.getImagePath('3현진우.png'),
+            "현진우가 가만히 앉아 있습니다": this.getImagePath('3현진우.png'),
             
             // 관리자 상태
             "관리자가 참여자의 데이터를 확인하고 있습니다": this.getImagePath('3은이연.png'),
             "관리자: 이미 사용된 암호가 여기서도 쓰이는 건 진부할까요?": this.getImagePath('3은이연.png'),
-            "관리자: 이전에 제 코드 일부가 유출됐던 것 같네요.": this.getImagePath('3은이연.png')
+            "관리자: 이전에 제 코드 일부가 유출됐던 것 같네요": this.getImagePath('3은이연.png')
         };
     },
 
