@@ -1,0 +1,428 @@
+/* src/styles/map.css - 모바일 최적화 버전 */
+/* Cruise Ship Map 스타일 */
+
+.map-container {
+    position: relative;
+    margin: 20px auto 80px; /* 푸터를 위한 하단 여백 확보 */
+    width: 95%;
+    max-width: 1000px;
+    background: rgba(10, 20, 40, 0.5);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(100, 150, 200, 0.2);
+    z-index: 10;
+  }
+  
+  /* 모바일 전용 장식 SVG */
+  .mobile-decoration {
+    width: 100%;
+    display: none; /* 기본적으로는 숨김 (데스크톱에서는 표시하지 않음) */
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .mobile-ship-svg {
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+  }
+  
+  .mobile-wave {
+    animation: mobile-wave-animation 8s ease-in-out infinite alternate;
+  }
+  
+  .mobile-wave-back {
+    animation: mobile-wave-animation 12s ease-in-out infinite alternate-reverse;
+  }
+  
+  .mobile-ship-hull {
+    animation: ship-float 6s ease-in-out infinite;
+  }
+  
+  @keyframes mobile-wave-animation {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+    100% { transform: translateY(0); }
+  }
+  
+  @keyframes ship-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+  
+  /* 모바일 전용 세로형 레이아웃 */
+  .mobile-deck-list {
+    width: 100%;
+    display: none; /* 기본적으로는 숨김 (데스크톱에서는 SVG 표시) */
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .mobile-deck-item {
+    background: #102030;
+    border: 2px solid #4080a0;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .mobile-deck-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(64, 128, 160, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 1.5s ease;
+  }
+  
+  .mobile-deck-item:hover::before, 
+  .mobile-deck-item.active::before {
+    transform: translateX(100%);
+  }
+  
+  .mobile-deck-item:hover, .mobile-deck-item.active {
+    background: #1a3045;
+    border-color: #5090b0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .mobile-deck-item.active {
+    background: #20405a;
+  }
+  
+  .deck-number {
+    font-weight: bold;
+    color: #4080a0;
+    font-size: 1.1rem;
+  }
+  
+  .deck-title {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  /* 데스크톱 전용 SVG 맵 */
+  .desktop-map {
+    width: 100%;
+    display: block; /* 기본적으로 데스크톱에서 보임 */
+  }
+  
+  /* SVG 지도 스타일 */
+  #cruise-map {
+    width: 100%;
+    max-width: 950px;
+    min-height: 600px;
+    margin-bottom: 20px;
+    transition: all 0.5s ease;
+  }
+  
+  /* 선박 층 스타일 */
+  .deck {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .deck:hover {
+    filter: brightness(1.5);
+    transform: translateY(-3px);
+  }
+  
+  .deck.active {
+    filter: brightness(1.8);
+    stroke-width: 3px;
+  }
+  
+  /* 층 구분을 더 명확하게 하기 위한 스타일 */
+  .deck rect {
+    fill: #102030;
+    stroke: #4080a0;
+    transition: all 0.3s ease;
+  }
+  
+  .deck:hover rect {
+    fill: #1a3045;
+  }
+  
+  .deck.active rect {
+    fill: #2a4055;
+  }
+  
+  /* 선박 외형 스타일 */
+  .ship-outline {
+    transition: all 0.5s ease;
+  }
+  
+  /* 물결 효과 애니메이션 */
+  .water-effect {
+    animation: water-movement 10s ease-in-out infinite alternate;
+  }
+  
+  @keyframes water-movement {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+  }
+  
+  /* 정보 패널 스타일 */
+  .deck-info-panel {
+    background: rgba(15, 30, 50, 0.9);
+    border-radius: 10px;
+    padding: 0;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    margin: 20px auto;
+    overflow: hidden;
+    border: 1px solid rgba(100, 150, 200, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+  }
+  
+  .deck-info-panel.visible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+  
+  /* 정보 패널 헤더 */
+  .deck-info-header {
+    background: rgba(20, 40, 70, 0.8);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(100, 150, 200, 0.3);
+  }
+  
+  #deck-title {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: rgba(200, 220, 255, 0.8);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: all 0.3s ease;
+  }
+  
+  .close-button:hover {
+    color: #fff;
+    transform: scale(1.1);
+  }
+  
+  /* 정보 패널 콘텐츠 */
+  .deck-info-content {
+    padding: 20px;
+  }
+  
+  #deck-description {
+    color: rgba(200, 220, 255, 0.9);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  /* 시설 목록 스타일 */
+  .deck-facilities {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(100, 150, 200, 0.2);
+  }
+  
+  .deck-facilities.hidden {
+    display: none;
+  }
+  
+  .deck-facilities h3 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+  
+  #facility-list {
+    list-style-type: none;
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  
+  #facility-list li {
+    color: rgba(200, 220, 255, 0.9);
+    padding: 8px 10px;
+    background: rgba(30, 50, 80, 0.5);
+    border-radius: 5px;
+    border-left: 3px solid #4080a0;
+    transition: all 0.3s ease;
+  }
+  
+  #facility-list li:hover {
+    background: rgba(40, 70, 100, 0.7);
+    transform: translateX(5px);
+  }
+  
+  /* 사건 목록 스타일 */
+  .deck-events {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(100, 150, 200, 0.2);
+  }
+  
+  .deck-events.hidden {
+    display: none;
+  }
+  
+  .deck-events h3 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+  
+  #event-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  #event-list li {
+    color: rgba(200, 220, 255, 0.9);
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    background: rgba(30, 50, 80, 0.5);
+    border-radius: 5px;
+    border-left: 3px solid #4080a0;
+    transition: all 0.3s ease;
+  }
+  
+  #event-list li:hover {
+    background: rgba(40, 70, 100, 0.7);
+    transform: translateX(5px);
+  }
+  
+  /* 반응형 스타일 - 모바일 최적화 */
+  @media (max-width: 768px) {
+    .map-container {
+      padding: 15px;
+      margin-bottom: 100px; /* 모바일에서 푸터 여백 더 확보 */
+    }
+    
+    /* 모바일에서는 장식 SVG와 세로형 레이아웃 표시, 데스크톱 SVG 맵 숨김 */
+    .mobile-decoration {
+      display: flex;
+    }
+    
+    .mobile-deck-list {
+      display: flex;
+    }
+    
+    .desktop-map {
+      display: none;
+    }
+    
+    .deck-number {
+      font-size: 1rem;
+    }
+    
+    .deck-title {
+      font-size: 1rem;
+      text-align: right;
+    }
+    
+    .deck-info-panel {
+      margin-top: 10px;
+    }
+    
+    #deck-title {
+      font-size: 1.1rem;
+    }
+    
+    .deck-info-content {
+      padding: 15px;
+    }
+    
+    #facility-list {
+      grid-template-columns: 1fr;
+    }
+    
+    .hero-section h1 {
+      font-size: 1.8rem;
+    }
+    
+    .subtitle {
+      font-size: 1rem;
+    }
+    
+    /* 모바일에서 정보 패널 보기 좋게 조정 */
+    .deck-info-panel.visible {
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    /* 모바일에서 패널 내부 스크롤 지원 */
+    .deck-info-content {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+  }
+  
+  /* 가로 모드 모바일 대응 */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .map-container {
+      margin-bottom: 70px;
+    }
+    
+    /* 가로 모드에서는 세로형 레이아웃과 SVG 맵 간격 조정 */
+    .mobile-deck-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    
+    .mobile-deck-item {
+      padding: 10px;
+    }
+    
+    .deck-info-panel.visible {
+      max-height: 70vh;
+    }
+    
+    .deck-info-content {
+      max-height: 50vh;
+    }
+    
+    .hero-section {
+      padding: 10px;
+    }
+    
+    .hero-section h1 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+    
+    .subtitle {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+  }

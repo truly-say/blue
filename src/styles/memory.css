@@ -1,0 +1,266 @@
+/* src/styles/memory.css */
+/* 메모리 페이지 스타일 - 사이버틱 느낌 최소화 */
+
+/* 테마 변수 */
+:root { 
+  --deep-sea: #003a5c;
+  --winter-night: #0a1725;
+  --frost-blue: #8ad0ea;
+  --ice-white: rgba(255, 255, 255, 0.9);
+  --mist-gray: rgba(255, 255, 255, 0.3);
+  --ocean-gradient: linear-gradient(180deg, var(--deep-sea) 0%, var(--winter-night) 100%);
+  --frost-glass: rgba(10, 21, 32, 0.95);
+  --frost-border: rgba(120, 170, 200, 0.2);
+  --frost-shadow: rgba(120, 170, 200, 0.1);
+}
+
+html, body {
+  overflow: hidden !important; /* 스크롤 문제 해결을 위한 중요 속성 추가 */
+  height: 100%; /* 높이 명시적 지정 */
+  margin: 0;
+  padding: 0;
+  position: fixed; /* 추가: 스크롤 방지를 위해 */
+  width: 100%;
+}
+
+/* 메인 컨테이너 */
+.archive-container {
+  position: fixed; /* fixed로 변경하여 스크롤 이슈 해결 */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--ocean-gradient);
+  overflow: hidden;
+}
+
+/* 섹션 스타일 */
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute; /* absolute로 변경 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 80px 20px;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none; /* 비활성 섹션은 이벤트 무시 */
+  z-index: 1;
+}
+
+.section.active {
+  opacity: 1;
+  pointer-events: auto; /* 활성 섹션만 이벤트 허용 */
+  z-index: 2;
+}
+
+.section-content {
+  max-width: 1200px;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease;
+}
+
+.section.active .section-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 네비게이션 메뉴 */
+.floating-menu {
+  position: fixed;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 100;
+  background: rgba(10, 30, 60, 0.2);
+  padding: 15px 8px;
+  border-radius: 20px;
+}
+
+.menu-item {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu-item.active {
+  background: var(--frost-blue);
+  box-shadow: 0 0 5px var(--frost-blue);
+}
+
+/* 터미널 창 - 덜 사이버틱하게 */
+.terminal-window {
+  background: rgba(10, 30, 60, 0.7);
+  border: 1px solid var(--frost-border);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: 'Noto Sans KR', sans-serif, monospace;
+  color: #d0e8f0;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.terminal-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(30, 60, 90, 0.4);
+  padding: 8px;
+  font-size: 0.9em;
+  color: #a0cee0;
+  border-bottom: 1px solid var(--frost-border);
+}
+
+.terminal-content {
+  margin-top: 30px;
+}
+
+.terminal-text {
+  white-space: pre-line;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: #a0cee0;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+/* 메시지와 특별 텍스트 */
+.final-message {
+  text-align: center;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-top: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s ease;
+  font-family: 'Noto Sans KR', sans-serif;
+  display: none; /* 처음에는 보이지 않게 */
+}
+
+.final-message.visible {
+  opacity: 1;
+  transform: translateY(0);
+  display: block;
+}
+
+.secret-text {
+  font-family: monospace;
+  color: rgba(160, 200, 220, 0.5);
+  font-size: 0.8em;
+  margin-top: 20px;
+  margin-bottom: 60px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  text-align: center;
+  opacity: 0;
+}
+
+.secret-text.visible {
+  opacity: 1;
+}
+
+.secret-text:hover {
+  color: rgba(160, 200, 220, 1);
+}
+
+/* 눈 효과 */
+.snow-particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 바다 오버레이 - 더 자연스럽게 */
+.ocean-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to bottom, 
+    rgba(10, 40, 70, 0) 0%,
+    rgba(10, 40, 70, 0.2) 50%,
+    rgba(10, 40, 70, 0.4) 100%
+  );
+  pointer-events: none;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(to bottom,
+    rgba(100, 180, 220, 0) 0%,
+    rgba(100, 180, 220, 0.05) 50%,
+    rgba(100, 180, 220, 0.1) 100%
+  );
+  animation: wave 20s linear infinite;
+  transform-origin: center bottom;
+}
+
+.wave:nth-child(2) {
+  animation-delay: -5s;
+  opacity: 0.5;
+}
+
+.wave:nth-child(3) {
+  animation-delay: -10s;
+  opacity: 0.2;
+}
+
+/* 애니메이션 */
+@keyframes wave {
+  0% { transform: translateX(0) translateZ(0) scaleY(1) }
+  50% { transform: translateX(-25%) translateZ(0) scaleY(1.2) }
+  100% { transform: translateX(-50%) translateZ(0) scaleY(1) }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .floating-menu {
+    right: 10px;
+  }
+
+  .terminal-window {
+    margin: 0 10px;
+    font-size: 14px;
+  }
+  
+  .final-message {
+    font-size: 1.2rem;
+  }
+}

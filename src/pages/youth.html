@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="../styles/youth.css">
+  <title>미완성 청춘에게</title>
+</head>
+<body>
+  <div class="overlay"></div>
+  <!-- 네비게이션 바 구조 수정 -->
+  <nav class="navbar">
+    <a href="#" class="nav-logo">靑春</a>
+    <div class="nav-controls">
+      <div class="nav-time" id="current-datetime"></div>
+      <div class="nav-danger-level">survivor: 3</div>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <div class="winter-snow"></div>
+    <img src="../../assets/images/선청고등학교.png" alt="School Image" class="school-image-overlay" id="schoolImage">
+    
+    <section class="hero-section">
+      <div class="school-name">善淸高等學校</div>
+      <h1>미완성 청춘에게</h1>
+      <div class="subtitle">돌아보자면 이미 많은 길을 지나왔다.</div>
+    </section>
+
+    <div class="system-status">
+      <div class="status-gauge">
+        <div class="status-progress"></div>
+      </div>
+      <div class="status-text"></div>
+      <div id="progress-text"></div>
+    </div>
+
+    <section class="info-section">
+      <div class="info-card glitch-hover" onclick="location.href='/'">
+        <div class="info-card-inner">
+          <h3>회상하기</h3>
+          <p>14기의 기억을 더듬습니다</p>
+          <div class="card-overlay"></div>
+        </div>
+      </div>
+      <div class="info-card glitch-hover" onclick="location.href='youth-timeline.html'">
+        <div class="info-card-inner">
+          <h3>타임라인</h3>
+          <p>2028.01.07 ~ 2028.02.08</p>
+          <div class="card-overlay"></div>
+        </div>
+      </div>
+      <div class="info-card glitch-hover" onclick="location.href='credits.html'">
+        <div class="info-card-inner">
+          <h3>마지막</h3>
+          <p>미완성 청춘에게</p>
+          <div class="card-overlay"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Snow effect
+    const snowContainer = document.querySelector(".winter-snow");
+    const snowflakeCount = 100;
+    
+    for (let i = 0; i < snowflakeCount; i++) {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.opacity = `${0.4 + Math.random() * 0.6}`;
+      snowflake.style.width = snowflake.style.height = `${3 + Math.random() * 4}px`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      snowflake.style.animationDuration = `${10 + Math.random() * 20}s`;
+      snowContainer.appendChild(snowflake);
+    }
+
+    // Image glitch effect
+    const schoolImage = document.getElementById('schoolImage');
+    
+    function glitchEffect() {
+      if (!schoolImage) return;
+      
+      schoolImage.classList.add('glitching');
+      schoolImage.src = '../../assets/images/홍련.png';
+      
+      setTimeout(() => {
+        schoolImage.src = '../../assets/images/선청고등학교.png';
+        schoolImage.classList.remove('glitching');
+      }, 300);
+    }
+
+    // Glitch effect interval
+    setInterval(() => {
+      if (Math.random() < 0.3) {
+        glitchEffect();
+      }
+    }, 2000);
+
+    // 시간 업데이트 - 수정된 부분
+    const timeDisplay = document.getElementById("current-datetime");
+    
+    // script.js의 타이머 제거 (충돌 방지)
+    if (window.timeUpdateInterval) {
+      clearInterval(window.timeUpdateInterval);
+    }
+    
+    // 이전 표시 시간을 저장할 변수
+    let lastTimeStr = "";
+    
+    function updateTime() {
+      const now = new Date();
+      
+      // index.html과 같은 포맷 사용 (년. 월. 일. 시:분)
+      const formattedTime = new Intl.DateTimeFormat('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).format(now);
+      
+      // 이전 시간과 다를 때만 DOM 업데이트
+      if (formattedTime !== lastTimeStr) {
+        timeDisplay.textContent = formattedTime;
+        lastTimeStr = formattedTime;
+      }
+    }
+
+    // 초기 시간 설정
+    updateTime();
+    
+    // 독립적인 타이머 사용 (script.js와 충돌 방지)
+    const youthTimeInterval = setInterval(updateTime, 1000);
+    
+    // 페이지 언로드 시 타이머 정리
+    window.addEventListener('beforeunload', () => {
+      clearInterval(youthTimeInterval);
+    });
+    
+    // script.js의 updateDateTime 함수 재정의 (충돌 방지)
+    window.updateDateTime = function() {
+      // youth.html에서는 아무 작업도 하지 않음
+    };
+    
+    // "youth" 키보드 입력 감지 추가
+    let keySequence = '';
+    const targetSequence = 'youth';
+    
+    document.addEventListener('keydown', (e) => {
+      // 현재 입력 문자 저장 (소문자로 통일)
+      keySequence += e.key.toLowerCase();
+      
+      // 입력 시퀀스가 너무 길어지면 초기화 (최대 10글자)
+      if (keySequence.length > 10) {
+        keySequence = keySequence.substring(keySequence.length - 10);
+      }
+      
+      // "youth" 입력 감지 시 reboot.html로 이동
+      if (keySequence.includes(targetSequence)) {
+        // 배경 깜박임 효과
+        document.body.classList.add('flash');
+        
+        // 약간의 딜레이 후 페이지 이동
+        setTimeout(() => {
+          window.location.href = 'reboot.html';
+        }, 500);
+      }
+    });
+  });
+  </script>
+  <script src="../scripts/script.js"></script>
+  <script src="../scripts/status-config2.js"></script>
+</body>
+</html>

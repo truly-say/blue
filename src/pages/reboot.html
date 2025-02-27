@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <title>SYSTEM REBOOT</title>
+  <style>
+    /* 기본 스타일 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #002a4e;
+      color: #ffffff;
+      font-family: 'Noto Sans KR', sans-serif, 'Courier New', monospace;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    
+    /* 화면 깜빡임 효과 - 줄임 */
+    .screen-flicker {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0000ff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10;
+      animation: flicker 8s infinite;
+    }
+    
+    @keyframes flicker {
+      0%, 97%, 100% {
+        opacity: 0;
+      }
+      98%, 99% {
+        opacity: 0.02;
+      }
+    }
+    
+    /* 준비 중 이미지 - 애니메이션 제거 및 효과 최소화 */
+    .image-container {
+      position: relative;
+      margin-bottom: 30px;
+    }
+    
+    .preparing-image {
+      max-width: 80%;
+      max-height: 50vh;
+    }
+    
+    /* 텍스트 효과 - 간소화 */
+    .status-text {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #4da6ff;
+      letter-spacing: 1px;
+    }
+    
+    .loading-text {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      position: relative;
+      margin-bottom: 40px;
+    }
+    
+    .loading-dots::after {
+      content: '';
+      animation: dots 1.5s infinite;
+    }
+    
+    @keyframes dots {
+      0%, 20% { content: '.'; }
+      40%, 60% { content: '..'; }
+      80%, 100% { content: '...'; }
+    }
+    
+    /* 돌아가기 버튼 - 심플하게 변경 */
+    .back-button {
+      padding: 10px 25px;
+      background: rgba(0, 100, 180, 0.2);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      font-family: 'Noto Sans KR', sans-serif, 'Courier New', monospace;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .back-button:hover {
+      background: rgba(0, 120, 200, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .back-button:active {
+      transform: translateY(1px);
+    }
+    
+    /* 배경 효과 - 최소화 */
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.05);
+      opacity: 0.4;
+      animation: scan 6s linear infinite;
+      pointer-events: none;
+      z-index: 5;
+    }
+    
+    @keyframes scan {
+      0% {
+        top: 0%;
+      }
+      100% {
+        top: 100%;
+      }
+    }
+    
+    /* 응답형 디자인 */
+    @media (max-width: 768px) {
+      .preparing-image {
+        max-width: 90%;
+      }
+      
+      .status-text {
+        font-size: 1.2rem;
+      }
+      
+      .loading-text {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen-flicker"></div>
+  <div class="scanline"></div>
+  
+  <div class="image-container">
+    <img src="../../assets/images/준비중.png" alt="준비 중" class="preparing-image">
+  </div>
+  
+  <div class="status-text">SYSTEM REBOOT IN PROGRESS</div>
+  <div class="loading-text">Initializing core modules<span class="loading-dots"></span></div>
+  
+  <button class="back-button" onclick="goBack()">돌아가기</button>
+  
+  <script>
+    // 돌아가기 버튼 함수
+    function goBack() {
+      window.location.href = 'youth.html';
+    }
+    
+    // 상태 텍스트 변경 - 효과 최소화
+    document.addEventListener('DOMContentLoaded', function() {
+      // 상태 텍스트 변경
+      const statusTexts = [
+        "SYSTEM REBOOT IN PROGRESS",
+        "INITIALIZING DATA TRANSFER",
+        "RECOVERING LOST MEMORIES",
+        "RECONNECTING NEURAL PATHWAYS",
+        "AWAITING NEXT INITIALIZATION"
+      ];
+      
+      let currentIndex = 0;
+      const statusElement = document.querySelector('.status-text');
+      
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % statusTexts.length;
+        statusElement.textContent = statusTexts[currentIndex];
+      }, 5000);
+    });
+  </script>
+</body>
+</html>

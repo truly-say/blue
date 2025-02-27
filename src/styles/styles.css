@@ -1,0 +1,309 @@
+/* 글꼴 불러오기 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@300;400;600&display=swap');
+@import url('components.css');
+@import url('base.css');
+@import url('glitch.css');
+
+/* 루트 변수 설정 */
+:root { 
+  /* 텍스트 효과 관련 */
+  --text-glitch: 0px;
+  --danger-level: 0;
+  
+  /* 폰트 패밀리 */
+  --primary-font: 'Noto Sans KR', sans-serif;
+  --accent-font: 'Montserrat', sans-serif;
+  
+  /* 파도 애니메이션 색상 */
+  --wave-color-1: rgba(0, 105, 148, 0.5);   /* 깊은 바다색 */
+  --wave-color-2: rgba(0, 169, 204, 0.3);   /* 밝은 해양색 */
+  --wave-color-3: rgba(32, 178, 170, 0.2);  /* 청록색 */
+  
+  /* 특수 효과 색상 */
+  --glitch-blue: #4affff;
+  --deep-background: #001f3f;
+}
+
+/* 섹션 레이아웃 */
+.hero-section, 
+.info-section {
+  position: relative;
+  z-index: 10;
+}
+
+/* 텍스트 스타일링 */
+body, 
+.status-text, 
+#progress-text {
+  font-family: var(--primary-font);
+}
+
+#progress-text {
+  font-family: monospace;
+  margin-top: 10px;
+}
+
+.status-text {
+  color: var(--ghostly-white, #fff);
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* 사이드 네비게이션 */
+.side-nav {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 15, 31, 0.7);
+  padding: 15px;
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+.side-nav-item {
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  display: block;
+  margin: 10px 0;
+  transition: color 0.3s ease;
+}
+
+.side-nav-item.active {
+  color: var(--glitch-blue);
+  font-weight: bold;
+}
+
+/* 호버 상세 정보 */
+.hover-detail {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 15, 31, 0.9);
+  padding: 15px;
+  display: none;
+  z-index: 10;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  border-radius: 0 0 15px 15px;
+}
+
+.timeline-section:hover .hover-detail {
+  display: block;
+}
+
+/* 진행 상태 표시 */
+.progress-bar {
+  background-color: var(--glitch-blue);
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+/* 애니메이션 정의 */
+@keyframes subtle-drift {
+  from { 
+    opacity: 0.6; 
+    transform: translateX(-5px); 
+  }
+  to { 
+    opacity: 0.8; 
+    transform: translateX(5px); 
+  }
+}
+
+@keyframes wave {
+  0% { 
+    transform: translateX(0); 
+  }
+  100% { 
+    transform: translateX(-1600px); 
+  }
+}
+
+@keyframes wave-undulate {
+  0%, 100% {
+    transform: 
+      translateX(-33.33%) 
+      scaleY(1) 
+      rotate(-2deg);
+  }
+  25% {
+    transform: 
+      translateX(-40%) 
+      scaleY(1.4) 
+      rotate(2deg);
+  }
+  50% {
+    transform: 
+      translateX(-50%) 
+      scaleY(1.2) 
+      rotate(-1deg);
+  }
+  75% {
+    transform: 
+      translateX(-45%) 
+      scaleY(1.5) 
+      rotate(1deg);
+  }
+}
+
+/* 메시지 오버레이 */
+.message-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: red;
+  padding: 1rem 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  z-index: 10000;
+  border: 2px solid red;
+  animation: fade-glitch 1s ease-out;
+}
+
+/* 오디오 푸터 */
+.audio-footer {
+  text-align: center;
+  color: rgba(228, 241, 254, 0.6);
+  font-size: 0.85rem;
+  margin-top: 12px;
+  font-style: italic;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 카드 컴포넌트 */
+.info-card {
+  background: rgba(0, 31, 63, 0.8);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.info-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.info-card p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* 모바일 반응형 */
+@media screen and (max-width: 768px) {
+  /* 컨테이너 관련 */
+  .container::before,
+  .container::after {
+    width: 40px;
+    opacity: 0.2;
+  }
+  
+  .container {
+    padding: 10px;
+  }
+  
+  /* 카운트다운 */
+  .countdown-numbers {
+    font-size: 1.5rem;
+  }
+  
+  /* 파도 효과 */
+  .waves {
+    height: 50px;
+  }
+  
+  /* 타이포그래피 */
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  /* 정보 섹션 */
+  .info-section {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+    gap: 1rem;
+  }
+  
+  .info-card {
+    min-height: 150px;
+    margin: 0.5rem 0;
+    padding: 1.5rem;
+  }
+  
+  .info-card h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* 카운트다운 스타일 */
+.countdown-numbers {
+  font-family: var(--accent-font);
+  font-size: 4rem;
+  font-weight: 600;
+  letter-spacing: -2px;
+  background: linear-gradient(45deg, #00b0ff, #0081cb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+/* 네비게이션 버튼 */
+.navigation-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.transition-button {
+  padding: 0.75rem 1.5rem;
+  font-family: var(--primary-font);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(74, 255, 255, 0.1);
+  border: 1px solid rgba(74, 255, 255, 0.3);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInButton 0.5s ease forwards;
+}
+
+.transition-button:hover {
+  background: rgba(74, 255, 255, 0.2);
+}
+
+@keyframes fadeInButton {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.transition-button.hidden {
+  display: none;
+}
