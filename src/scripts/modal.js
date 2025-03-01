@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         messageContainer.innerHTML = `
             <div class="date-message-content">
                 <h3>열람 제한</h3>
-                <p>이 컨텐츠는 2025년 3월 2일부터 열람이 가능합니다.</p>
+                <p>이 컨텐츠는 2025년 3월 9일부터 열람이 가능합니다.</p>
                 <button id="closeMessageBtn">확인</button>
             </div>
         `;
