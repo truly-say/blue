@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 상수
     const CORRECT_PASSWORD = 'YOUTH';
-    const UNLOCK_DATE = new Date('2025-03-02T00:00:00'); // 2025년 3월 2일에 열람 가능
+    const UNLOCK_DATE = new Date('2025-03-09T00:00:00'); // 2025년 3월 9일에 열람 가능
     
     // 메모리 카드 클릭 시 날짜 확인 후 모달 표시 또는 메시지 출력
     memoryCard.addEventListener('click', function(e) {

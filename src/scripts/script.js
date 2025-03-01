@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 날짜/시간 업데이트 함수
     function updateDateTime() {
         const now = new Date();
-        const departureDate = new Date('2025-03-02T00:00:00');
+        const departureDate = new Date('2025-03-09T00:00:00');
         const diff = departureDate - now;
     
         // 날짜 차이 계산
