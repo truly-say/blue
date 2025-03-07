@@ -11,57 +11,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 상수
     const CORRECT_PASSWORD = 'YOUTH';
-    const UNLOCK_DATE = new Date('2025-03-09T00:00:00'); // 2025년 3월 9일에 열람 가능
     
     // 메모리 카드 클릭 시 날짜 확인 후 모달 표시 또는 메시지 출력
     memoryCard.addEventListener('click', function(e) {
         e.preventDefault(); // 기본 이벤트 방지
         
-        // 현재 날짜가 열람 가능 날짜보다 이전인지 확인
-        const currentDate = new Date();
-        
-        if (currentDate < UNLOCK_DATE) {
-            // 아직 열람 불가능한 경우 알림 표시
-            showDateMessage();
-        } else {
-            // 열람 가능한 경우 비밀번호 모달 표시
-            openPasswordModal();
-        }
+        // 날짜 체크 없이 바로 비밀번호 모달 표시
+        openPasswordModal();
     });
     
-    // 날짜 메시지 표시 함수
-    function showDateMessage() {
-        // 기존 에러 메시지 컨테이너 활용하거나 새 메시지 창 생성
-        const messageContainer = document.createElement('div');
-        messageContainer.className = 'date-restriction-message';
-        messageContainer.innerHTML = `
-            <div class="date-message-content">
-                <h3>열람 제한</h3>
-                <p>이 컨텐츠는 2025년 3월 9일부터 열람이 가능합니다.</p>
-                <button id="closeMessageBtn">확인</button>
-            </div>
-        `;
-        
-        document.body.appendChild(messageContainer);
-        
-        // 확인 버튼 클릭 시 메시지 닫기
-        const closeBtn = document.getElementById('closeMessageBtn');
-        closeBtn.addEventListener('click', function() {
-            messageContainer.remove();
-        });
-        
-        // 배경 클릭 시 메시지 닫기
-        messageContainer.addEventListener('click', function(e) {
-            if (e.target === messageContainer) {
-                messageContainer.remove();
-            }
-        });
-        
-        // 애니메이션 효과를 위해 약간의 딜레이 후 표시
-        setTimeout(() => {
-            messageContainer.classList.add('visible');
-        }, 10);
-    }
     
     // 비밀번호 모달 열기
     function openPasswordModal() {

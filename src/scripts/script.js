@@ -9,6 +9,65 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.container');         // 메인 컨테이너
     const youthButton = document.getElementById('youth-button');    // 미완성 청춘으로 버튼
 
+    // 제목 클릭 이벤트 처리
+    const mainTitle = document.getElementById('main-title');
+    if (mainTitle) {
+        let clickCount = 0;
+        let timeout = null;
+
+        // 클릭 및 터치 이벤트 리스너 추가
+        mainTitle.addEventListener('click', handleTitleInteraction);
+        mainTitle.addEventListener('touchend', function (e) {
+            e.preventDefault(); // 더블 클릭 방지
+            handleTitleInteraction();
+        });
+
+        // 제목 상호작용 처리 함수
+        function handleTitleInteraction() {
+            // 클릭 카운트 증가
+            clickCount++;
+
+            // 시간 초과 설정 (여러 번 클릭을 하나의 시퀀스로 간주)
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                // 확률 계산 (3번 이상 클릭하면 30% 확률로 글리치 효과 적용)
+                if (clickCount >= 3 && Math.random() < 0.3) {
+                    applyTitleGlitchEffect();
+                }
+                // 클릭 카운트 초기화
+                clickCount = 0;
+            }, 500);
+        }
+
+        // 글리치 효과 및 텍스트 변경 함수 - BLUE LAM 스타일
+        function applyTitleGlitchEffect() {
+            // 간소화된 글리치 효과 클래스 추가
+            mainTitle.classList.add('simple-title-glitch');
+
+            // 텍스트 변경 ("청춘의 최종본"으로)
+            setTimeout(() => {
+                mainTitle.textContent = mainTitle.getAttribute('data-alternate');
+            }, 150);
+
+            // 잠시 후 원래 상태로 복원
+            setTimeout(() => {
+                mainTitle.classList.remove('simple-title-glitch');
+
+                setTimeout(() => {
+                    mainTitle.classList.add('simple-title-glitch');
+                    setTimeout(() => {
+                        mainTitle.textContent = mainTitle.getAttribute('data-original');
+
+                        // 글리치 효과 클래스 제거
+                        setTimeout(() => {
+                            mainTitle.classList.remove('simple-title-glitch');
+                        }, 150);
+                    }, 100);
+                }, 1500); // 1.5초 동안 "청춘의 최종본" 표시
+            }, 300);
+        }
+    }
+
     // youth-button 클릭 이벤트 추가
     if (youthButton) {
         youthButton.addEventListener('click', () => {
@@ -97,15 +156,15 @@ document.addEventListener('DOMContentLoaded', () => {
         async showImage(message) {
             const newImage = this.imageElements[message];
             if (!newImage) return;
-        
+
             // 제한된 접근 메시지 확인
             const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
-        
+
             // 이전 이미지가 있다면 페이드 아웃
             if (this.currentlyVisibleImage) {
                 await this.fadeOutImage(this.currentlyVisibleImage);
             }
-        
+
             // 새 이미지 페이드 인 (제한 접근 플래그 전달)
             await this.fadeInImage(newImage, isRestrictedAccess);
             this.currentlyVisibleImage = newImage;
@@ -126,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             image.style.visibility = 'visible';
             await new Promise(resolve => setTimeout(resolve, 50));
             image.style.opacity = '1';
-            
+
             // 제한된 접근 메시지일 때는 바운스 효과 적용하지 않음
             if (!isRestrictedAccess) {
                 // translateX(-50%)은 유지하면서 바운스 효과 적용
@@ -137,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 image.style.transform = 'translateX(-50%)'; // X축 중앙 정렬만 유지
                 image.classList.remove('bounce-active');
             }
-        }        
+        }
 
         // 프로그레스 바 애니메이션
         animateProgress(duration, targetProgress) {
@@ -227,13 +286,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = new Date();
         const departureDate = new Date('2025-03-09T00:00:00');
         const diff = departureDate - now;
-    
+
         // 날짜 차이 계산
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
+
         // 현재 시간 표시 업데이트
         if (timeDisplay) {
             timeDisplay.textContent = new Intl.DateTimeFormat('ko-KR', {
@@ -245,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hour12: false
             }).format(now);
         }
-    
+
         // 카운트다운 표시 업데이트
         if (countdownDisplay) {
             if (diff <= 0) {

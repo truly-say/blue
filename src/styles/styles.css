@@ -226,10 +226,13 @@ body,
   .countdown-numbers {
     font-size: 1.5rem;
   }
-  
-  /* 파도 효과 */
   .waves {
-    height: 50px;
+    height: 150px;
+  }
+  
+  .wave {
+    height: 150px;
+    background-size: 1600px 100px;
   }
   
   /* 타이포그래피 */
@@ -256,13 +259,6 @@ body,
   
   .info-card h3 {
     font-size: 1.3rem;
-  }
-  
-  /* 상태 이미지 오버레이 크기 조정 - 모바일에서 작게 표시 */
-  .status-image-overlay {
-    width: 100px !important;
-    height: 100px !important;
-    bottom: 140%; /* 프로그레스 바와 겹치지 않도록 위치 조정 */
   }
 }
 

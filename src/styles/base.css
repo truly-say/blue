@@ -122,10 +122,10 @@ h1 {
 .status-image-overlay {
   position: absolute;
   left: 50%;
-  bottom: 80%; /* 상태 게이지 바로 위에 위치하도록 설정 */
+  bottom: 70%; /* 상태 게이지 바로 위에 위치하도록 설정 */
   transform: translateX(-50%); /* 수평 중앙 정렬만 유지 */
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
@@ -153,40 +153,42 @@ h1 {
 }
 
 /* 파도 애니메이션 */
+/* 파도 애니메이션 - 끝 부분만 개선 */
 .waves {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 100px;
+  height: 150px; /* 약간만 높이 증가 */
   overflow: hidden;
   z-index: -1;
 }
 
 .wave {
   position: absolute;
-  bottom: 0;
+  bottom: -10px; /* 약간 아래로 내려 틈새 방지 */
   left: 0;
   width: 6400px;
-  height: 100px;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 100" preserveAspectRatio="none"><path fill="rgba(0,105,148,0.5)" d="M0 25 Q1600 75 3200 25 T6400 50 V100 H0z"/></svg>');
-  background-size: 1600px 100px;
+  height: 150px; /* 약간만 높이 증가 */
+  /* 기존 너울거림 유지하되 높이값 조정 */
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 120" preserveAspectRatio="none"><path fill="rgba(0,105,148,0.5)" d="M0 25 Q1600 75 3200 25 T6400 50 V120 H0z"/></svg>');
+  background-size: 1600px 120px;
   animation: wave 10s linear infinite;
   transform-origin: center bottom;
 }
 
 .wave:nth-child(2) {
-  bottom: 10px;
+  bottom: -10px; /* 통일된 bottom 값 */
   animation: wave 12s linear infinite;
   opacity: 0.75;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 100" preserveAspectRatio="none"><path fill="rgba(0,169,204,0.3)" d="M0 50 Q1600 25 3200 75 T6400 25 V100 H0z"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 120" preserveAspectRatio="none"><path fill="rgba(0,169,204,0.3)" d="M0 50 Q1600 25 3200 75 T6400 25 V120 H0z"/></svg>');
 }
 
 .wave:nth-child(3) {
-  bottom: 20px;
+  bottom: -10px; /* 통일된 bottom 값 */
   animation: wave 15s linear infinite;
   opacity: 0.5;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 100" preserveAspectRatio="none"><path fill="rgba(32,178,170,0.2)" d="M0 75 Q1600 50 3200 25 T6400 75 V100 H0z"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6400 120" preserveAspectRatio="none"><path fill="rgba(32,178,170,0.2)" d="M0 75 Q1600 50 3200 25 T6400 75 V120 H0z"/></svg>');
 }
 
 /* 진행률 및 카운트다운 */
@@ -256,9 +258,7 @@ h1 {
 /* 모바일 뷰에서 상태 이미지 위치 조정 */
 @media (max-width: 768px) {
   .status-image-overlay {
-    width: 80px !important;
-    height: 80px !important;
-    bottom: 100% !important; /* 게이지 바 바로 위 */
+    bottom: 90% !important; /* 게이지 바 바로 위 */
   }
   
   .system-status {

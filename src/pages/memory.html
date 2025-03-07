@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="../styles/styles.css">
   <link rel="stylesheet" href="../styles/memory.css">
   <link rel="stylesheet" href="../styles/audio-footer.css">
-  <link rel="stylesheet" href="../styles/date-restriction.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
 </head>
 <body>
@@ -203,47 +202,7 @@
     </div>
   </footer>
   <script>
-    // 페이지 로드 시 날짜 확인
     document.addEventListener('DOMContentLoaded', function() {
-      // 열람 가능 날짜 설정
-      const UNLOCK_DATE = new Date('2025-03-09T00:00:00'); // 2025년 3월 9일
-      const currentDate = new Date();
-      
-      // 현재 날짜가 열람 가능 날짜보다 이전인지 확인
-      if (currentDate < UNLOCK_DATE) {
-        // 접근 제한 메시지 생성
-        const restrictionMessage = document.createElement('div');
-        restrictionMessage.className = 'access-restriction-message';
-        restrictionMessage.innerHTML = `
-          <div class="restriction-content">
-            <h2>접근 제한</h2>
-            <p>이 페이지는 2025년 3월 9일부터 열람이 가능합니다.</p>
-            <button id="backButton">메인으로 돌아가기</button>
-          </div>
-        `;
-        
-        // 기존 컨텐츠 숨기기
-        document.querySelector('.archive-container').style.display = 'none';
-        document.querySelector('.audio-footer').style.display = 'none';
-        
-        // 메시지 표시
-        document.body.appendChild(restrictionMessage);
-        
-        // 버튼 이벤트 리스너 추가
-        document.getElementById('backButton').addEventListener('click', function() {
-          window.location.href = '../../index.html';
-        });
-        
-        // 애니메이션 효과를 위해 약간의 딜레이 후 표시
-        setTimeout(() => {
-          restrictionMessage.classList.add('visible');
-        }, 10);
-        
-        // 기존 스크립트 실행 중단
-        return;
-      }
-      
-      // 날짜 확인 통과 시 기존 스크립트 계속 실행
       // 오디오 자동 재생 시도
       if (window.playWaveSound) {
         window.playWaveSound();
