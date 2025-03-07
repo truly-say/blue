@@ -122,17 +122,16 @@ h1 {
 .status-image-overlay {
   position: absolute;
   left: 50%;
-  bottom: 100%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
+  bottom: 80%; /* 상태 게이지 바로 위에 위치하도록 설정 */
+  transform: translateX(-50%); /* 수평 중앙 정렬만 유지 */
+  width: 100px;
+  height: 100px;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
   z-index: 10;
   object-fit: contain;
   pointer-events: none;
-  will-change: transform, opacity;
 }
 
 .status-image-overlay[data-loaded="true"] {
@@ -239,16 +238,36 @@ h1 {
   word-break: break-all;
 }
 
-/* 오버레이 바운스 애니메이션 */
+/* 바운스 애니메이션 수정 - 아래에서 위로 */
+@keyframes overlay-bounce {
+  0%, 100% { 
+    transform: translate(-50%, 0); /* 기본 위치 - X축 중앙, Y축 변화 없음 */
+  }
+  50% { 
+    transform: translate(-50%, -15px); /* 위로 올라가는 효과 */
+  }
+}
+
+/* 바운스 효과가 적용된 요소 */
 .bounce-active {
   animation: overlay-bounce 1.2s cubic-bezier(0.36, 0, 0.66, -0.56) infinite;
 }
 
-@keyframes overlay-bounce {
-  0%, 100% { 
-    transform: translate(-50%, 50%) translateY(0);
+/* 모바일 뷰에서 상태 이미지 위치 조정 */
+@media (max-width: 768px) {
+  .status-image-overlay {
+    width: 80px !important;
+    height: 80px !important;
+    bottom: 100% !important; /* 게이지 바 바로 위 */
   }
-  50% { 
-    transform: translate(-50%, 50%) translateY(-15px);
+  
+  .system-status {
+    position: relative;
+    margin: 2rem 0;
+    min-height: 150px; /* 여유 공간 확보 */
+  }
+  
+  .bounce-active {
+    animation: overlay-bounce 1.2s cubic-bezier(0.36, 0, 0.66, -0.56) infinite;
   }
 }

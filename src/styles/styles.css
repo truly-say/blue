@@ -1,3 +1,4 @@
+/* src/styles/styles.css */
 /* 글꼴 불러오기 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@300;400;600&display=swap');
 @import url('components.css');
@@ -46,7 +47,7 @@ body,
 .status-text {
   color: var(--ghostly-white, #fff);
   font-size: 1.5rem;
-  letter-spacing: 0.5rem;
+  letter-spacing: 0.2rem; /* 글자 간격 줄임 (0.5rem에서 0.2rem으로 변경) */
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -255,6 +256,13 @@ body,
   
   .info-card h3 {
     font-size: 1.3rem;
+  }
+  
+  /* 상태 이미지 오버레이 크기 조정 - 모바일에서 작게 표시 */
+  .status-image-overlay {
+    width: 100px !important;
+    height: 100px !important;
+    bottom: 140%; /* 프로그레스 바와 겹치지 않도록 위치 조정 */
   }
 }
 

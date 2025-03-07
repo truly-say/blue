@@ -26,14 +26,14 @@ const STATUS_CONFIG = {
             "최예슬이 책상 위 물건들을 정리하고 있습니다": this.getImagePath('커컥커.png'),
             
             // 사망자 상태
-            "[신혜련의 생명 신호 감지되지 않음]": this.getImagePath('선청고등학교.png'),
-            "[선지현의 생명 신호 감지되지 않음]": this.getImagePath('선청고등학교.png'),
-            "[청검수의 생명 신호 감지되지 않음]": this.getImagePath('선청고등학교.png'),
+            "[신혜련의 생명 신호 감지되지 않음]": this.getImagePath('뭐야.png'),
+            "[선지현의 생명 신호 감지되지 않음]": this.getImagePath('청소.png'),
+            "[청검수의 생명 신호 감지되지 않음]": this.getImagePath('낙준.png'),
             
             // 성주안 상태
-            "성주안이 노트에 무언가를 적고 있습니다": this.getImagePath('선청고등학교.png'),
-            "성주안이 부탁 받은 일은 도와주고 있습니다": this.getImagePath('선청고등학교.png'),
-            "성주안이 주변 사람들의 행동을 보고 있습니다": this.getImagePath('선청고등학교.png'),
+            "성주안이 노트에 무언가를 적고 있습니다": this.getImagePath('주안.png'),
+            "성주안이 부탁 받은 일은 도와주고 있습니다": this.getImagePath('주안.png'),
+            "성주안이 주변 사람들의 행동을 보고 있습니다": this.getImagePath('주안.png'),
             
             // 이도윤 상태
             "이도윤이 문을 열고 집을 나설 준비를 합니다": this.getImagePath('끼끼.png'),
@@ -46,9 +46,9 @@ const STATUS_CONFIG = {
             "구해늘이 집중하는 듯 침묵을 지키고 있습니다": this.getImagePath('해팔.png'),
             
             // 유민 상태
-            "유민이 다른 사람의 말을 경청하고 있습니다": this.getImagePath('선청고등학교.png'),
-            "유민이 상대의 행동을 지적하고 있습니다": this.getImagePath('선청고등학교.png'),
-            "유민이 가볍게 아침을 때우고 있습니다": this.getImagePath('선청고등학교.png'),
+            "유민이 다른 사람의 말을 경청하고 있습니다": this.getImagePath('유민.png'),
+            "유민이 상대의 행동을 지적하고 있습니다": this.getImagePath('유민.png'),
+            "유민이 가볍게 아침을 때우고 있습니다": this.getImagePath('유민.png'),
             
             // 천여울 상태
             "[11기 졸업생]이 잠에서 깼습니다": this.getImagePath('토끼.png'),
@@ -66,24 +66,24 @@ const STATUS_CONFIG = {
             "[신원 미상]이 업무 이메일을 읽고 있습니다": this.getImagePath('겨ㅇ비.png'),
             
             // 연해령 상태
-            "연해령이 모델 설계 및 개발을 하고 있습니다": this.getImagePath('선청고등학교.png'),
-            "연해령이 책상에 엎드려 자고 있습니다": this.getImagePath('선청고등학교.png'),
-            "연해령이 산책 중 만난 강아지를 쓰다듬고 있습니다": this.getImagePath('선청고등학교.png'),
+            "연해령이 모델 설계 및 개발을 하고 있습니다": this.getImagePath('이불.png'),
+            "연해령이 책상에 엎드려 자고 있습니다": this.getImagePath('이불.png'),
+            "연해령이 산책 중 만난 강아지를 쓰다듬고 있습니다": this.getImagePath('이불.png'),
             
             // 이지훈 상태
-            "이지훈이 누군가의 생사를 확인하고 있습니다": this.getImagePath('선청고등학교.png'),
-            "이지훈이 거울을 보고 있습니다": this.getImagePath('선청고등학교.png'),
-            "이지훈이 상황 파악을 하고 있습니다": this.getImagePath('선청고등학교.png'),
+            "이지훈이 누군가의 생사를 확인하고 있습니다": this.getImagePath('와인.png'),
+            "이지훈이 거울을 보고 있습니다": this.getImagePath('와인.png'),
+            "이지훈이 상황 파악을 하고 있습니다": this.getImagePath('와인.png'),
             
             // 단하율 상태
-            "단하율이 취재를 준비하고 있습니다": this.getImagePath('선청고등학교.png'),
-            "단하율이 14기에게 연락을 시도하고 있습니다": this.getImagePath('선청고등학교.png'),
-            "단하율이 자료를 정리하고 있습니다": this.getImagePath('선청고등학교.png'),
+            "단하율이 취재를 준비하고 있습니다": this.getImagePath('기자.png'),
+            "단하율이 14기에게 연락을 시도하고 있습니다": this.getImagePath('기자.png'),
+            "단하율이 자료를 정리하고 있습니다": this.getImagePath('기자.png'),
             
             // 현진우 상태
-            "현진우가 슬기로운 감빵 생활 중입니다": this.getImagePath('선청고등학교.png'),
-            "현진우가 교도관 옆에서 밥을 먹고 있습니다": this.getImagePath('선청고등학교.png'),
-            "현진우가 침대에서 뒤척거리고 있습니다": this.getImagePath('선청고등학교.png'),
+            "현진우가 슬기로운 감빵 생활 중입니다": this.getImagePath('마녀.png'),
+            "현진우가 교도관 옆에서 밥을 먹고 있습니다": this.getImagePath('마녀.png'),
+            "현진우가 침대에서 뒤척거리고 있습니다": this.getImagePath('마녀.png'),
             
             // 관리자 상태
             "y_pred = model.predict(X_test)": this.getImagePath('살구.png')

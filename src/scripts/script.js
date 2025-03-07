@@ -97,14 +97,17 @@ document.addEventListener('DOMContentLoaded', () => {
         async showImage(message) {
             const newImage = this.imageElements[message];
             if (!newImage) return;
-
+        
+            // 제한된 접근 메시지 확인
+            const isRestrictedAccess = message === "y_pred = model.predict(X_test)";
+        
             // 이전 이미지가 있다면 페이드 아웃
             if (this.currentlyVisibleImage) {
                 await this.fadeOutImage(this.currentlyVisibleImage);
             }
-
-            // 새 이미지 페이드 인
-            await this.fadeInImage(newImage);
+        
+            // 새 이미지 페이드 인 (제한 접근 플래그 전달)
+            await this.fadeInImage(newImage, isRestrictedAccess);
             this.currentlyVisibleImage = newImage;
         }
 
@@ -112,17 +115,29 @@ document.addEventListener('DOMContentLoaded', () => {
         async fadeOutImage(image) {
             image.style.opacity = '0';
             image.classList.remove('bounce-active');
+            // 애니메이션 클래스 제거 후 기본 위치로 복원
+            image.style.transform = 'translateX(-50%)';
             await new Promise(resolve => setTimeout(resolve, this.config.animationDuration));
             image.style.visibility = 'hidden';
         }
 
         // 이미지 페이드 인 효과
-        async fadeInImage(image) {
+        async fadeInImage(image, isRestrictedAccess = false) {
             image.style.visibility = 'visible';
             await new Promise(resolve => setTimeout(resolve, 50));
             image.style.opacity = '1';
-            image.classList.add('bounce-active');
-        }
+            
+            // 제한된 접근 메시지일 때는 바운스 효과 적용하지 않음
+            if (!isRestrictedAccess) {
+                // translateX(-50%)은 유지하면서 바운스 효과 적용
+                image.style.transform = 'translateX(-50%)'; // 기본 X축 중앙 정렬 유지
+                image.classList.add('bounce-active');
+            } else {
+                // 제한된 접근의 경우 바운스 효과 없이 기본 위치 유지
+                image.style.transform = 'translateX(-50%)'; // X축 중앙 정렬만 유지
+                image.classList.remove('bounce-active');
+            }
+        }        
 
         // 프로그레스 바 애니메이션
         animateProgress(duration, targetProgress) {
