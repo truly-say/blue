@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>   
+
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <link rel="icon" href="../../assets/images/홍련.png">
   <link rel="stylesheet" href="../styles/styles.css">
   <link rel="stylesheet" href="../styles/youth.css">
-  <title>미완성 시간선</title>
+  <title>미완성 청춘에게</title>
   <style>
     /* 타임라인 페이지 전용 스타일 */
     .timeline-page-container {
@@ -15,17 +16,17 @@
       margin: 0 auto;
       padding: 2rem 1rem;
     }
-    
+
     .timeline-header {
       text-align: center;
       margin-bottom: 3rem;
     }
-    
+
     .timeline-header h1 {
       font-size: clamp(2.5rem, 6vw, 3.5rem);
       margin-bottom: 1rem;
     }
-    
+
     .timeline-header .subtitle {
       font-size: clamp(1.1rem, 2.5vw, 1.4rem);
       opacity: 0.8;
@@ -33,12 +34,12 @@
       margin: 0 auto;
       line-height: 1.6;
     }
-    
+
     .detailed-timeline {
       position: relative;
       margin: 3rem 0;
     }
-    
+
     .detailed-timeline::before {
       content: '';
       position: absolute;
@@ -48,25 +49,26 @@
       width: 2px;
       background: rgba(255, 255, 255, 0.15);
     }
-    
+
     .timeline-entry {
       position: relative;
       margin-bottom: 4rem;
       width: 100%;
       display: flex;
     }
-    
+
     /* 왼쪽/오른쪽 배치 수정 */
     .timeline-entry:nth-child(odd) {
       justify-content: flex-start;
     }
-    
+
     .timeline-entry:nth-child(even) {
       justify-content: flex-end;
     }
-    
+
     .timeline-entry-content {
-      width: 45%; /* 가로 너비 조정 */
+      width: 45%;
+      /* 가로 너비 조정 */
       background: rgba(43, 74, 117, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
@@ -76,13 +78,13 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
-    
+
     .timeline-entry-content:hover {
       transform: translateY(-5px);
       background: rgba(43, 74, 117, 0.8);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
-    
+
     .timeline-marker {
       position: absolute;
       left: 50%;
@@ -96,7 +98,7 @@
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
       z-index: 2;
     }
-    
+
     .timeline-date {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.1rem;
@@ -106,20 +108,20 @@
       font-weight: 500;
       letter-spacing: 0.5px;
     }
-    
+
     .timeline-title {
       font-size: 1.5rem;
       color: #fff;
       margin-bottom: 1rem;
     }
-    
+
     .timeline-description {
       color: rgba(255, 255, 255, 0.8);
       line-height: 1.7;
       font-size: 1rem;
       margin-bottom: 1rem;
     }
-    
+
     .memory-fragment {
       background: rgba(0, 0, 0, 0.2);
       padding: 1rem;
@@ -130,7 +132,7 @@
       position: relative;
       border-left: 3px solid rgba(168, 196, 224, 0.4);
     }
-    
+
     .memory-fragment::before {
       content: '"';
       position: absolute;
@@ -140,7 +142,7 @@
       color: rgba(168, 196, 224, 0.3);
       line-height: 1;
     }
-    
+
     /* 상단 이동 버튼 */
     .scroll-top-btn {
       position: fixed;
@@ -163,44 +165,44 @@
       transition: all 0.3s ease;
       z-index: 100;
     }
-    
+
     .scroll-top-btn.visible {
       opacity: 1;
       visibility: visible;
     }
-    
+
     .scroll-top-btn:hover {
       background: rgba(43, 74, 117, 1);
       transform: translateY(-5px);
     }
-    
+
     /* navbar 너비 조정 */
     .navbar {
       padding: 1rem;
       max-width: 100%;
       box-sizing: border-box;
     }
-    
+
     @media (max-width: 768px) {
       .detailed-timeline::before {
         left: 30px;
       }
-      
+
       .timeline-entry {
         flex-direction: column;
         justify-content: flex-start !important;
       }
-      
+
       .timeline-entry-content {
         width: 80%;
         margin-left: 60px !important;
       }
-      
+
       .timeline-marker {
         left: 30px;
         top: 30px;
       }
-      
+
       .scroll-top-btn {
         width: 40px;
         height: 40px;
@@ -209,8 +211,65 @@
         bottom: 20px;
       }
     }
+    @media (max-width: 320px) {
+
+      h1{
+        font-size: 2.1rem !important;
+      }
+        .timeline-entry-content {
+          width: 90%;
+          /* 더 넓게 확장 */
+          padding: 1rem;
+          /* 패딩 더 축소 */
+          margin-left: 30px !important;
+          /* 마진 더 축소 */
+        }
+
+        .timeline-marker {
+          left: 15px;
+          /* 마커 더 왼쪽으로 */
+          width: 10px;
+          /* 마커 더 작게 */
+          height: 10px;
+        }
+
+        .detailed-timeline::before {
+          left: 15px;
+          /* 중앙선 더 왼쪽으로 */
+        }
+
+        /* 텍스트 더 작게 */
+        .timeline-date {
+          font-size: 1rem;
+        }
+
+        .timeline-title {
+          font-size: 1.5rem;
+        }
+
+        .timeline-description {
+          font-size: 0.8rem;
+        }
+
+        .memory-fragment {
+          font-size: 0.8rem;
+          padding: 0.7rem;
+        }
+
+        /* 상단 여백 조정 - 제목이 상단 바에 가려지지 않도록 */
+        .timeline-header {
+          margin-top: 1rem;
+          margin-bottom: 2rem;
+        }
+
+        /* 중요 콘텐츠 강조 */
+        .timeline-title {
+          font-weight: bold;
+        }
+      }
   </style>
 </head>
+
 <body>
   <div class="overlay"></div>
   <!-- 네비게이션 바 -->
@@ -221,177 +280,182 @@
       <div class="nav-danger-level">timeline: active</div>
     </div>
   </nav>
-  
+
   <div class="container">
     <div class="timeline-page-container">
       <div class="timeline-header">
-        <h1>미완성 시간선</h1>
+        <h1>미완성 청춘에게</h1>
         <div class="subtitle">미완성인 우리들의 발자취.<br>모든 선택의 기록.</div>
       </div>
-      
+
       <div class="detailed-timeline">
         <div class="timeline-entry">
           <div class="timeline-marker"></div>
           <div class="timeline-entry-content">
             <span class="timeline-date">2028.01.08</span>
             <h3 class="timeline-title">참여자들 도착</h3>
-            <p class="timeline-description">안전 상(혹은 다른 이유로)의 이유로 각 참여자들의 선청고등학교 방문.</p>
-            <div class="memory-fragment">참여자들은 당분간 컨테이너에서 생활하도록 인도됨.</div>
+            <p class="timeline-description">안전 상의 이유로, 혹은 다른 사유로 인해 각 참여자들의 선청고등학교 방문.</p>
+            <div class="memory-fragment">참여자들은 일정 기간 동안 컨테이너에서 생활하도록 조치됨.</div>
           </div>
         </div>
-        
+
         <div class="timeline-entry">
           <div class="timeline-marker"></div>
           <div class="timeline-entry-content">
             <span class="timeline-date">2028.01.13</span>
             <h3 class="timeline-title">프로젝트 시작</h3>
-            <p class="timeline-description">귀가 시간이 되어 돌아가던 중 사건 발생.</p>
-            <div class="memory-fragment">레이저 결계 생성 및 프로젝트 관련 안내.</div>
+            <p class="timeline-description">귀가 시간이 되어 돌아가던 중 예상치 못한 돌발 상황 발생.</p>
+            <div class="memory-fragment">레이저가 생성되어 이동 구역이 제한되었으며, 프로젝트 관련 안내가 전달됨.</div>
           </div>
         </div>
-        
+
         <div class="timeline-entry">
           <div class="timeline-marker"></div>
           <div class="timeline-entry-content">
             <span class="timeline-date">2028.01.20</span>
             <h3 class="timeline-title">첫번째 경쟁</h3>
-            <p class="timeline-description">descriptiondescriptiondescription</p>
-            <div class="memory-fragment">fragmentfragmentfragment</div>
+            <p class="timeline-description">관리자의 지시에 따라 참여자들이 첫 번째 경쟁을 수행함. <br>—총 3라운드로 이루어져 있으며 지정된 장소에 지정된 인원만큼 수용
+              가능. 시간 내에 해당 장소에 들어가지 못할 시 탈락.</p>
+            <div class="memory-fragment">진행 결과: 총 5인 통과, 5인 낙오.</div>
           </div>
         </div>
-        
+
         <div class="timeline-entry">
           <div class="timeline-marker"></div>
           <div class="timeline-entry-content">
             <span class="timeline-date">2028.01.27</span>
             <h3 class="timeline-title">두번째 경쟁</h3>
-            <p class="timeline-description">descriptiondescriptiondescription</p>
-            <div class="memory-fragment">fragmentfragmentfragment</div>
+            <p class="timeline-description">프로젝트 총책임자의 지시에 따라 두 번째 경쟁이 진행됨. <br>—타인에게 입힌 부상도를 숫자로 환산. 같은 소속 별로 합산하여 최종값이
+              가장 높은 집안이 승리, 패배 시 패널티 부여.</p>
+            <div class="memory-fragment">모든 집단의 값이 같으면 무효 처리할 것을 안내했으나 결과적으로 해당 제안은 무산됨.</div>
           </div>
         </div>
-        
+
         <div class="timeline-entry">
           <div class="timeline-marker"></div>
           <div class="timeline-entry-content">
             <span class="timeline-date">2028.02.03</span>
-            <h3 class="timeline-title">기숙사 바리케이트 설치</h3>
-            <p class="timeline-description">descriptiondescriptiondescription</p>
-            <div class="memory-fragment">fragmentfragmentfragment</div>
+            <h3 class="timeline-title">조사팀 분할</h3>
+            <p class="timeline-description">외부 기계 해제를 위한 남현우, 천여울, 도이성 3인의 외부 조사. 나머지 내부 조사 인원은 본관으로 거처 이동 및 바리케이트 설치.
+            </p>
+            <div class="memory-fragment">외부 조사 인원의 복귀 및 강당에서 휴식하던 내부 조사 인원과의 합류. 일부 인원은 복도, 화학실에 잔류.</div>
           </div>
         </div>
-        
+
         <div class="timeline-entry">
           <div class="timeline-marker"></div>
           <div class="timeline-entry-content">
             <span class="timeline-date">2028.02.08</span>
             <h3 class="timeline-title">프로젝트 종료</h3>
-            <p class="timeline-description">descriptiondescriptiondescription</p>
-            <div class="memory-fragment">fragmentfragmentfragment</div>
+            <p class="timeline-description">하수도를 통해 3인이 후문으로 탈출. 단하율과 합류.</p>
+            <div class="memory-fragment">참여자 총 3인 생존, 6인 사망, 1인 ■■.</div>
           </div>
         </div>
-        
+
         <div class="timeline-entry">
           <div class="timeline-marker"></div>
           <div class="timeline-entry-content">
-            <span class="timeline-date">2031.□□.□□</span>
+            <span class="timeline-date">2031.02.08</span>
             <h3 class="timeline-title">미완성</h3>
-            <p class="timeline-description">3년의 시간이 경과함. 살아남은 사람들은...</p>
-            <div class="memory-fragment">각자의 방식으로, 각자의 선택으로.</div>
+            <p class="timeline-description">세계는 최근 토성의 궤도를 지나간 혜성으로부터 떨어진 조각에 대해 논의하며, 방송사에선 어떤 영화의 배경이 되는 연도랍시고 20년은
+              되어가는 영화를 편성하고, 언론은 여전히 크고 작은 사건 사고로 떠들썩하다. </p>
+            <div class="memory-fragment">그러고보니, 그곳으로부터 빠져나온지도 딱 3년이 되었다.</div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+
   <!-- 상단 이동 버튼 -->
   <button class="scroll-top-btn" id="scrollTopBtn" aria-label="페이지 상단으로">↑</button>
 
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // 타임라인 애니메이션 효과
-    const timelineEntries = document.querySelectorAll('.timeline-entry');
-    
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-    
-    timelineEntries.forEach(entry => {
-      entry.style.opacity = '0';
-      entry.style.transform = 'translateY(30px)';
-      entry.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-      observer.observe(entry);
-    });
-    
-    // 요소가 뷰포트에 나타날 때 애니메이션 시작
-    document.addEventListener('scroll', () => {
-      timelineEntries.forEach((entry, index) => {
-        const entryTop = entry.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-        
-        if (entryTop < windowHeight * 0.9) {
-          setTimeout(() => {
-            entry.style.opacity = '1';
-            entry.style.transform = 'translateY(0)';
-          }, index * 150); // 각 항목마다 시간차 두기
-        }
-      });
-    }, { passive: true });
-    
-    // 시간 업데이트
-    const timeDisplay = document.getElementById("current-datetime");
-    
-    function updateTime() {
-      const now = new Date();
-      
-      const formattedTime = new Intl.DateTimeFormat('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      }).format(now);
-      
-      if (timeDisplay) {
-        timeDisplay.textContent = formattedTime;
-      }
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+      // 타임라인 애니메이션 효과
+      const timelineEntries = document.querySelectorAll('.timeline-entry');
 
-    // 초기 시간 설정 및 주기적 업데이트
-    updateTime();
-    setInterval(updateTime, 1000);
-    
-    // 스크롤 상단 버튼 기능
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
-    
-    // 스크롤 위치에 따라 버튼 표시/숨김
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 300) {
-        scrollTopBtn.classList.add('visible');
-      } else {
-        scrollTopBtn.classList.remove('visible');
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      timelineEntries.forEach(entry => {
+        entry.style.opacity = '0';
+        entry.style.transform = 'translateY(30px)';
+        entry.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(entry);
+      });
+
+      // 요소가 뷰포트에 나타날 때 애니메이션 시작
+      document.addEventListener('scroll', () => {
+        timelineEntries.forEach((entry, index) => {
+          const entryTop = entry.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (entryTop < windowHeight * 0.9) {
+            setTimeout(() => {
+              entry.style.opacity = '1';
+              entry.style.transform = 'translateY(0)';
+            }, index * 150); // 각 항목마다 시간차 두기
+          }
+        });
+      }, { passive: true });
+
+      // 시간 업데이트
+      const timeDisplay = document.getElementById("current-datetime");
+
+      function updateTime() {
+        const now = new Date();
+
+        const formattedTime = new Intl.DateTimeFormat('ko-KR', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        }).format(now);
+
+        if (timeDisplay) {
+          timeDisplay.textContent = formattedTime;
+        }
       }
-    });
-    
-    // 버튼 클릭 시 상단으로 스크롤
-    scrollTopBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+
+      // 초기 시간 설정 및 주기적 업데이트
+      updateTime();
+      setInterval(updateTime, 1000);
+
+      // 스크롤 상단 버튼 기능
+      const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+      // 스크롤 위치에 따라 버튼 표시/숨김
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+
+      // 버튼 클릭 시 상단으로 스크롤
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       });
     });
-  });
   </script>
 </body>
+
 </html>

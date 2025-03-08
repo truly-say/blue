@@ -293,8 +293,8 @@ html, body {
     justify-content: center;
     align-items: center;
     z-index: 50;
-    padding: 0; /* 패딩 제거 */
-}
+    padding: 0;
+  }
 
 #restartMessageContainer .messages-wrapper {
     width: 100%;
@@ -312,10 +312,10 @@ html, body {
 }
 
 .restart-message {
-    position: absolute; 
+    position: absolute;
     top: 50%;
-    left: 50% !important; /* 가로 중앙 위치 강제 적용 */
-    transform: translate(-50%, -50%) !important; /* 중앙 정렬 강제 적용 */
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: linear-gradient(135deg, #001a33, #00264d, #003366, #004080);
     color: white;
     padding: 20px 25px;
@@ -323,63 +323,67 @@ html, body {
     font-size: 1.4rem;
     width: 90%;
     max-width: 600px;
-    text-align: center !important;
-    z-index: 2;
-    margin: 0 auto !important;
-    right: auto !important; /* 오른쪽 오프셋 제거 */
-}
-
-/* 메시지 숨김 상태 - 투명도만 변경 */
-.restart-message {
+    text-align: center;
+    z-index: 52;
+    margin: 0 auto;
+    right: auto;
+    display: block;
     opacity: 0;
     transition: opacity 0.5s ease;
-}
+  }
 
 /* 메시지 표시 애니메이션 - 위치 이동 없이 페이드인만 */
 .restart-message.visible {
     opacity: 1;
-}
+  }
 
 /* 업데이트 메시지 컨테이너 너비 조정 */
 .update-message {
     position: absolute;
     top: calc(50% + 80px);
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    background: transparent !important;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
     color: white;
     padding: 15px 20px;
-    text-align: center !important;
+    text-align: center;
     font-size: 1.1rem;
-    /* 너비 조정 - 좁게 설정 */
-    width: auto !important;
-    max-width: 350px !important; /* 더 좁게 설정 */
-    min-width: 250px !important; /* 최소 너비 보장 */
-    z-index: 1;
-    margin: 0 auto !important;
-    right: auto !important;
-}
+    width: auto;
+    max-width: 350px;
+    min-width: 250px;
+    z-index: 51;
+    margin: 0 auto;
+    right: auto;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
 
-.wait-message {
+  .update-message.visible {
+    opacity: 1;
+  }
+
+  .wait-message {
     position: absolute;
     top: calc(50% + 130px);
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    background: transparent !important;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
     color: white;
     padding: 10px 20px;
-    text-align: center !important;
+    text-align: center;
     font-size: 1rem;
-    /* 너비 조정 - 좁게 설정 */
-    width: auto !important;
-    max-width: 300px !important; /* 더 좁게 설정 */
-    min-width: 200px !important; /* 최소 너비 보장 */
-    z-index: 1;
-    margin: 0 auto !important;
-    right: auto !important;
-    opacity: 0.7 !important;
-}
-
+    width: auto;
+    max-width: 300px;
+    min-width: 200px;
+    z-index: 50;
+    margin: 0 auto;
+    right: auto;
+    display: none;
+    opacity: 0.7;
+    transition: opacity 0.5s ease;
+  }
+  
 /* 메시지 자체 컨텐츠만큼의 너비로 자동 조정 */
 #updateMessage, #waitMessage {
     display: inline-block !important;
@@ -455,7 +459,7 @@ html body #restartMessageContainer * {
     z-index: 40;
 }
 
-/* 팝업 메시지 */
+/* 팝업 메시지 - 애니메이션 수정 */
 .popup-message {
     position: absolute;
     padding: 15px 25px;
@@ -470,20 +474,20 @@ html body #restartMessageContainer * {
     line-height: 1.4;
     max-width: 350px;
     width: auto;
-    /* 추가: 화면 밖으로 나가지 않도록 word-wrap 설정 */
+    /* 화면 밖으로 나가지 않도록 word-wrap 설정 */
     word-wrap: break-word;
     word-break: break-word;
     overflow-wrap: break-word;
-    /* 추가: 화면 밖으로 나가지 않도록 제한 */
+    /* 화면 밖으로 나가지 않도록 제한 */
     max-height: calc(100vh - 100px);
     overflow: hidden;
     z-index: 40;
-}
+  }
 
-.popup-message.visible {
+  .popup-message.visible {
     opacity: 1;
     transform: scale(1);
-}
+  }
 
 /* 모바일 전용 중앙 정렬 팝업 */
 .centered-popup {
@@ -655,8 +659,7 @@ html body #restartMessageContainer * {
 
 /* 크레딧 푸터 */
 .credits-footer {
-    margin-top: 5rem;
-    margin-bottom: 8rem;
+    margin-top: 1rem !important;
     font-size: 1.2rem;
     line-height: 2.5;
     color: white;
@@ -671,8 +674,7 @@ html body #restartMessageContainer * {
 
 /* AND YOU 강조 */
 .thanks-you-section {
-    margin-top: 5rem;
-    margin-bottom: 10rem;
+    margin-bottom: 6rem !important;
 }
 
 .emphasis-item {
@@ -708,7 +710,7 @@ html body #restartMessageContainer * {
 .group-photo-container {
     width: 100%;
     max-width: 800px;
-    margin: 2rem auto 3rem;
+    margin-bottom: 2rem !important;
     text-align: center;
     padding: 0 20px;
 }
@@ -925,14 +927,11 @@ html body #restartMessageContainer * {
         padding: 12px 18px;
         font-size: 1rem;
         border-radius: 18px;
-        max-width: calc(100vw - 40px);
-        /* 중앙에 가깝게 배치 */
-        left: 50% !important;
-        transform: translateX(-50%) scale(0.9);
-    }
+        max-width: calc(100vw - 60px);
+      }
     
     .popup-message.visible {
-        transform: translateX(-50%) scale(1);
+        transform: scale(1);
     }
 }
 
@@ -943,13 +942,3 @@ html body #restartMessageContainer * {
     opacity: 1;
     /* transform 제거 - 위치 변경 방지 */
 }
-
-/* 메시지 숨김 상태 - 투명도만 변경 */
-.restart-message,
-.update-message,
-.wait-message {
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    /* 트랜지션에서 transform 제거 */
-}
-

@@ -11,56 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const content = document.querySelector('.credits-content');
     const darkOverlay = document.getElementById('dark-overlay');
 
-    // 음원 출처 정보를 기존 섹션에 통합하는 함수
-    function addSoundCredits() {
-        // 이미 존재하는 크레딧 컨텐츠 찾기
-        const creditsContent = document.querySelector('.credits-content');
-        if (!creditsContent) return;
-
-        // 기존 "음원 소스 참조" 섹션 찾기
-        const existingSoundSection = Array.from(creditsContent.querySelectorAll('.credits-section-title')).find(
-            el => el.textContent.includes('음원 소스 참조')
-        );
-
-        if (existingSoundSection) {
-            // 해당 섹션의 부모 요소 찾기 (credits-section)
-            const parentSection = existingSoundSection.closest('.credits-section');
-
-            if (parentSection) {
-                // 기존에 있는 credit-item 유지하고 추가 정보 삽입
-                const additionalCredits = `
-                    <div class="credit-item">
-                        <div class="credit-line">
-                            <span class="character-name">Mike Koenig</span>
-                            <span class="credit-separator">|</span>
-                            <span class="character-owner">http://soundbible.com/1841-Panic.html</span>
-                        </div>
-                    </div>
-                    <div class="credit-item">
-                        <div class="credit-line">
-                            <span class="character-name">KevanGC</span>
-                            <span class="credit-separator">|</span>
-                            <span class="character-owner">http://soundbible.com/1645-Pling.html</span>
-                        </div>
-                    </div>
-                    <div class="credit-item">
-                        <div class="credit-line">
-                            <span class="character-name">abyeditsound</span>
-                            <span class="credit-separator">|</span>
-                            <span class="character-owner">freesound.org/450509 (CC0)</span>
-                        </div>
-                    </div>
-                `;
-
-                // 기존 내용 뒤에 새 내용 추가
-                parentSection.innerHTML += additionalCredits;
-            }
-        }
-    }
-
     // 효과음 생성
     const messageSound = new Audio('../../assets/audio/MP_Pling.mp3'); // 메세지 효과음
-    const tickingSound = new Audio('../../assets/audio/MP_시계 똑딱 소리.mp3'); // 시계 똑딱 소리
+    const tickingSound = document.getElementById('tickingSound'); // 시계 똑딱 소리
     const panicSound = new Audio('../../assets/audio/MP_Panic.mp3'); // 패닉 효과음
 
     // 배경음악
@@ -136,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 크레딧 애니메이션 관련 변수
     let normalScrollSpeed = 0.3; // 일반 스크롤 속도
-    let fastScrollSpeed = 1; // 빠른 스크롤 속도 
+    let fastScrollSpeed = 3; // 빠른 스크롤 속도 
     let currentScrollSpeed = normalScrollSpeed;
     let scrollPosition = 0;
     let animationId = null;
@@ -144,6 +97,53 @@ document.addEventListener("DOMContentLoaded", () => {
     let isLastPartDisplayed = false; // 마지막 메시지가 표시되었는지 여부
     let lastScrollPosition = 0; // 마지막으로 기록된 스크롤 위치
     let isMobile = false; // 모바일 디바이스 감지 변수
+
+    // 음원 출처 정보를 기존 섹션에 통합하는 함수
+    function addSoundCredits() {
+        // 이미 존재하는 크레딧 컨텐츠 찾기
+        const creditsContent = document.querySelector('.credits-content');
+        if (!creditsContent) return;
+
+        // 기존 "음원 소스 참조" 섹션 찾기
+        const existingSoundSection = Array.from(creditsContent.querySelectorAll('.credits-section-title')).find(
+            el => el.textContent.includes('음원 소스 참조')
+        );
+
+        if (existingSoundSection) {
+            // 해당 섹션의 부모 요소 찾기 (credits-section)
+            const parentSection = existingSoundSection.closest('.credits-section');
+
+            if (parentSection) {
+                // 기존에 있는 credit-item 유지하고 추가 정보 삽입
+                const additionalCredits = `
+                    <div class="credit-item">
+                        <div class="credit-line">
+                            <span class="character-name">Mike Koenig</span>
+                            <span class="credit-separator">|</span>
+                            <span class="character-owner">http://soundbible.com/1841-Panic.html</span>
+                        </div>
+                    </div>
+                    <div class="credit-item">
+                        <div class="credit-line">
+                            <span class="character-name">KevanGC</span>
+                            <span class="credit-separator">|</span>
+                            <span class="character-owner">http://soundbible.com/1645-Pling.html</span>
+                        </div>
+                    </div>
+                    <div class="credit-item">
+                        <div class="credit-line">
+                            <span class="character-name">abyeditsound</span>
+                            <span class="credit-separator">|</span>
+                            <span class="character-owner">freesound.org/450509 (CC0)</span>
+                        </div>
+                    </div>
+                `;
+
+                // 기존 내용 뒤에 새 내용 추가
+                parentSection.innerHTML += additionalCredits;
+            }
+        }
+    }
 
     // 디바이스 감지 함수
     function detectDevice() {
@@ -236,7 +236,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
         } else if (identity === '14gi') {
             // 14기 졸업생: 14기 메시지만 표시 (19~끝까지)
-            playPartialCenterMessages(19, centerMessages.length - 1)
+            // 메시지 최대 갯수를 4개로 제한
+            playPartialCenterMessages(19, centerMessages.length - 1, 4)
                 .then(() => playMainMessages())
                 .then(() => new Promise(resolve => setTimeout(resolve, 2000)))
                 .then(() => playPopupMessages()) // 원래 모든 팝업 메시지 표시
@@ -301,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 특정 범위의 중앙 메시지만 표시
     // 시작 인덱스와 끝 인덱스를 지정하여 해당 범위의 중앙 메시지만 표시하는 함수
-    const playPartialCenterMessages = (startIndex, endIndex) => {
+    const playPartialCenterMessages = (startIndex, endIndex, maxMessages = 0) => {
         return new Promise(resolve => {
             let index = startIndex;
             const interval = 3500; // 메시지 간 간격
@@ -327,6 +328,15 @@ document.addEventListener("DOMContentLoaded", () => {
             // 메시지 표시 함수
             function showNextMessage() {
                 if (isCancelled) return; // 건너뛰기 발생 시 종료
+
+                // 메시지 최대 개수 제한 확인
+                if (maxMessages > 0 && messageManager.activeMessages.length >= maxMessages) {
+                    // 가장 오래된 메시지 제거
+                    const oldestMessage = messageManager.activeMessages.shift();
+                    if (oldestMessage) {
+                        messageManager.removeMessage(oldestMessage);
+                    }
+                }
 
                 if (index <= endIndex) {
                     messageManager.addMessage(centerMessages[index]);
@@ -565,14 +575,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // 메시지 추가
         // 메시지 컨테이너에 새 메시지를 추가하는 함수
         addMessage: function (text, wrapper = messagesWrapper) {
-            // 효과음 재생 (첫 메시지가 아닐 때만)
-            if (!this.isFirstMessage) {
-                messageSound.currentTime = 0;
-                messageSound.play().catch(err => console.log("효과음 재생 불가:", err));
-            } else {
-                this.isFirstMessage = false; // 첫 메시지 플래그 해제
-            }
-
             // 새 메시지 생성
             const message = document.createElement('div');
             message.classList.add('center-message');
@@ -725,60 +727,63 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // 팝업 메시지 생성 함수
-    // 좁은 화면에서 랜덤 메시지가 화면 밖으로 나가지 않도록 수정
-const createPopupMessage = (message, isFirstMessage = false) => {
-    // 효과음 재생 (첫 메시지가 아닐 때만)
-    if (!isFirstMessage || message.includes("사적 대화")) {
-        messageSound.currentTime = 0;
-        messageSound.play().catch(err => console.log("효과음 재생 불가:", err));
-    }
+    // 팝업 메시지 생성 함수 (화면 내에 항상 표시되도록 엄격히 제한)
+    const createPopupMessage = (message, isFirstMessage = false) => {
+        // 효과음 재생 (첫 메시지가 아닐 때만)
+        if (!isFirstMessage || message.includes("사적 대화")) {
+            messageSound.currentTime = 0;
+            messageSound.play().catch(err => console.log("효과음 재생 불가:", err));
+        }
 
-    // 팝업 요소 생성
-    const popup = document.createElement('div');
-    popup.classList.add('popup-message');
+        // 팝업 요소 생성
+        const popup = document.createElement('div');
+        popup.classList.add('popup-message');
 
-    // 마크다운 스타일 직접 변환
-    popup.innerHTML = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        // 마크다운 스타일 직접 변환
+        popup.innerHTML = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-    // 화면 너비 확인 - 좁은 화면 대응
-    const isNarrowScreen = window.innerWidth <= 360;
-
-    // 랜덤 위치 계산 (화면 크기 기준) - 좁은 화면 대응
-    const padding = isNarrowScreen ? 10 : 30; // 좁은 화면에서는 패딩을 줄임
-    
-    // 메시지 최대 너비 제한
-    const messageMaxWidth = isNarrowScreen ? 
-        window.innerWidth - 40 : // 좁은 화면에서는 화면 크기에 맞게 제한
-        350; // 일반 화면
-    
-    const maxWidth = window.innerWidth - messageMaxWidth - (padding * 2); // 화면에서 실제로 사용 가능한 공간
-    const maxHeight = window.innerHeight - 100;
-
-    // 랜덤 위치 결정
-    let x, y;
-    
-    if (isNarrowScreen) {
-        // 좁은 화면에서는 가로 중앙 정렬에 가깝게
-        x = window.innerWidth / 2 - messageMaxWidth / 2 + (Math.random() * 30 - 15);
-    } else {
-        // 일반 화면에서는 기존 로직 유지
-        x = padding + Math.random() * Math.max(50, maxWidth);
-    }
-    
-    // 세로 위치는 동일하게 랜덤
-    y = padding + Math.random() * Math.max(100, maxHeight - 100);
-
-    // 좁은 화면에서는 겹침 검사 생략 (화면 크기 제약 때문에)
-    if (!isNarrowScreen) {
-        // 기존 팝업과 겹치는지 확인
-        let attempts = 0;
-        const maxAttempts = 20;
-        const minDistance = 150;
-        const existingPopups = popupContainer.querySelectorAll('.popup-message.visible');
+        // 화면 크기 및 안전 여백
+        const safeMargin = 30; // 더 큰 안전 여백 설정
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
         
-        do {
+        // 임시로 DOM에 추가하여 크기 측정 (실제 크기 기반 계산을 위함)
+        popup.style.opacity = '0';
+        popup.style.visibility = 'hidden';
+        popup.style.position = 'fixed';
+        popup.style.maxWidth = `${Math.min(350, viewportWidth - safeMargin * 2)}px`;
+        document.body.appendChild(popup);
+        
+        // 실제 요소 크기 측정
+        const popupWidth = popup.offsetWidth;
+        const popupHeight = popup.offsetHeight;
+        
+        // 측정 후 임시 요소 제거
+        document.body.removeChild(popup);
+        
+        // 안전하게 표시 가능한 영역 계산
+        const minX = safeMargin;
+        const maxX = viewportWidth - popupWidth - safeMargin;
+        const minY = safeMargin;
+        const maxY = viewportHeight - popupHeight - safeMargin;
+        
+        // 영역이 너무 좁아지면 조정 (화면이 매우 좁은 경우)
+        const adjustedMaxX = Math.max(minX + 50, maxX);
+        const adjustedMaxY = Math.max(minY + 50, maxY);
+        
+        // 화면 전체에 랜덤하게 위치 (안전 영역 내에서만)
+        let x = Math.floor(Math.random() * (adjustedMaxX - minX) + minX);
+        let y = Math.floor(Math.random() * (adjustedMaxY - minY) + minY);
+        
+        // 기존 팝업과 겹치는지 확인 및 회피
+        const existingPopups = popupContainer.querySelectorAll('.popup-message.visible');
+        const minDistance = 100; // 최소 거리
+        let attempts = 0;
+        const maxAttempts = 15;
+        
+        while (attempts < maxAttempts) {
             let overlapping = false;
+            
             existingPopups.forEach(existingPopup => {
                 const rect = existingPopup.getBoundingClientRect();
                 const distance = Math.sqrt(
@@ -791,117 +796,21 @@ const createPopupMessage = (message, isFirstMessage = false) => {
                 }
             });
             
-            if (overlapping) {
-                // 다시 위치 계산
-                x = padding + Math.random() * Math.max(50, maxWidth);
-                y = padding + Math.random() * Math.max(100, maxHeight - 100);
-            } else {
-                break;
-            }
+            if (!overlapping) break;
             
+            // 새 위치 시도 - 영역 내에서만
+            x = Math.floor(Math.random() * (adjustedMaxX - minX) + minX);
+            y = Math.floor(Math.random() * (adjustedMaxY - minY) + minY);
             attempts++;
-        } while (attempts < maxAttempts);
-    }
-
-    // 화면 경계 확인 - 화면 밖으로 나가지 않도록
-    x = Math.max(padding, Math.min(x, window.innerWidth - messageMaxWidth - padding));
-    y = Math.max(padding, Math.min(y, window.innerHeight - 100 - padding));
-
-    // 위치 적용
-    popup.style.left = `${x}px`;
-    popup.style.top = `${y}px`;
-    
-    // 좁은 화면에서 너비 조정
-    if (isNarrowScreen) {
-        popup.style.maxWidth = `${messageMaxWidth}px`;
-        popup.style.width = `calc(100% - ${padding * 2}px)`;
-    }
-
-    // 컨테이너에 추가
-    popupContainer.appendChild(popup);
-
-    // 표시 애니메이션
-    setTimeout(() => {
-        popup.classList.add('visible');
-    }, 10);
-
-    // 2~3초 후 사라짐 (랜덤)
-    const displayTime = 2000 + Math.random() * 1000;
-    setTimeout(() => {
-        popup.classList.remove('visible');
-        
-        setTimeout(() => {
-            if (popup.parentNode === popupContainer) {
-                popupContainer.removeChild(popup);
-            }
-        }, 500);
-    }, displayTime);
-};
-
-
-    // 간소화된 팝업 메시지 표시 함수 (모바일용)
-    const playSimplifiedPopupMessages = (messageCount) => {
-        return new Promise(resolve => {
-            // 모바일에서는 메시지 수를 제한하고 간격을 늘림
-            let messages = [];
-
-            // 랜덤으로 메시지 선택
-            for (let i = 0; i < messageCount; i++) {
-                const randomIndex = Math.floor(Math.random() * popupMessages.length);
-                messages.push(popupMessages[randomIndex]);
-            }
-
-            let index = 0;
-            let isFirstPopup = true;
-
-            // 메시지 간 간격을 더 길게 설정
-            const delay = 1200; // 1.2초 간격
-
-            const showNextPopup = () => {
-                if (index < messages.length) {
-                    // 모바일에서는 가운데 정렬된 위치에 팝업 생성
-                    createCenteredPopupMessage(messages[index], isFirstPopup);
-                    isFirstPopup = false;
-                    index++;
-
-                    setTimeout(showNextPopup, delay);
-                } else {
-                    // 모든 메시지 표시 후 완료
-                    setTimeout(resolve, 1500);
-                }
-            };
-
-            // 첫 번째 메시지 표시
-            showNextPopup();
-        });
-    };
-
-    // 중앙에 팝업 메시지 표시 (모바일용)
-    const createCenteredPopupMessage = (message, isFirstMessage = false) => {
-        // 효과음 재생 (첫 메시지가 아닐 때만)
-        if (!isFirstMessage) {
-            messageSound.currentTime = 0;
-            messageSound.play().catch(err => console.log("효과음 재생 불가:", err));
         }
-
-        // 팝업 요소 생성
-        const popup = document.createElement('div');
-        popup.classList.add('popup-message');
-        popup.classList.add('centered-popup'); // 중앙 정렬용 클래스 추가
-
-        // 마크다운 스타일 직접 변환
-        popup.innerHTML = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-        // 모바일용 스타일 조정
-        popup.style.position = 'fixed';
-        popup.style.left = '50%';
-        popup.style.top = '50%';
-        popup.style.transform = 'translate(-50%, -50%)';
-        popup.style.maxWidth = '90%';
-        popup.style.width = 'auto';
-        popup.style.textAlign = 'center';
-        popup.style.zIndex = '50';
-
+        
+        // 최종 위치 적용
+        popup.style.opacity = '';
+        popup.style.visibility = '';
+        popup.style.left = `${x}px`;
+        popup.style.top = `${y}px`;
+        popup.style.transform = 'scale(0.9)'; // 초기 크기
+        
         // 컨테이너에 추가
         popupContainer.appendChild(popup);
 
@@ -910,20 +819,20 @@ const createPopupMessage = (message, isFirstMessage = false) => {
             popup.classList.add('visible');
         }, 10);
 
-        // 3초 후 사라짐 (모바일에서는 더 길게 표시)
+        // 2~3초 후 사라짐 (랜덤)
+        const displayTime = 2000 + Math.random() * 1000;
         setTimeout(() => {
             popup.classList.remove('visible');
-
-            // 트랜지션 완료 후 요소 제거
+            
             setTimeout(() => {
                 if (popup.parentNode === popupContainer) {
                     popupContainer.removeChild(popup);
                 }
             }, 500);
-        }, 3000);
+        }, displayTime);
     };
 
-    // 팝업 메시지 시퀀스 함수
+    // 팝업 메시지 시퀀스 함수 (모든 환경에서 동일하게 동작)
     const playPopupMessages = () => {
         return new Promise(resolve => {
             let index = 0;
@@ -953,7 +862,6 @@ const createPopupMessage = (message, isFirstMessage = false) => {
             setTimeout(showNextPopup, 500);
         });
     };
-
 
     // 마지막 메시지 추가 함수
     // 최종 메시지를 추가하는 함수
@@ -1004,46 +912,24 @@ const createPopupMessage = (message, isFirstMessage = false) => {
         });
     };
 
-    // 재시작 메시지 표시 함수 개선 - 메시지 타이밍 수정
-const showRestartMessage = () => {
-    return new Promise(resolve => {
-        // 컨테이너 표시
-        restartMessageContainer.style.display = 'flex';
-        
+    // 재시작 메시지 표시 함수 - 시계 소리와 메시지 표시 순서 수정
+    const showRestartMessage = () => {
         // 메시지 요소들
         const messageElement = restartMessageContainer.querySelector('.restart-message');
         const updateMessage = document.getElementById('updateMessage');
-        const waitMessage = document.getElementById('waitMessage');
         
-        // 중앙 정렬 적용
-        messageElement.style.left = '50%';
-        messageElement.style.transform = 'translate(-50%, -50%)';
-        messageElement.style.textAlign = 'center';
-        messageElement.style.right = 'auto';
-        
-        updateMessage.style.left = '50%';
-        updateMessage.style.transform = 'translateX(-50%)';
-        updateMessage.style.textAlign = 'center'; 
-        updateMessage.style.right = 'auto';
-        
-        waitMessage.style.left = '50%';
-        waitMessage.style.transform = 'translateX(-50%)';  
-        waitMessage.style.textAlign = 'center';
-        waitMessage.style.right = 'auto';
-        
-        // 모든 메시지 초기화
+        // 모든 메시지 초기 숨김 처리
+        messageElement.style.display = 'none';
         messageElement.classList.remove('visible');
-        updateMessage.classList.remove('visible');
-        waitMessage.classList.remove('visible');
         updateMessage.style.display = 'none';
-        waitMessage.style.display = 'none';
+        updateMessage.classList.remove('visible');
         
-        // 시계 소리 재생
+        // 시계 소리 재생 (시작점)
         tickingSound.currentTime = 0;
         tickingSound.loop = true;
         tickingSound.play().catch(err => console.log("시계 소리 재생 불가:", err));
         
-        // 5초 후에 패닉 효과음과 함께 메시지 표시
+        // 시계 소리 5초 지속 후 중단
         setTimeout(() => {
             // 시계 소리 중지
             tickingSound.pause();
@@ -1053,73 +939,49 @@ const showRestartMessage = () => {
             panicSound.currentTime = 0;
             panicSound.play().catch(err => console.log("패닉 효과음 재생 불가:", err));
             
-            // 메인 메시지 표시
-            messageElement.style.left = '50%';
-            messageElement.style.transform = 'translate(-50%, -50%)';
-            messageElement.classList.add('visible');
-            
-            // 3초 후 업데이트 메시지 표시
+            // 패닉 소리와 함께 첫 번째 메시지 표시
+            messageElement.style.display = 'block';
             setTimeout(() => {
-                updateMessage.style.display = 'inline-block';
-                updateMessage.style.width = 'auto';
-                updateMessage.style.maxWidth = '350px';
-                updateMessage.style.minWidth = '250px';
-                updateMessage.style.whiteSpace = 'nowrap';
-                updateMessage.style.left = '50%';
-                updateMessage.style.transform = 'translateX(-50%)';
+                messageElement.classList.add('visible');
                 
+                // 3초 후 두 번째 메시지 표시
                 setTimeout(() => {
-                    updateMessage.classList.add('visible');
-                    
-                    // 타이밍 수정: 3초 후(원래 2초)에 기다림 메시지 표시
+                    updateMessage.style.display = 'block';
                     setTimeout(() => {
-                        waitMessage.style.display = 'inline-block';
-                        waitMessage.style.width = 'auto';
-                        waitMessage.style.maxWidth = '300px';
-                        waitMessage.style.minWidth = '200px';
-                        waitMessage.style.whiteSpace = 'nowrap';
-                        waitMessage.style.left = '50%';
-                        waitMessage.style.transform = 'translateX(-50%)';
-                        
-                        setTimeout(() => {
-                            waitMessage.classList.add('visible');
-                        }, 50);
-                    }, 3000); // 기존 2000에서 3000으로 변경
-                }, 50);
-            }, 3000);
-            
-            resolve();
-        }, 5000);
-    });
-};
+                        updateMessage.classList.add('visible');
+                    }, 50);
+                }, 3000);
+            }, 50);
+        }, 5000); // 시계 소리 5초 지속
+    };
 
     // 크레딧 완료 시 마지막 메시지 표시 함수
     function showLastMessage() {
         if (isLastPartDisplayed) return;
         isLastPartDisplayed = true;
-
+    
         // 크레딧 컨테이너 숨김
         if (creditsContainer) {
             creditsContainer.style.display = 'none';
         }
-
+    
         // 배경 색상 어둡게 유지
         if (darkOverlay) {
             darkOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
         }
-
+    
         // 마지막 메시지 컨테이너 초기화
         if (restartMessageContainer) {
             // 컨테이너 클래스 추가로 스타일 적용
             restartMessageContainer.classList.add('visible');
-
-            // 모든 자식 요소 위치 고정 및 중앙 정렬
+            restartMessageContainer.style.display = 'flex';
+    
+            // 모든 자식 요소 위치 및 스타일 설정
             const restartMsg = restartMessageContainer.querySelector('.restart-message');
             const updateMsg = document.getElementById('updateMessage');
-            const waitMsg = document.getElementById('waitMessage');
-
+    
+            // 메시지 스타일 조정
             if (restartMsg) {
-                // 메시지 중앙 정렬 강제
                 restartMsg.style.position = 'absolute';
                 restartMsg.style.top = '50%';
                 restartMsg.style.left = '50%';
@@ -1128,16 +990,15 @@ const showRestartMessage = () => {
                 restartMsg.style.maxWidth = '600px';
                 restartMsg.style.margin = '0 auto';
                 restartMsg.style.textAlign = 'center';
-                restartMsg.style.right = 'auto'; // 오른쪽 위치 속성 제거
+                restartMsg.style.right = 'auto';
                 restartMsg.textContent = "완성된 삶으로부터, 재시작하시겠습니까?";
             }
-
+    
             if (updateMsg) {
                 updateMsg.style.position = 'absolute';
                 updateMsg.style.top = 'calc(50% + 80px)';
                 updateMsg.style.left = '50%';
                 updateMsg.style.transform = 'translateX(-50%)';
-                // 너비 컨텐츠에 맞게 자동 조정
                 updateMsg.style.width = 'auto';
                 updateMsg.style.maxWidth = '350px';
                 updateMsg.style.minWidth = '250px';
@@ -1145,54 +1006,20 @@ const showRestartMessage = () => {
                 updateMsg.style.textAlign = 'center';
                 updateMsg.style.background = 'transparent';
                 updateMsg.style.right = 'auto';
-                updateMsg.style.display = 'inline-block';
+                updateMsg.style.display = 'none';
                 updateMsg.style.whiteSpace = 'nowrap';
                 updateMsg.textContent = "실크송 출시하면 업데이트 함";
             }
-
-            if (waitMsg) {
-                waitMsg.style.position = 'absolute';
-                waitMsg.style.top = 'calc(50% + 130px)';
-                waitMsg.style.left = '50%';
-                waitMsg.style.transform = 'translateX(-50%)';
-                // 너비 컨텐츠에 맞게 자동 조정
-                waitMsg.style.width = 'auto';
-                waitMsg.style.maxWidth = '300px';
-                waitMsg.style.minWidth = '200px';
-                waitMsg.style.margin = '0 auto';
-                waitMsg.style.textAlign = 'center';
-                waitMsg.style.background = 'transparent';
-                waitMsg.style.opacity = "0.7";
-                waitMsg.style.right = 'auto';
-                waitMsg.style.display = 'inline-block';
-                waitMsg.style.whiteSpace = 'nowrap';
-                waitMsg.textContent = "기다릴 수 있으면 기다려보세요";
-            }
-
-            // 메시지 래퍼 중앙 정렬
-            const messagesWrapper = restartMessageContainer.querySelector('.messages-wrapper');
-            if (messagesWrapper) {
-                messagesWrapper.style.width = '100%';
-                messagesWrapper.style.maxWidth = '100%';
-                messagesWrapper.style.margin = '0 auto';
-                messagesWrapper.style.padding = '0';
-                messagesWrapper.style.display = 'flex';
-                messagesWrapper.style.flexDirection = 'column';
-                messagesWrapper.style.alignItems = 'center';
-                messagesWrapper.style.justifyContent = 'center';
-                messagesWrapper.style.position = 'relative';
-                messagesWrapper.style.left = '0';
-            }
         }
-
-        // 배경음 페이드 아웃 후 재시작 메시지 표시
+    
+        // 배경음 페이드 아웃 후 5초 지연 시간을 두고 마지막 시퀀스 시작
         fadeOutBackgroundMusic().then(() => {
-            // 7초 대기 후 재시작 메시지 표시
             setTimeout(() => {
                 showRestartMessage();
-            }, 7000);
+            }, 5000); // 5초 후 시계 소리 재생 및 메시지 시퀀스 시작
         });
     }
+    
 
     // 크레딧 준비 및 시작 함수
     const prepareCredits = () => {
@@ -1336,27 +1163,23 @@ const showRestartMessage = () => {
             });
         }
 
-        // 끝까지 스크롤되었는지 확인 - 임계값 증가
-        const completionThreshold = 1.5; // 더 높은 값으로 설정
-
-        // content 요소의 바닥이 화면을 벗어났는지 확인
+        // 끝까지 스크롤되었는지 확인
+        const completionThreshold = 1.5;
         const contentBottom = content.offsetHeight;
         const currentPosition = scrollPosition - window.innerHeight * 1.2;
         const isBottomReached = currentPosition >= contentBottom;
 
-        // 크레딧 완료 조건 개선
+        // 크레딧 완료 조건 확인
         if (scrollPosition < totalScrollDistance * completionThreshold &&
             !isBottomReached &&
             !isCreditsComplete) {
             animationId = requestAnimationFrame(scrollCredits);
         } else {
-            // 모든 섹션이 보였는지 확인 (안전 장치)
+            // 마지막 섹션까지 보였는지 확인
             const lastSection = content.querySelector('.credits-section:last-child');
             if (lastSection) {
-                // 마지막 섹션까지 보였는지 확인 후 완료 처리
                 const lastSectionRect = lastSection.getBoundingClientRect();
                 if (lastSectionRect.bottom > 0) {
-                    // 아직 마지막 섹션이 보이지 않았다면 계속 스크롤
                     animationId = requestAnimationFrame(scrollCredits);
                     return;
                 }

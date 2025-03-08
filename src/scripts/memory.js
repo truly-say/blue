@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const text = document.querySelector('.secret-text');
         
         if (text.textContent === binaryCode) {
-            text.textContent = "See you in the next winter, LAM.";
+            text.textContent = "Congratulations on your graduation";
             setTimeout(() => {
                 text.textContent = binaryCode;
             }, 3000);

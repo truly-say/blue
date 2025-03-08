@@ -30,10 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // 시간 초과 설정 (여러 번 클릭을 하나의 시퀀스로 간주)
             clearTimeout(timeout);
             timeout = setTimeout(() => {
-                // 확률 계산 (3번 이상 클릭하면 30% 확률로 글리치 효과 적용)
-                if (clickCount >= 3 && Math.random() < 0.3) {
+                
                     applyTitleGlitchEffect();
-                }
                 // 클릭 카운트 초기화
                 clickCount = 0;
             }, 500);
